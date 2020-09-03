@@ -4,11 +4,9 @@ from engine.state.enemy import Enemy
 
 class State:
 
-    def __init__(self, timeline, time_chunk):
-        self.time_chunk = time_chunk
-        self.timeline = timeline
+    def __init__(self, scheduler):
         self.raiders = [Raider()] * 20
-        self.bosses = [Enemy(self.timeline)]
+        self.bosses = [Enemy(self)]
 
         self.total_healing_done = 0.0
 

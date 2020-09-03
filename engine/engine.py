@@ -1,4 +1,8 @@
-from flux import Timeline
+#import sched
+from apscheduler.scheduler import Scheduler
+import time
+import datetime
+from engine.state.state import State
 
 """
 
@@ -22,7 +26,11 @@ def simulate(player, sim details(?)):
 """
 
 
-class State:
+class Engine:
 
     def __init__(self):
-        self.timeline = Timeline()
+        #self.scheduler = sched.scheduler(time.time, time.sleep)
+        self.scheduler = Scheduler()
+
+        self.state = State(self.scheduler)
+        # e2 = s.enter(seconds_to_exec, priority, callback, (time.time(),)), can access start time later by e2.argument[0]
