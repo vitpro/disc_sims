@@ -49,5 +49,6 @@ class Cast(Spell):
 class Buff(models.Model):
     name = models.CharField(max_length=255, unique=True)
     buff_id = models.IntegerField(default=0, unique=True)
+    # TODO: one to many relation to abstract spell
     # not sure how to implement this best
     # affects_spells = ArrayField(models.IntegerField(default=0), size=10)
