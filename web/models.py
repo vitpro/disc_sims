@@ -2,4 +2,4 @@ from django.db import models
 
 
 class Player(models.Model):
-    pass
+    hp = models.IntegerField()

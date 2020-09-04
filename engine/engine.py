@@ -1,7 +1,4 @@
-#import sched
-from apscheduler.scheduler import Scheduler
-import time
-import datetime
+from apscheduler.scheduler import Scheduler     # this has to be v2.1.2 !important
 from engine.state.state import State
 
 """
@@ -29,8 +26,6 @@ def simulate(player, sim details(?)):
 class Engine:
 
     def __init__(self):
-        #self.scheduler = sched.scheduler(time.time, time.sleep)
         self.scheduler = Scheduler()
 
         self.state = State(self.scheduler)
-        # e2 = s.enter(seconds_to_exec, priority, callback, (time.time(),)), can access start time later by e2.argument[0]
