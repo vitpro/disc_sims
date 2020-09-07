@@ -1,5 +1,6 @@
 from django.db import models
-#from django.contrib.postgres.fields import ArrayField
+# from django.contrib.postgres.fields import ArrayField
+from disc_sims.settings import STAT_NAMES, BUFF_PROCS_FROM
 
 
 class Spell(models.Model):
@@ -45,10 +46,30 @@ class Cast(Spell):
     dps_sp = models.DecimalField(max_digits=10, decimal_places=2)
     healing_sp = models.DecimalField(max_digits=10, decimal_places=2)
 
+    def get_cast_time(self):
+        return self.cast_time
+
+    def get_dps_sp(self):
+        return self.dps_sp
+
+    def get_healing_sp(self):
+        return self.healing_sp
+
 
 class Buff(models.Model):
     name = models.CharField(max_length=255, unique=True)
     buff_id = models.IntegerField(default=0, unique=True)
+
+    max_stacks = models.IntegerField(default=1)
+    affected_stat = models.CharField(choices=map(lambda t: (t, t), STAT_NAMES), max_length=10, default='')
+    duration = models.IntegerField(default=0)
+
+    procs_from = models.CharField(choices=map(lambda t: (t, t), BUFF_PROCS_FROM), max_length=10, null=False)
+    rppm = models.DecimalField(max_digits=10, decimal_places=2, default=0.0, null=True)
+
+    def __str__(self):
+        return '%s[%d]' % (self.name, self.buff_id)
+
     # TODO: one to many relation to abstract spell
     # not sure how to implement this best
     # affects_spells = ArrayField(models.IntegerField(default=0), size=10)

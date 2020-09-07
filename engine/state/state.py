@@ -4,7 +4,8 @@ from engine.state.enemy import Enemy
 
 class State:
 
-    def __init__(self, scheduler):
+    def __init__(self, scheduler, player_stats):
+        self.scheduler = scheduler
         self.raiders = [Raider()] * 20
         self.bosses = [Enemy(self)]
 
@@ -18,3 +19,6 @@ class State:
 
     def process_dots(self):
         pass  # TODO: process if dots ticked in a given time chunk on any enemies
+
+    def get_stats(self):
+        return (self.total_healing_done, )
