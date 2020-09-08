@@ -4,7 +4,8 @@ from engine.state.enemy import Enemy
 
 class State:
 
-    def __init__(self, scheduler, player_stats):
+    def __init__(self, scheduler, player_stats, response_lock):
+        self.response_lock = response_lock
         self.scheduler = scheduler
         self.raiders = [Raider()] * 20
         self.enemies = [Enemy(self)]
@@ -13,11 +14,11 @@ class State:
         self.results = []
 
     def get_stats(self):
-        return self.results
+        with self.response_lock:
+            return self.results
 
     def register_damage(self, target, sp):
         # TODO log damage
-        target
 
         for raider in self.raiders:
             if raider.has_atonement():

@@ -22,8 +22,9 @@ class Engine:
 
         self.scheduler = Scheduler()
         self.scheduler.start()
+        self.response_lock = threading.Lock()
 
-        self.state = State(self.scheduler, player_stats)
+        self.state = State(self.scheduler, player_stats, self.response_lock)
 
     # TODO logic for safe running next spell, need some sort of lock for state resources!!
     def run(self):
@@ -34,8 +35,15 @@ class Engine:
         run_thread.start()
 
         # wait for spell queue to finish working, indicated by results list being filled
-        while not self.state.get_stats():
-            time.sleep(1 * EXEC_SPEED_MULTIPLIER)
+        while True:
+            self.response_lock.aquire()
+            if not self.state.get_stats():
+                self.response_lock.release()
+                time.sleep(5 * EXEC_SPEED_MULTIPLIER)
+            else:
+                self.response_lock.release()
+                break
+
         if run_thread.is_alive():
             run_thread.join()
 
