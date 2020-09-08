@@ -10,6 +10,7 @@ class State:
         self.bosses = [Enemy(self)]
 
         self.total_healing_done = 0.0
+        self.results = []
 
     def apply_healing(self, value):
         pass  # TODO: traverse raiders list, check if atonement is active and apply healing
@@ -21,4 +22,4 @@ class State:
         pass  # TODO: process if dots ticked in a given time chunk on any enemies
 
     def get_stats(self):
-        return (self.total_healing_done, )
+        return self.results
