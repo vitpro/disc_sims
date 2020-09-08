@@ -7,6 +7,7 @@ class Spell(models.Model):
     name = models.CharField(max_length=255, unique=True)
     mana_cost = models.DecimalField(max_digits=6, decimal_places=3)
     spell_id = models.IntegerField(default=0, unique=True)
+    icon = models.ImageField(upload_to='icons', null=True)
 
     def get_spell_name(self):
         return self.name
@@ -69,7 +70,3 @@ class Buff(models.Model):
 
     def __str__(self):
         return '%s[%d]' % (self.name, self.buff_id)
-
-    # TODO: one to many relation to abstract spell
-    # not sure how to implement this best
-    # affects_spells = ArrayField(models.IntegerField(default=0), size=10)

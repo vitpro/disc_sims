@@ -16,5 +16,12 @@ class Raider:
     def get_hp(self):
         return self.hp
 
+    def has_atonement(self):
+        return self.atonement_duration > 0
+
     def __str__(self):
         return '{ ' + str(self.hp) + ' / ' + str(self.atonement_duration) + 'sec } '
+
+    # TODO CERE do maths
+    def heal(self):
+        pass

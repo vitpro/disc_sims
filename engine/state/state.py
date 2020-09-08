@@ -7,19 +7,22 @@ class State:
     def __init__(self, scheduler, player_stats):
         self.scheduler = scheduler
         self.raiders = [Raider()] * 20
-        self.bosses = [Enemy(self)]
+        self.enemies = [Enemy(self)]
 
         self.total_healing_done = 0.0
         self.results = []
 
-    def apply_healing(self, value):
-        pass  # TODO: traverse raiders list, check if atonement is active and apply healing
-
-    def decay_atonements(self):
-        pass  # TODO: traverse and apply the decay
-
-    def process_dots(self):
-        pass  # TODO: process if dots ticked in a given time chunk on any enemies
-
     def get_stats(self):
         return self.results
+
+    def register_damage(self, target, sp):
+        # TODO log damage
+        target
+
+        for raider in self.raiders:
+            if raider.has_atonement():
+                # TODO log healing done
+                raider.heal()   # TODO CERE do maths
+
+    def register_healing(self, target, sp):  # non atonement healing
+        pass
