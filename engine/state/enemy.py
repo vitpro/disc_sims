@@ -1,4 +1,3 @@
-import engine.toolkit.dot
 
 
 class Enemy:
@@ -17,5 +16,6 @@ class Enemy:
     def extend_dot(self, extend_duration):
         self.dot_duration = self.dot_duration + extend_duration
 
+    # FIXME buff multiplier probably goes here
     def take_damage(self, sp):   # TODO convert sp into actual numbers maybe? idk
         self.damage_taken = self.damage_taken + sp

@@ -17,6 +17,11 @@ class State:
         with self.response_lock:
             return self.results
 
+    def register_healing(self, target, sp, applies_atonement=False, atonement_duration=0.0):
+        self.raiders[target].heal(sp)
+        if applies_atonement:
+            self.raiders[target].apply_atonement(atonement_duration)
+
     def register_damage(self, enemy, sp):
         # log damage
         enemy.take_damage(sp)
@@ -24,7 +29,7 @@ class State:
         for raider in self.raiders:
             if raider.has_atonement():
                 # TODO log healing done
-                raider.heal()   # TODO CERE do maths
+                raider.heal(sp)   # TODO CERE do maths
 
-    def register_healing(self, target, sp):  # non atonement healing
-        pass
+    def register_damage_no_atonement(self, enemy, sp):
+        enemy.take_damage(sp)
