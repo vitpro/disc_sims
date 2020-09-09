@@ -17,8 +17,9 @@ class State:
         with self.response_lock:
             return self.results
 
-    def register_damage(self, target, sp):
-        # TODO log damage
+    def register_damage(self, enemy, sp):
+        # log damage
+        enemy.take_damage(sp)
 
         for raider in self.raiders:
             if raider.has_atonement():

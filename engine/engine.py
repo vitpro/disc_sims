@@ -50,17 +50,17 @@ class Engine:
         return self.state.get_stats()
 
     def execute_next_spell(self):
-        (next_spell, target) = self.spell_sequence.pop(0)  # should be of django spell type
+        (next_spell, target_id) = self.spell_sequence.pop(0)  # should be of django spell type
 
         # update rppm buffs TODO
         # check for buffs TODO
 
         # que the spell, with timer if needed
         if type(next_spell) is Dot:
+            enemy = self.state.enemies[target_id[1]]
             # apply initial hit
-            self.state.register_damage(target, next_spell.get_initial_hit_sp())  # TODO CERE - fix maths
+            self.state.register_damage(enemy, next_spell.get_initial_hit_sp())  # TODO CERE - fix maths
             # check if dot is in pandemic, if new dot - schedule the ticks
-            enemy = self.state.enemies[target[1]]
             if enemy.has_dot():
                 enemy.extend_dot(next_spell.duration)
             else:   # apply new dot
