@@ -17,7 +17,7 @@ class Engine:
             player_stats = []
         if spell_sequence is None:
             spell_sequence = []
-        self.simulate = simulate # this is for much later when we would want it to generate spell sequence for us
+        self.simulate = simulate  # this is for much later when we would want it to generate spell sequence for us
         self.spell_sequence = spell_sequence
 
         self.scheduler = Scheduler()
@@ -26,7 +26,6 @@ class Engine:
 
         self.state = State(self.scheduler, player_stats, self.response_lock)
 
-    # TODO logic for safe running next spell, need some sort of lock for state resources!!
     def run(self):
         self.execute_next_spell()
 
@@ -49,6 +48,11 @@ class Engine:
 
         return self.state.get_stats()
 
+    '''
+    spell_sequence format:
+        [[ spell_id, [ (0 - healing, 1 - harm, 2 - aoe), (int ally_id/enemy_id for 0,1 OR [[ally_ids ... ], [ enemy ids ...]] for aoe) ] ], ... ]
+    '''
+
     def execute_next_spell(self):
         (next_spell, target_id) = self.spell_sequence.pop(0)  # should be of django spell type
 
@@ -63,16 +67,59 @@ class Engine:
             # check if dot is in pandemic, if new dot - schedule the ticks
             if enemy.has_dot():
                 enemy.extend_dot(next_spell.duration)
-            else:   # apply new dot
+            else:  # apply new dot
                 enemy.apply_dot(next_spell)
                 # schedule ticks
                 current_time = datetime.datetime.now()
                 # TODO CERE fix dot tickrate maths, use haste etc
                 sched_time = datetime.timedelta(milliseconds=(1500 * EXEC_SPEED_MULTIPLIER)) + current_time
-                self.scheduler.add_date_job(self.process_dot_ticks, sched_time, )
+                self.scheduler.add_date_job(self.process_dot_tick, sched_time, )
         else:
-            # next spell is a cast
-            pass
+            # next spell is a cast`
+
+            # check if this is an instant cast or not, schedule if needed for the cast time duration
+            if next_spell.cast_time:
+                self.execute_spell_now(next_spell, target_id)
+            else:
+                current_time = datetime.datetime.now()
+                # TODO CERE fix dot tickrate maths, use haste etc
+                # *1000 because need to convert to milliseconds
+                sched_time = datetime.timedelta(milliseconds=(next_spell.cast_time * 1000
+                                                              * EXEC_SPEED_MULTIPLIER)) + current_time
+                self.scheduler.add_date_job(self.execute_spell_now, sched_time, args=[next_spell, target_id])
+
+    def execute_spell_now(self, next_spell, target_id):
+        # check if it's a dps or healing spell, then check if it's an aoe spell
+        is_aoe_spell = target_id[0] == 2
+        # check if the spell does any damage
+        if target_id[0] == 1 or (is_aoe_spell and len(target_id[1][1]) != 0):
+            # cover aoe spell case
+            aoe_target_list = target_id[1][1]
+            if is_aoe_spell and aoe_target_list:  # will assume first target in the enemy list is the closest one
+                main_target = aoe_target_list.pop(0)
+                self.state.register_damage(main_target, next_spell.get_dps_sp())  # TODO CERE fix maths
+                for target in aoe_target_list:
+                    self.state.register_damage_no_atonement(target, next_spell.get_dps_sp())
+            # ST spell case
+            else:
+                self.state.register_damage(target_id[1], next_spell.get_dps_sp())
+
+        # check if the spell does any healing
+        aoe_healing_list = target_id[1][0]
+        if target_id[0] == 0 or (is_aoe_spell and aoe_healing_list):
+            # check if it does aoe healing
+            if is_aoe_spell and aoe_healing_list:
+                for target in aoe_healing_list:
+                    self.state.register_healing(target, next_spell.get_healing_sp(),
+                                                next_spell.applies_atonement,
+                                                next_spell.atonement_duration)
+            # st spell
+            else:
+                self.state.register_healing(target_id[1], next_spell.get_healing_sp(),
+                                            next_spell.applies_atonement,
+                                            next_spell.atonement_duration)
 
     def process_dot_tick(self):
+        # TODO process dot expiring last tick (portion of value)
+        # TODO add potds proc
         pass
