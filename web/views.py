@@ -27,10 +27,12 @@ def submit_sim(request):
         simulate_sequence = request.POST['simulate']
 
     engine = Engine(spell_sequence, player_stats, player_talents, simulate_sequence)
-    sims_report = engine.simulate()
+    sims_report, error_list = engine.simulate()
     if sims_report['report_id']:
         request.session['report_id'] = sims_report['report_id']
         return redirect(report + sims_report['report_id'])
+    if error_list:
+        request.session['error_list'] = error_list
     return redirect(error)
 
 

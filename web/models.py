@@ -2,7 +2,7 @@ import uuid
 
 from django.db import models
 # from django.contrib.postgres.fields import ArrayField
-from disc_sims.settings import STAT_NAMES, BUFF_PROCS_FROM
+from disc_sims.settings import STAT_NAMES, BUFF_PROCS_FROM, CASTING_SCHOOLS
 
 
 class Spell(models.Model):
@@ -10,6 +10,8 @@ class Spell(models.Model):
     name = models.CharField(max_length=255, unique=True)
     mana_cost = models.DecimalField(max_digits=6, decimal_places=3)
     icon = models.ImageField(upload_to='icons', null=True)
+    # schools for things like scov checks
+    casting_school = models.CharField(choices=map(lambda t: (t, t), CASTING_SCHOOLS), max_length=10, default='')
 
     def get_spell_name(self):
         return self.name

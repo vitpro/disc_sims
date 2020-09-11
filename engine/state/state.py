@@ -38,6 +38,7 @@ class State:
     def register_damage_no_atonement(self, enemy, sp):
         enemy.take_damage(sp)
 
+    # TODO add actual data to the report when ready
     def generate_report(self):
         self.results = []
         SimulationReport(report_id=uuid.uuid4()).save()

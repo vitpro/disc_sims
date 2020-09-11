@@ -4,6 +4,7 @@ import threading
 import time
 from disc_sims.settings import EXEC_SPEED_MULTIPLIER
 from web.models import Dot, Cast, Spell
+from django.core.exceptions import ObjectDoesNotExist
 import datetime
 
 '''
@@ -14,6 +15,7 @@ import datetime
 
 class Engine:
     def __init__(self, spell_sequence=None, player_stats=None, player_talents=None, simulate=False):
+        self.error_list = []
         if player_talents is None:
             player_talents = []
         if player_stats is None:
@@ -22,7 +24,12 @@ class Engine:
             spell_sequence = []
         self.simulate = simulate  # this is for much later when we would want it to generate spell sequence for us
         # get Spell objects from spell ids
-        self.spell_sequence = list(map(lambda spell: [Spell.objects.get(spell_id=spell[0]), spell[1]], spell_sequence))
+        try:
+            self.spell_sequence = list(
+                map(lambda spell: [Spell.objects.get(spell_id=spell[0]), spell[1]], spell_sequence))
+        except ObjectDoesNotExist:
+            # TODO add error message to some error list
+            self.spell_sequence = []
 
         self.scheduler = Scheduler()
         self.scheduler.start()
@@ -34,6 +41,10 @@ class Engine:
         self.execute_next_spell()
 
     def simulate(self):
+        # if there are no spells to sim then we return an empty report and display any errors that may have happened
+        if not self.spell_sequence:
+            return [], self.error_list
+
         run_thread = threading.Thread(target=self.run)
         run_thread.start()
 
@@ -50,7 +61,7 @@ class Engine:
         if run_thread.is_alive():
             run_thread.join()
 
-        return self.state.get_stats()
+        return self.state.get_stats(), self.error_list
 
     def execute_next_spell(self):
         (next_spell, target_id) = self.spell_sequence.pop(0)  # should be of django spell type
@@ -72,8 +83,8 @@ class Engine:
                 current_time = datetime.datetime.now()
                 # TODO CERE fix dot tickrate maths, use haste etc
                 sched_time = datetime.timedelta(milliseconds=(1500 * EXEC_SPEED_MULTIPLIER)) + current_time
-                self.scheduler.add_date_job(self.process_dot_tick, sched_time, )
-        else:
+                self.scheduler.add_date_job(self.process_dot_tick, sched_time, args=[enemy])
+        elif type(next_spell) is Cast:
             # next spell is a cast`
 
             # check if this is an instant cast or not, schedule if needed for the cast time duration
@@ -86,6 +97,10 @@ class Engine:
                 sched_time = datetime.timedelta(milliseconds=(next_spell.cast_time * 1000
                                                               * EXEC_SPEED_MULTIPLIER)) + current_time
                 self.scheduler.add_date_job(self.execute_spell_now, sched_time, args=[next_spell, target_id])
+        else:
+            # some weirdness TODO test this and display error
+            print('bp')
+            pass
 
     def execute_spell_now(self, next_spell, target_id):
         # check if it's a dps or healing spell, then check if it's an aoe spell
@@ -119,7 +134,7 @@ class Engine:
                                             next_spell.applies_atonement,
                                             next_spell.atonement_duration)
 
-    def process_dot_tick(self):
+    def process_dot_tick(self, enemy):
         # TODO process dot expiring last tick (portion of value)
         # TODO add potds proc
         pass
