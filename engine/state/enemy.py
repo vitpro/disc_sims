@@ -19,3 +19,10 @@ class Enemy:
     # FIXME buff multiplier probably goes here
     def take_damage(self, sp):   # TODO convert sp into actual numbers maybe? idk
         self.damage_taken = self.damage_taken + sp
+
+    def decay_dot(self, duration):
+        self.dot_duration = self.dot_duration - duration
+
+    @property
+    def dot_duration(self):
+        return self.dot_duration

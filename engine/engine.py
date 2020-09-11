@@ -82,8 +82,11 @@ class Engine:
                 # schedule ticks
                 current_time = datetime.datetime.now()
                 # TODO CERE fix dot tickrate maths, use haste etc
-                sched_time = datetime.timedelta(milliseconds=(1500 * EXEC_SPEED_MULTIPLIER)) + current_time
-                self.scheduler.add_date_job(self.process_dot_tick, sched_time, args=[enemy])
+                sched_time = datetime.timedelta(milliseconds=(next_spell.baseline_tick_time * 1000
+                                                              * EXEC_SPEED_MULTIPLIER)) + current_time
+                self.scheduler.add_date_job(self.process_dot_tick, sched_time, args=[next_spell.baseline_tick_time,
+                                                                                     next_spell.sp_per_tick,
+                                                                                     enemy])
         elif type(next_spell) is Cast:
             # next spell is a cast`
 
@@ -134,7 +137,27 @@ class Engine:
                                             next_spell.applies_atonement,
                                             next_spell.atonement_duration)
 
-    def process_dot_tick(self, enemy):
-        # TODO process dot expiring last tick (portion of value)
+    def process_dot_tick(self, baseline_tick_time, tick_sp, dot, enemy):
         # TODO add potds proc
-        pass
+
+        self.state.register_damage(enemy, tick_sp)
+        dot_tick_time = baseline_tick_time  # TODO CERE fix maths for this dot tick time
+        enemy.decay_dot(dot_tick_time)
+
+        # check if the dot has expired and there is no next tick
+        if enemy.dot_duration == 0:
+            return
+
+        current_time = datetime.datetime.now()
+        # check if dot is going to expire soon and we need to process the last tick bit
+        if enemy.dot_duration < dot_tick_time:
+            sched_time = datetime.timedelta(milliseconds=(enemy.dot_duration * 1000 *
+                                                          EXEC_SPEED_MULTIPLIER)) + current_time
+            sp_dmg_portion = enemy.dot_duration / dot_tick_time
+            self.scheduler.add_date_job(self.process_dot_tick, sched_time,
+                                        args=[enemy.dot_duration, sp_dmg_portion, dot, enemy])
+        else:
+            # TODO CERE fix dot tickrate maths, use haste etc
+            sched_time = datetime.timedelta(milliseconds=(dot_tick_time * 1000 * EXEC_SPEED_MULTIPLIER)) + current_time
+            self.scheduler.add_date_job(self.process_dot_tick, sched_time,
+                                        args=[dot_tick_time, dot.sp_per_tick, dot, enemy])
