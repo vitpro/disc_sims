@@ -1,12 +1,14 @@
+import uuid
+
 from django.db import models
 # from django.contrib.postgres.fields import ArrayField
 from disc_sims.settings import STAT_NAMES, BUFF_PROCS_FROM
 
 
 class Spell(models.Model):
+    spell_id = models.IntegerField(primary_key=True, default=0, unique=True)
     name = models.CharField(max_length=255, unique=True)
     mana_cost = models.DecimalField(max_digits=6, decimal_places=3)
-    spell_id = models.IntegerField(default=0, unique=True)
     icon = models.ImageField(upload_to='icons', null=True)
 
     def get_spell_name(self):
@@ -73,3 +75,11 @@ class Buff(models.Model):
 
     def __str__(self):
         return '%s[%d]' % (self.name, self.buff_id)
+
+
+class SimulationReport(models.Model):   # TODO CERE what else do we need in the report?
+    report_id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    total_gcds = models.IntegerField(default=0)
+    total_healing = models.DecimalField(max_digits=32, decimal_places=2, default=0.0)    # in sp?
+    total_damage = models.DecimalField(max_digits=32, decimal_places=2, default=0.0)     # in sp?
+

@@ -3,28 +3,32 @@ from engine.state.state import State
 import threading
 import time
 from disc_sims.settings import EXEC_SPEED_MULTIPLIER
-from web.models import Dot, Cast
+from web.models import Dot, Cast, Spell
 import datetime
 
-"""
-
-"""
+'''
+    spell_sequence format:
+        [[ Spell, [ (0 - healing, 1 - harm, 2 - aoe), (int ally_id/enemy_id for 0,1 OR [[ally_ids ... ], [ enemy ids ...]] for aoe) ] ], ... ]
+'''
 
 
 class Engine:
-    def __init__(self, spell_sequence=None, player_stats=None, simulate=False):
+    def __init__(self, spell_sequence=None, player_stats=None, player_talents=None, simulate=False):
+        if player_talents is None:
+            player_talents = []
         if player_stats is None:
             player_stats = []
         if spell_sequence is None:
             spell_sequence = []
         self.simulate = simulate  # this is for much later when we would want it to generate spell sequence for us
-        self.spell_sequence = spell_sequence
+        # get Spell objects from spell ids
+        self.spell_sequence = list(map(lambda spell: [Spell.objects.get(spell_id=spell[0]), spell[1]], spell_sequence))
 
         self.scheduler = Scheduler()
         self.scheduler.start()
         self.response_lock = threading.Lock()
 
-        self.state = State(self.scheduler, player_stats, self.response_lock)
+        self.state = State(self.scheduler, player_stats, player_talents, self.response_lock)
 
     def run(self):
         self.execute_next_spell()
@@ -47,11 +51,6 @@ class Engine:
             run_thread.join()
 
         return self.state.get_stats()
-
-    '''
-    spell_sequence format:
-        [[ spell_id, [ (0 - healing, 1 - harm, 2 - aoe), (int ally_id/enemy_id for 0,1 OR [[ally_ids ... ], [ enemy ids ...]] for aoe) ] ], ... ]
-    '''
 
     def execute_next_spell(self):
         (next_spell, target_id) = self.spell_sequence.pop(0)  # should be of django spell type

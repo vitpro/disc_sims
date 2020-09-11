@@ -1,14 +1,18 @@
 from engine.state.raider import Raider
 from engine.state.enemy import Enemy
+from engine.state.player import Player
+from web.models import SimulationReport
+import uuid
 
 
 class State:
 
-    def __init__(self, scheduler, player_stats, response_lock):
+    def __init__(self, scheduler, player_stats, player_talents, response_lock):
         self.response_lock = response_lock
         self.scheduler = scheduler
         self.raiders = [Raider()] * 20
         self.enemies = [Enemy(self)]
+        self.player = Player(player_stats, player_talents)
 
         self.total_healing_done = 0.0
         self.results = []
@@ -33,3 +37,7 @@ class State:
 
     def register_damage_no_atonement(self, enemy, sp):
         enemy.take_damage(sp)
+
+    def generate_report(self):
+        self.results = []
+        SimulationReport(report_id=uuid.uuid4()).save()
