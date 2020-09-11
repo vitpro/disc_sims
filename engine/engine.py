@@ -2,10 +2,11 @@ from apscheduler.scheduler import Scheduler  # this has to be v2.1.2 !important
 from engine.state.state import State
 import threading
 import time
-from disc_sims.settings import EXEC_SPEED_MULTIPLIER
+from disc_sims.settings import EXEC_SPEED_MULTIPLIER, PET_SPELL_ID
 from web.models import Dot, Cast, Spell
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
+import random
 
 '''
     spell_sequence format:
@@ -151,11 +152,20 @@ class Engine:
         current_time = datetime.datetime.now()
         # check if dot is going to expire soon and we need to process the last tick bit
         if enemy.dot_duration < dot_tick_time:
-            sched_time = datetime.timedelta(milliseconds=(enemy.dot_duration * 1000 *
-                                                          EXEC_SPEED_MULTIPLIER)) + current_time
-            sp_dmg_portion = enemy.dot_duration / dot_tick_time
-            self.scheduler.add_date_job(self.process_dot_tick, sched_time,
-                                        args=[enemy.dot_duration, sp_dmg_portion, dot, enemy])
+            # check if it's a bender or shadowfiend and we need to rng last hit
+            if dot.spell_id in PET_SPELL_ID:
+                chance_to_hit = enemy.dot_duration / dot_tick_time
+                if random.random() < chance_to_hit:
+                    sched_time = datetime.timedelta(milliseconds=(dot_tick_time * 1000 *
+                                                                  EXEC_SPEED_MULTIPLIER)) + current_time
+                    self.scheduler.add_date_job(self.process_dot_tick, sched_time,
+                                                args=[dot_tick_time, dot.sp_per_tick, dot, enemy])
+            else:   # SWP or PTW case
+                sched_time = datetime.timedelta(milliseconds=(enemy.dot_duration * 1000 *
+                                                              EXEC_SPEED_MULTIPLIER)) + current_time
+                sp_dmg_portion = enemy.dot_duration / dot_tick_time
+                self.scheduler.add_date_job(self.process_dot_tick, sched_time,
+                                            args=[enemy.dot_duration, sp_dmg_portion, dot, enemy])
         else:
             # TODO CERE fix dot tickrate maths, use haste etc
             sched_time = datetime.timedelta(milliseconds=(dot_tick_time * 1000 * EXEC_SPEED_MULTIPLIER)) + current_time
