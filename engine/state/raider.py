@@ -10,10 +10,8 @@ class Raider:
     def get_atonement_duration(self):
         return self.atonement_duration
 
-    def set_hp(self, hp):
-        self.hp = hp
-
-    def get_hp(self):
+    @property
+    def hp(self):
         return self.hp
 
     def has_atonement(self):
@@ -24,5 +22,6 @@ class Raider:
 
     # TODO CERE do maths
     # buff multiplier should probably go here
+    # TODO log healing done
     def heal(self, sp):
         pass

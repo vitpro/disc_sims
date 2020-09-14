@@ -2,7 +2,7 @@ from apscheduler.scheduler import Scheduler  # this has to be v2.1.2 !important
 from engine.state.state import State
 import threading
 import time
-from disc_sims.settings import EXEC_SPEED_MULTIPLIER, PET_SPELL_ID
+from disc_sims.settings import EXEC_SPEED_MULTIPLIER, PET_SPELL_IDS
 from web.models import Dot, Cast, Spell
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
@@ -77,7 +77,8 @@ class Engine:
             self.state.register_damage(enemy, next_spell.get_initial_hit_sp())  # TODO CERE - fix maths
             # check if dot is in pandemic, if new dot - schedule the ticks
             if enemy.has_dot():
-                enemy.extend_dot(next_spell.duration)
+                # 1.3 pandemic window
+                enemy.extend_dot(next_spell.duration, max_dot_duration=next_spell.duration * 1.3)
             else:  # apply new dot
                 enemy.apply_dot(next_spell)
                 # schedule ticks
@@ -137,6 +138,9 @@ class Engine:
                 self.state.register_healing(target_id[1], next_spell.get_healing_sp(),
                                             next_spell.applies_atonement,
                                             next_spell.atonement_duration)
+        # process any additional perks, i.e. mindgames extra value
+        if next_spell.bonus_sp:
+            self.state.register_healing(0, next_spell.bonus_sp)
 
     def process_dot_tick(self, baseline_tick_time, tick_sp, dot, enemy):
         # TODO add potds proc
@@ -153,7 +157,7 @@ class Engine:
         # check if dot is going to expire soon and we need to process the last tick bit
         if enemy.dot_duration < dot_tick_time:
             # check if it's a bender or shadowfiend and we need to rng last hit
-            if dot.spell_id in PET_SPELL_ID:
+            if dot.spell_id in PET_SPELL_IDS:
                 chance_to_hit = enemy.dot_duration / dot_tick_time
                 if random.random() < chance_to_hit:
                     sched_time = datetime.timedelta(milliseconds=(dot_tick_time * 1000 *

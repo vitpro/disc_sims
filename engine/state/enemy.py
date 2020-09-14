@@ -12,9 +12,11 @@ class Enemy:
 
     def has_dot(self):
         return self.dot_duration > 0
-    
-    def extend_dot(self, extend_duration):
-        self.dot_duration = self.dot_duration + extend_duration
+
+    # TODO add pandemic check
+    def extend_dot(self, extend_duration, max_dot_duration):
+        self.dot_duration = max_dot_duration if self.dot_duration + extend_duration > max_dot_duration else \
+            self.dot_duration + extend_duration
 
     # FIXME buff multiplier probably goes here
     def take_damage(self, sp):   # TODO convert sp into actual numbers maybe? idk

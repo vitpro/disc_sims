@@ -49,6 +49,7 @@ class Cast(Spell):
     cast_time = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
     dps_sp = models.DecimalField(max_digits=10, decimal_places=2)
     healing_sp = models.DecimalField(max_digits=10, decimal_places=2)
+    bonus_sp = models.DecimalField(max_digits=10, decimal_places=2)
     applies_atonement = models.BooleanField(default=False)
     atonement_duration = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
 
