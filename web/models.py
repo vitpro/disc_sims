@@ -32,7 +32,8 @@ class Spell(models.Model):
 class Dot(Spell):
     duration = models.IntegerField(default=0)
     initial_hit_sp = models.DecimalField(max_digits=10, decimal_places=2)
-    ticks_sp = models.DecimalField(max_digits=10, decimal_places=2)
+    sp_per_tick = models.DecimalField(max_digits=10, decimal_places=2)
+    baseline_tick_time = models.DecimalField(max_digits=4, decimal_places=2)
     # end of duration to indicate it's a dot that benefits from haste, pets have a chance to hit instead
     end_of_duration_tick = models.BooleanField(default=True)
 
@@ -41,9 +42,6 @@ class Dot(Spell):
 
     def get_initial_hit_sp(self):
         return self.initial_hit_sp
-
-    def get_ticks_sp(self):
-        return self.ticks_sp
 
 
 class Cast(Spell):
