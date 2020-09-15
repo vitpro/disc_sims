@@ -9,6 +9,8 @@ __pycache__/
 # pycharm
 .idea*
 
+#sqlite
+.sqlite3
 
 
 # C extensions
