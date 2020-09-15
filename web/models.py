@@ -8,6 +8,8 @@ class Spell(models.Model):
     spell_id = models.IntegerField(primary_key=True, default=0, unique=True)
     name = models.CharField(max_length=255, unique=True)
     mana_cost = models.DecimalField(max_digits=6, decimal_places=3)
+    cooldown = models.DecimalField(max_digits=5, decimal_places=2)
+
     icon = models.ImageField(upload_to='icons', null=True, blank=True)
     # schools for things like scov checks
     casting_school = models.CharField(choices=map(lambda t: (t, t), CASTING_SCHOOLS), max_length=10, default='')
@@ -68,12 +70,24 @@ class Buff(models.Model):
     buff_id = models.IntegerField(default=0, unique=True)
     icon = models.ImageField(upload_to='buff_icons', null=True, blank=True)
 
+    # empty if not a blank stat buff
+    affects_stat = models.CharField(choices=map(lambda t: (t, t), STAT_NAMES), max_length=10, default='', blank=True)
+    # field showing which spell in particular it affects, many spells if null
+    affects_spell = models.OneToOneField(Cast, on_delete=models.DO_NOTHING, blank=True, null=True,
+                                         related_name='affects_spell')
+    # if spell causes a buff - register it here (schism/scov etc)
+    caused_by_spell = models.OneToOneField(Cast, on_delete=models.DO_NOTHING, blank=True, null=True,
+                                           related_name='caused_by_spell')
+
     max_stacks = models.IntegerField(default=1)
-    affected_stat = models.CharField(choices=map(lambda t: (t, t), STAT_NAMES), max_length=10, default='', blank=True)
-    duration = models.IntegerField(default=0)
+    max_duration = models.IntegerField(default=0)
     is_permanent = models.BooleanField(default=False)
+
+    # indicator of how this buff in invoked
     procs_from = models.CharField(choices=map(lambda t: (t, t), BUFF_PROCS_FROM), max_length=10, null=False)
     rppm = models.DecimalField(max_digits=10, decimal_places=2, default=0.0, null=True)
+
+    is_blocked = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s[%d]' % (self.name, self.buff_id)
@@ -91,6 +105,12 @@ class SimulationReport(models.Model):  # TODO CERE what else do we need in the r
     # ','.join([str(i) for i in list_of_ints])
     raiders_healing_received_list = models.CharField(validators=[int_list_validator, ], max_length=120)
 
+    def __str__(self):
+        return 'report #' + str(self.report_id)
+
+    class Meta:
+        ordering = ('report_id', )
+
 
 # 1 report -> N buffs values
 class ReportBuffValue(models.Model):
@@ -98,3 +118,6 @@ class ReportBuffValue(models.Model):
     simulation_report = models.ForeignKey(SimulationReport, on_delete=models.CASCADE)
     total_healing_value = models.DecimalField(max_digits=32, decimal_places=2, default=0.0)
     total_damage_value = models.DecimalField(max_digits=32, decimal_places=2, default=0.0)
+
+    def __str__(self):
+        return '[%s] -> %s' % (str(self.buff), str(self.simulation_report.report_id))

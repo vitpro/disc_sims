@@ -10,7 +10,7 @@ class State:
     def __init__(self, scheduler, player_stats, player_talents, response_lock):
         self.response_lock = response_lock
         self.scheduler = scheduler
-        self.raiders = [Raider()] * 20
+        self.raiders = [Raider(self)] * 20
         self.enemies = [Enemy(self)]
         self.player = Player(player_stats, player_talents)
 
@@ -42,3 +42,6 @@ class State:
     def generate_report(self):
         self.results = []
         SimulationReport(report_id=uuid.uuid4()).save()
+
+    def atonement_count(self):
+        return len(list(filter(lambda raider: raider.has_atonement, self.raiders)))

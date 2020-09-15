@@ -1,6 +1,7 @@
 class Raider:
 
-    def __init__(self):
+    def __init__(self, state):
+        self.state = state
         self.hp = 0.0
         self.atonement_duration = 0.0
 
@@ -24,4 +25,5 @@ class Raider:
     # buff multiplier should probably go here
     # TODO log healing done
     def heal(self, sp):
+        
         pass

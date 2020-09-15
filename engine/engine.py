@@ -73,6 +73,13 @@ class Engine:
         if run_thread.is_alive():
             run_thread.join()
 
+        # clean up
+        # TODO anything else?
+        for buff in self.active_buffs:
+            if buff.is_blocked:
+                buff.is_blocked = False
+                buff.save()
+
         return self.state.get_stats(), self.error_list
 
     def execute_next_spell(self):
