@@ -70,7 +70,7 @@ class Buff(models.Model):
     max_stacks = models.IntegerField(default=1)
     affected_stat = models.CharField(choices=map(lambda t: (t, t), STAT_NAMES), max_length=10, default='')
     duration = models.IntegerField(default=0)
-
+    is_permanent = models.BooleanField(default=False)
     procs_from = models.CharField(choices=map(lambda t: (t, t), BUFF_PROCS_FROM), max_length=10, null=False)
     rppm = models.DecimalField(max_digits=10, decimal_places=2, default=0.0, null=True)
 

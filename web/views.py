@@ -16,6 +16,7 @@ def submit_sim(request):
     spell_sequence = []
     player_stats = []
     player_talents = []
+    active_buffs = []
     simulate_sequence = False
     if request.POST['spell_sequence']:
         spell_sequence = request.POST['spell_sequence']
@@ -25,8 +26,10 @@ def submit_sim(request):
         player_talents = request.POST['player_talents']
     if request.POST['simulate'] is not None:    # TODO check this
         simulate_sequence = request.POST['simulate']
+    if request.POST['active_buffs']:
+        active_buffs = request.POST['active_buffs']
 
-    engine = Engine(spell_sequence, player_stats, player_talents, simulate_sequence)
+    engine = Engine(spell_sequence, player_stats, player_talents, active_buffs, simulate_sequence)
     sims_report, error_list = engine.simulate()
     if sims_report['report_id']:
         request.session['report_id'] = sims_report['report_id']

@@ -15,7 +15,10 @@ import random
 
 
 class Engine:
-    def __init__(self, spell_sequence=None, player_stats=None, player_talents=None, simulate=False):
+    def __init__(self, spell_sequence=None, player_stats=None, player_talents=None,
+                 active_buffs=None, simulate=False):
+        if active_buffs is None:
+            active_buffs = []
         self.error_list = []
         if player_talents is None:
             player_talents = []
@@ -31,6 +34,14 @@ class Engine:
         except ObjectDoesNotExist:
             # TODO add error message to some error list
             self.spell_sequence = []
+
+        try:
+            self.active_buffs = list(
+                map(lambda buff: [Spell.objects.get(buff_id=buff[0]), buff[1]], active_buffs)
+            )
+        except ObjectDoesNotExist:
+            # TODO add error message
+            self.active_buffs = []
 
         self.scheduler = Scheduler()
         self.scheduler.start()
@@ -77,7 +88,7 @@ class Engine:
             self.state.register_damage(enemy, next_spell.get_initial_hit_sp())  # TODO CERE - fix maths
             # check if dot is in pandemic, if new dot - schedule the ticks
             if enemy.has_dot():
-                # 1.3 pandemic window
+                # 1.3 = pandemic window
                 enemy.extend_dot(next_spell.duration, max_dot_duration=next_spell.duration * 1.3)
             else:  # apply new dot
                 enemy.apply_dot(next_spell)
