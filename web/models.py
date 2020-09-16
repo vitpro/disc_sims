@@ -20,9 +20,6 @@ class Spell(models.Model):
     def get_mana_cost(self):
         return self.mana_cost
 
-    def __eq__(self, other):
-        return self.name == other.name and self.spell_id == other.spell_id
-
     def __str__(self):
         return '%s[%d]' % (self.name, self.spell_id)
 
@@ -67,7 +64,7 @@ class Cast(Spell):
 
 class Buff(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    buff_id = models.IntegerField(default=0, unique=True)
+    buff_id = models.IntegerField(default=0, unique=True, primary_key=True)
     icon = models.ImageField(upload_to='buff_icons', null=True, blank=True)
 
     # empty if not a blank stat buff
@@ -78,6 +75,10 @@ class Buff(models.Model):
     # if spell causes a buff - register it here (schism/scov etc)
     caused_by_spell = models.OneToOneField(Cast, on_delete=models.DO_NOTHING, blank=True, null=True,
                                            related_name='caused_by_spell')
+    # by how many % this buff increases a stat/dmg/healing values
+    multiplier_value = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    # ranked values for conduits maybe?
+    # ranked_multiplier_value = models. ...
 
     max_stacks = models.IntegerField(default=1)
     max_duration = models.IntegerField(default=0)
@@ -91,6 +92,9 @@ class Buff(models.Model):
 
     def __str__(self):
         return '%s[%d]' % (self.name, self.buff_id)
+
+    def __eq__(self, other):
+        return self.buff_id == other.buff_id
 
     class Meta:
         ordering = ('name',)

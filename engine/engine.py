@@ -3,7 +3,7 @@ from engine.state.state import State
 import threading
 import time
 from disc_sims.settings import EXEC_SPEED_MULTIPLIER, PET_SPELL_IDS
-from web.models import Dot, Cast, Spell
+from web.models import Dot, Cast, Spell, Buff
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
 import random
@@ -37,7 +37,7 @@ class Engine:
 
         try:
             self.active_buffs = list(
-                map(lambda buff: [Spell.objects.get(buff_id=buff[0]), buff[1]], active_buffs)
+                map(lambda buff: [Buff.objects.get(buff_id=buff[0]), buff[1]], active_buffs)
             )
         except ObjectDoesNotExist:
             # TODO add error message
@@ -47,7 +47,7 @@ class Engine:
         self.scheduler.start()
         self.response_lock = threading.Lock()
 
-        self.state = State(self.scheduler, player_stats, player_talents, self.response_lock)
+        self.state = State(self.scheduler, player_stats, player_talents, active_buffs, self.response_lock)
 
     def run(self):
         self.execute_next_spell()
@@ -140,7 +140,7 @@ class Engine:
                     self.state.register_damage_no_atonement(target, next_spell.get_dps_sp())
             # ST spell case
             else:
-                self.state.register_damage(target_id[1], next_spell.get_dps_sp())
+                self.state.register_damage(target_id[1], next_spell.get_dps_sp())    # TODO add buff modifiers here
 
         # check if the spell does any healing
         aoe_healing_list = target_id[1][0]

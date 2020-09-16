@@ -21,9 +21,7 @@ class Raider:
     def __str__(self):
         return '{ ' + str(self.hp) + ' / ' + str(self.atonement_duration) + 'sec } '
 
-    # TODO CERE do maths
-    # buff multiplier should probably go here
-    # TODO log healing done
+    # TODO CERE maths
     def heal(self, sp):
-        
+        self.hp = self.hp + sp
         pass

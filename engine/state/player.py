@@ -1,7 +1,6 @@
 class Player:
 
-    def __init__(self, stats, talents):
-        self.talents = talents
+    def __init__(self, stats):
         self.vers = stats['VERS']
         self.mastery = stats['MASTERY']
         self.haste = stats['HASTE']
