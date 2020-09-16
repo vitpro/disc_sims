@@ -1,5 +1,9 @@
 class Player:
 
+    '''
+    TODO CERE what's a good way to represent these? would be int stat values that we convert into %, 
+    or work with % straight away? (would probably be more precise to do ints and calculate here if we get some procs)
+    '''
     def __init__(self, stats):
         self.vers = stats['VERS']
         self.mastery = stats['MASTERY']

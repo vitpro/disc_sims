@@ -35,22 +35,20 @@ class Engine:
             # TODO add error message to some error list
             self.spell_sequence = []
 
-        try:
-            self.active_buffs = list(
-                map(lambda buff: [Buff.objects.get(buff_id=buff[0]), buff[1]], active_buffs)
-            )
-        except ObjectDoesNotExist:
-            # TODO add error message
-            self.active_buffs = []
-
         self.scheduler = Scheduler()
         self.scheduler.start()
         self.response_lock = threading.Lock()
 
-        self.state = State(self.scheduler, player_stats, player_talents, active_buffs, self.response_lock)
+        self.active_buffs = self.init_buffs(active_buffs)
+
+        # TODO check active buffs references - maybe need to pass self and reference via engine.active_buffs?
+        self.state = State(self.scheduler, player_stats, player_talents, self.active_buffs, self.response_lock)
 
     def run(self):
+        # TODO implement logic loop
+        #while job store is not empty
         self.execute_next_spell()
+        # else gen report
 
     def simulate(self):
         # if there are no spells to sim then we return an empty report and display any errors that may have happened
@@ -140,7 +138,7 @@ class Engine:
                     self.state.register_damage_no_atonement(target, next_spell.get_dps_sp())
             # ST spell case
             else:
-                self.state.register_damage(target_id[1], next_spell.get_dps_sp())    # TODO add buff modifiers here
+                self.state.register_damage(target_id[1], next_spell.get_dps_sp())  # TODO add buff modifiers here
 
         # check if the spell does any healing
         aoe_healing_list = target_id[1][0]
@@ -182,7 +180,7 @@ class Engine:
                                                                   EXEC_SPEED_MULTIPLIER)) + current_time
                     self.scheduler.add_date_job(self.process_dot_tick, sched_time,
                                                 args=[dot_tick_time, dot.sp_per_tick, dot, enemy])
-            else:   # SWP or PTW case
+            else:  # SWP or PTW case
                 sched_time = datetime.timedelta(milliseconds=(enemy.dot_duration * 1000 *
                                                               EXEC_SPEED_MULTIPLIER)) + current_time
                 sp_dmg_portion = enemy.dot_duration / dot_tick_time
@@ -193,3 +191,24 @@ class Engine:
             sched_time = datetime.timedelta(milliseconds=(dot_tick_time * 1000 * EXEC_SPEED_MULTIPLIER)) + current_time
             self.scheduler.add_date_job(self.process_dot_tick, sched_time,
                                         args=[dot_tick_time, dot.sp_per_tick, dot, enemy])
+
+    def untrack_buff(self, buff_id):
+        try:
+            _buff = Buff.objects.get(buff_id=buff_id)
+            self.active_buffs = [buff for buff in self.active_buffs if not buff[0] == _buff]
+        except Buff.DoesNotExist:
+            # TODO really bad error happining
+            self.error_list.append('...')
+
+    def init_buffs(self, buff_list):
+        active_buffs = []
+        for buff in buff_list:
+            try:
+                # schedule buff expiration
+                sched_time = datetime.timedelta(milliseconds=buff[1] * 1000 * EXEC_SPEED_MULTIPLIER) + datetime.datetime.now()
+                job = self.scheduler.add_date_job(self.untrack_buff, sched_time, args=[buff[0], ])
+                active_buffs.append([Buff.objects.get(buff_id=buff[0]), job])
+            except Buff.DoesNotExist:
+                # TODO error message
+                self.error_list.append('some error message, buff %d isn;t in the db etc' % buff[0])
+        return active_buffs
