@@ -20,6 +20,9 @@ class State:
         self.total_healing_done = 0.0
         self.results = []
 
+        #self.init_stats()
+        self.init_buffs()
+
     def get_stats(self):
         with self.response_lock:
             return self.results
@@ -67,8 +70,7 @@ class State:
     def apply_generic_hps_buffs(self, sp, has_atonement):
         hps_sp = self.apply_generic_buffs(sp)
         if has_atonement:   # apply mastery
-            #hps_sp = hps_sp * some mastery # TODO CERE
-            pass
+            hps_sp = hps_sp * self.player.mastery   # TODO CERE maths with stats
         return hps_sp
 
     def process_talents(self, sp):
@@ -115,6 +117,12 @@ class State:
         else:
             return 1.12
 
+    # TODO implment this
     def process_active_buffs(self, sp):
         buffed_sp = sp
         return buffed_sp
+
+    def init_buffs(self):
+        for buff in self.active_buffs:
+            if buff.affects_stat:
+                self.player.stats[buff.affects_stat] = self.player.stats[buff.affects_stat] * buff.multiplier_value

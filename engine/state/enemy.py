@@ -18,7 +18,6 @@ class Enemy:
         self.dot_duration = max_dot_duration if self.dot_duration + extend_duration > max_dot_duration else \
             self.dot_duration + extend_duration
 
-    # FIXME buff multiplier probably goes here
     def take_damage(self, sp):   # TODO convert sp into actual numbers maybe? idk
         self.damage_taken = self.damage_taken + sp
 
@@ -28,3 +27,7 @@ class Enemy:
     @property
     def dot_duration(self):
         return self.dot_duration
+
+    @dot_duration.setter
+    def dot_duration(self, value):
+        self.dot_duration = value

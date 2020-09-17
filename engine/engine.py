@@ -132,7 +132,7 @@ class Engine:
             aoe_target_list = target_id[1][1]
             if is_aoe_spell and aoe_target_list:  # will assume first target in the enemy list is the closest one
                 main_target = aoe_target_list.pop(0)
-                self.state.register_damage(main_target, next_spell.get_dps_sp())  # TODO CERE fix maths
+                self.state.register_damage(main_target, next_spell.get_dps_sp())
                 # atonement only works on 1 target
                 for target in aoe_target_list:
                     self.state.register_damage_no_atonement(target, next_spell.get_dps_sp())
