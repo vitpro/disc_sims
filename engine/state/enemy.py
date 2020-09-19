@@ -13,7 +13,6 @@ class Enemy:
     def has_dot(self):
         return self.dot_duration > 0
 
-    # TODO add pandemic check
     def extend_dot(self, extend_duration, max_dot_duration):
         self.dot_duration = max_dot_duration if self.dot_duration + extend_duration > max_dot_duration else \
             self.dot_duration + extend_duration

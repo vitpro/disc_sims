@@ -24,4 +24,3 @@ class Raider:
     # TODO CERE maths
     def heal(self, sp):
         self.hp = self.hp + sp
-        pass

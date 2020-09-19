@@ -122,6 +122,10 @@ class State:
         buffed_sp = sp
         return buffed_sp
 
+    def process_buff_expiration(self, buff):
+        if buff.affects_stat:
+            self.player.stats[buff.affects_stat] = self.player.stats[buff.affects_stat] / buff.multiplier_value
+
     def init_buffs(self):
         for buff in self.active_buffs:
             if buff.affects_stat:

@@ -28,6 +28,7 @@ class Engine:
             spell_sequence = []
         self.simulate = simulate  # this is for much later when we would want it to generate spell sequence for us
         # get Spell objects from spell ids
+
         try:
             self.spell_sequence = list(
                 map(lambda spell: [Spell.objects.get(spell_id=spell[0]), spell[1]], spell_sequence))
@@ -105,12 +106,14 @@ class Engine:
                 self.scheduler.add_date_job(self.process_dot_tick, sched_time, args=[next_spell.baseline_tick_time,
                                                                                      next_spell.sp_per_tick,
                                                                                      enemy])
+            # TODO add gcd
         elif type(next_spell) is Cast:
             # next spell is a cast`
 
             # check if this is an instant cast or not, schedule if needed for the cast time duration
             if next_spell.cast_time:
                 self.execute_spell_now(next_spell, target_id)
+                # TODO add gcd
             else:
                 current_time = datetime.datetime.now()
                 # TODO CERE fix dot tickrate maths, use haste etc
@@ -196,8 +199,9 @@ class Engine:
         try:
             _buff = Buff.objects.get(buff_id=buff_id)
             self.active_buffs = [buff for buff in self.active_buffs if not buff[0] == _buff]
+            self.state.process_buff_expiration(_buff)
         except Buff.DoesNotExist:
-            # TODO really bad error happining
+            # TODO really bad error happening - buff not in db but in the list somehow
             self.error_list.append('...')
 
     def init_buffs(self, buff_list):
