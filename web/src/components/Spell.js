@@ -14,22 +14,26 @@ const grid = 8;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
-  userSelect: 'none',
-  padding: grid * 2,
-  margin: `0 ${grid}px 0 0`,
+      userSelect: 'none',
+      padding: grid * 2,
+      margin: `0 ${grid}px 0 0`,
 
-  // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
-
-  // styles we need to apply on draggables
-  ...draggableStyle,
+      // change background colour if dragging
+      background: isDragging ? 'lightgrey' : 'grey',
+      border: isDragging? 'solid red 2px' : '',
+      // styles we need to apply on draggables
+      ...draggableStyle,
 });
 
 export default class Spell extends Component {
     render() {
         const key = 'spellid-' + this.props.spell.id;
         return (
-            <Draggable key={key} draggableId={this.props.spell.id.toString()} index={this.props.index}>
+            <Draggable
+                key={key}
+                draggableId={this.props.spell.id.toString()}
+                index={this.props.index}
+            >
                 { (provided, snapshot) => (
                     <div
                         ref={provided.innerRef}

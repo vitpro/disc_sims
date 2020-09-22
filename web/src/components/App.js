@@ -19,14 +19,8 @@ const SpellQueue = styled.div`
 
 const grid = 8;
 
-const getItems = count =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `item-${k}`,
-    content: `item ${k}`,
-  }));
-
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  background: isDraggingOver ? 'lightgrey' : 'lightgrey',
   display: 'flex',
   padding: grid,
   overflow: 'auto',
@@ -47,7 +41,6 @@ class App extends Component {
             data: {
                 'spells': []
             },
-            items: getItems(6),
             loaded: false,
             placeholder: "Loading"
         };
@@ -84,23 +77,26 @@ class App extends Component {
         }
 
         const items = reorder(
-            this.state.items,
+            this.state.data.spells,
             result.source.index,
             result.destination.index
         );
 
-        this.setState({
-            items,
-        });
+        const newState = {
+            ...this.state,
+            data: {
+                'spells': items,
+            }
+        };
+        this.setState(newState);
     }
-
 
     render() {
         return (
             <div>
                 <Title>Title</Title>
                 <DragDropContext onDragEnd={this.onDragEnd}>
-                    <Droppable droppableId="droppable">
+                    <Droppable droppableId="droppable" direction="horizontal">
                         { (provided, snapshot) => (
                             <div
                                 ref={provided.innerRef}
@@ -123,5 +119,3 @@ class App extends Component {
 export default App;
 
 ReactDOM.render(<App />, document.getElementById('app'));
-// const container = document.getElementById("app");
-// render(<App />, container);
