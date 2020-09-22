@@ -1,5 +1,19 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
+import styled, { css } from 'styled-components';
+import Spell from './Spell';
+
+const Container = styled.div`
+    margin: 8px;
+    border: 1px solid lightgrey;
+    border-radius: 2px;
+`;
+const Title = styled.h3`
+    padding: 8px;
+`;
+const SpellQueue = styled.div`
+    padding: 8px;
+`;
 
 class App extends Component {
     constructor(props) {
@@ -37,17 +51,13 @@ class App extends Component {
     }
 
     render() {
+        const spell_names = this.state.data.spells.map(spell => <Spell key={spell.id} spell={spell} />);
+
         return (
-            <div>
-                <p>hi</p>
-                <ul>
-                    {this.state.data.spells.map(spell => {
-                        return (
-                            <li>{spell.name}</li>
-                        );
-                    })}
-                </ul>
-            </div>
+            <Container>
+                <Title>Title</Title>
+                <SpellQueue>{spell_names}</SpellQueue>
+            </Container>
         );
     }
 }
