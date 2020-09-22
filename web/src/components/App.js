@@ -14,7 +14,10 @@ class App extends Component {
     }
 
     componentDidMount() {
-        fetch("/get_spells")
+        const requestOptions = {
+            method: 'GET',
+        };
+        fetch("/get_spells", requestOptions)
             .then(resp => {
                 if (resp.status > 400) {
                     return this.setState(() => {
@@ -38,13 +41,11 @@ class App extends Component {
             <div>
                 <p>hi</p>
                 <ul>
-
                     {this.state.data.spells.map(spell => {
                         return (
                             <li>{spell.name}</li>
                         );
                     })}
-
                 </ul>
             </div>
         );
