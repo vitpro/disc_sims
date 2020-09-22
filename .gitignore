@@ -12,6 +12,10 @@ __pycache__/
 #sqlite
 *.sqlite3
 
+# node stuff
+web/node_modules/
+web/static/frontend
+
 #*/migrations/*
 
 # C extensions
@@ -67,3 +71,11 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# VS
+/disc_sims.pyproj
+/.vs/VSWorkspaceState.json
+/.vs/slnx.sqlite
+/.vs/ProjectSettings.json
+/.vs/disc_sims/v15/.suo
+/disc_sims.sln
