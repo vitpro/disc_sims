@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import styled, { css } from 'styled-components';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import ReactDOM from 'react-dom';
 import Spell from './Spell';
 
 const Container = styled.div`
@@ -50,19 +52,37 @@ class App extends Component {
             });
     }
 
-    render() {
-        const spell_names = this.state.data.spells.map(spell => <Spell key={spell.id} spell={spell} />);
+    onDragEnd(result) {
+        console.log('xd' + result);
+    };
 
+
+    render() {
         return (
-            <Container>
+            <div>
                 <Title>Title</Title>
-                <SpellQueue>{spell_names}</SpellQueue>
-            </Container>
+                <DragDropContext onDragEnd={this.onDragEnd}>
+                    <Droppable droppableId="droppable">
+                        { (provided) => (
+                            <div
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                            >
+                                {this.state.data.spells.map((spell, index) => (
+                                    <Spell key={'spellid-' + spell.id} spell={spell} index={index}/>
+                                ))}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+            </div>
         );
     }
 }
 
 export default App;
 
-const container = document.getElementById("app");
-render(<App />, container);
+ReactDOM.render(<App />, document.getElementById('app'));
+// const container = document.getElementById("app");
+// render(<App />, container);

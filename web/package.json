@@ -14,7 +14,7 @@
   "scripts": {
     "watch": "npm-watch",
     "dev": "webpack --mode development ./src/index.js --output ./static/frontend/main.js",
-    "build": "webpack --mode production ./src/index.js --output ./static/frontend/main.js",
+    "build": "webpack --mode development ./src/index.js --output ./static/frontend/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

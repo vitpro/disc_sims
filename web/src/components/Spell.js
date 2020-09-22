@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
+import ReactDOM from 'react-dom';
+import { Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
     border: 1px solid lightgrey;
@@ -8,8 +10,22 @@ const Container = styled.div`
     margin-bottom: 8px;
 `;
 
-export default class Spell extends React.Component {
+export default class Spell extends Component {
     render() {
-        return <Container>{this.props.spell.name}</Container>
+        const key = 'spellid-' + this.props.spell.id;
+        return (
+            <Draggable key={key} draggableId={this.props.spell.id} index={this.props.index}>
+                { (provided) => (
+                    <div
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                    >
+                        {this.props.spell.name}
+                    </div>
+
+                )}
+            </Draggable>
+        );
     }
 }

@@ -67,6 +67,7 @@ def get_spells(request):
     for spell in spells:
         # TODO populate properly
         spell_response_data.append({
+            'id': spell.spell_id,
             'name': spell.name,
         })
 
