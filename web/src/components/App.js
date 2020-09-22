@@ -17,6 +17,29 @@ const SpellQueue = styled.div`
     padding: 8px;
 `;
 
+const grid = 8;
+
+const getItems = count =>
+  Array.from({ length: count }, (v, k) => k).map(k => ({
+    id: `item-${k}`,
+    content: `item ${k}`,
+  }));
+
+const getListStyle = isDraggingOver => ({
+  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  display: 'flex',
+  padding: grid,
+  overflow: 'auto',
+});
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -24,9 +47,11 @@ class App extends Component {
             data: {
                 'spells': []
             },
+            items: getItems(6),
             loaded: false,
             placeholder: "Loading"
         };
+        this.onDragEnd = this.onDragEnd.bind(this);
     }
 
     componentDidMount() {
@@ -53,8 +78,21 @@ class App extends Component {
     }
 
     onDragEnd(result) {
-        console.log('xd' + result);
-    };
+        // dropped outside the list
+        if (!result.destination) {
+            return;
+        }
+
+        const items = reorder(
+            this.state.items,
+            result.source.index,
+            result.destination.index
+        );
+
+        this.setState({
+            items,
+        });
+    }
 
 
     render() {
@@ -63,13 +101,14 @@ class App extends Component {
                 <Title>Title</Title>
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     <Droppable droppableId="droppable">
-                        { (provided) => (
+                        { (provided, snapshot) => (
                             <div
                                 ref={provided.innerRef}
+                                style={getListStyle(snapshot.isDraggingOver)}
                                 {...provided.droppableProps}
                             >
                                 {this.state.data.spells.map((spell, index) => (
-                                    <Spell key={'spellid-' + spell.id} spell={spell} index={index}/>
+                                    <Spell key={'spellid-' + spell.id} spell={spell} index={index} />
                                 ))}
                                 {provided.placeholder}
                             </div>
