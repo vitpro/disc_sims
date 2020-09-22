@@ -12,6 +12,10 @@ __pycache__/
 #sqlite
 *.sqlite3
 
+# node stuff
+web/node_modules/
+web/static/frontend
+
 #*/migrations/*
 
 # C extensions
