@@ -1,6 +1,7 @@
 from web.models import *
 from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import render, redirect, HttpResponse
+from django.http import JsonResponse
 from engine.engine import Engine
 
 
@@ -54,3 +55,20 @@ def error(request):
 
     }
     return render(request, 'error.html', ctx)
+
+
+@require_GET
+def get_spells(request):
+    response_data = {}
+    spell_response_data = []
+    dots = Dot.objects.all()
+    casts = Cast.objects.all()
+    spells = list(dots) + list(casts)
+    for spell in spells:
+        # TODO populate properly
+        spell_response_data.append({
+            'name': spell.name,
+        })
+
+    response_data['spells'] = spell_response_data
+    return JsonResponse(response_data)
