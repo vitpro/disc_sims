@@ -15,7 +15,7 @@ class State:
         self.scheduler = scheduler
         self.raiders = [Raider(self)] * 20
         self.enemies = [Enemy(self)]
-        self.player = Player(player_stats)
+        self.player = Player(player_stats, race)
 
         self.total_healing_done = 0.0
         self.results = []

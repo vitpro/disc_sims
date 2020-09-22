@@ -1,4 +1,4 @@
-from apscheduler.scheduler import Scheduler  # this has to be v2.1.2 !important
+from apscheduler.scheduler import Scheduler # this has to be v2.1.2 !important
 from engine.state.state import State
 import threading
 import time
@@ -7,6 +7,7 @@ from web.models import Dot, Cast, Spell, Buff
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
 import random
+
 
 '''
     spell_sequence format:
@@ -162,7 +163,8 @@ class Engine:
         # TODO add potds proc
 
         self.state.register_damage(enemy, tick_sp)
-        dot_tick_time = baseline_tick_time  # TODO CERE fix maths for this dot tick time
+        haste = self.state.player.get_haste_multiplier()
+        dot_tick_time = baseline_tick_time/haste
         enemy.decay_dot(dot_tick_time)
 
         # check if the dot has expired and there is no next tick
