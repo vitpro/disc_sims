@@ -78,4 +78,5 @@ target/
 /.vs/slnx.sqlite
 /.vs/ProjectSettings.json
 /.vs/disc_sims/v15/.suo
+/.vs/tasks.vs.json
 /disc_sims.sln
