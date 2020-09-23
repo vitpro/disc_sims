@@ -1,9 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { render } from "react-dom";
 import styled, { css } from 'styled-components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import ReactDOM from 'react-dom';
+import Select, { defaultTheme } from 'react-select';
 import Spell from './Spell';
+
 
 const Container = styled.div`
     margin: 8px;
@@ -17,13 +19,20 @@ const SpellQueue = styled.div`
     padding: 8px;
 `;
 
+const Button = styled.button`
+    
+    margin-left: 10px;
+`;
+
 const grid = 8;
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'lightgrey' : 'lightgrey',
-  display: 'flex',
-  padding: grid,
-  overflow: 'auto',
+    background: isDraggingOver ? 'lightgrey' : 'lightgrey',
+    display: 'flex',
+    padding: grid,
+    overflow: 'auto',
+    width: '800px',
+    height: '80px',
 });
 
 const reorder = (list, startIndex, endIndex) => {
@@ -41,7 +50,9 @@ class App extends Component {
             data: {
                 'spells': []
             },
+            sequence: [],
             loaded: false,
+            selected_spell: null,
             placeholder: "Loading"
         };
         this.onDragEnd = this.onDragEnd.bind(this);
@@ -77,7 +88,7 @@ class App extends Component {
         }
 
         const items = reorder(
-            this.state.data.spells,
+            this.state.sequence,
             result.source.index,
             result.destination.index
         );
@@ -85,16 +96,51 @@ class App extends Component {
         // update state to keep track of ordering
         this.setState({
             ...this.state,
-            data: {
-                'spells': items,
-            }
+            sequence: items,
         });
     }
 
+    handleSelectChange = selected => {
+        this.setState({
+            ...this.state,
+            selected_spell: selected,
+        });
+    };
+
+    addNewSpellToSequence = () => {
+        // if none selected - do nothing
+        if (this.state.selected_spell) {
+            const spellToAdd = this.state.data.spells.find(spell => spell.id === this.state.selected_spell.value);
+            const seq = this.state.sequence.slice();
+            seq.push(spellToAdd);
+            this.setState({
+                ...this.state,
+                sequence: seq,
+            })
+        }
+    };
+
     render() {
+        const selectSpellListOptions = this.state.data.spells.map(spell => {
+            return { value: spell.id, label: spell.name }
+        });
         return (
             <div>
                 <Title>Title</Title>
+                <Container>
+                    Add spell:
+                    <Select
+                        className="basic-single"
+                        classNamePrefix="select"
+                        options={selectSpellListOptions}
+                        onChange={this.handleSelectChange}
+                    />
+                    <Button
+                        onClick={this.addNewSpellToSequence}
+                    >
+                        Add
+                    </Button>
+                </Container>
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     <Droppable droppableId="droppable" direction="horizontal">
                         { (provided, snapshot) => (
@@ -103,8 +149,9 @@ class App extends Component {
                                 style={getListStyle(snapshot.isDraggingOver)}
                                 {...provided.droppableProps}
                             >
-                                {this.state.data.spells.map((spell, index) => (
-                                    <Spell key={'spellid-' + spell.id} spell={spell} index={index} />
+                                {this.state.sequence.map((spell, index) => (
+                                    <Spell key={spell.id + '/' + index}
+                                           spell={spell} index={index} />
                                 ))}
                                 {provided.placeholder}
                             </div>
