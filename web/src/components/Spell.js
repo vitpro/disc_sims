@@ -27,7 +27,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 export default class Spell extends Component {
     render() {
-        const key = 'spellid-' + this.props.spell.id;
+        const key = 'spellid-' + this.props.spell.id + this.props.index;
         return (
             <Draggable
                 key={key}

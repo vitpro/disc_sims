@@ -82,13 +82,13 @@ class App extends Component {
             result.destination.index
         );
 
-        const newState = {
+        // update state to keep track of ordering
+        this.setState({
             ...this.state,
             data: {
                 'spells': items,
             }
-        };
-        this.setState(newState);
+        });
     }
 
     render() {
