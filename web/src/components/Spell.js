@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import ReactDOM from 'react-dom';
 import { Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`

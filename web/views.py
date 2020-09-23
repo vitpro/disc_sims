@@ -3,12 +3,12 @@ from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from engine.engine import Engine
+import json
 
 
 @require_GET
 def index(request):
-    ctx = {'text': ' there xD'}
-
+    ctx = {}
     return render(request, 'index.html', ctx)
 
 
@@ -19,16 +19,21 @@ def submit_sim(request):
     player_talents = []
     active_buffs = []
     simulate_sequence = False
-    if request.POST['spell_sequence']:
-        spell_sequence = request.POST['spell_sequence']
-    if request.POST['player_stats']:
-        player_stats = request.POST['player_stats']
-    if request.POST['player_talents']:
-        player_talents = request.POST['player_talents']
-    if request.POST['simulate'] is not None:    # TODO check this
-        simulate_sequence = request.POST['simulate']
-    if request.POST['active_buffs']:
-        active_buffs = request.POST['active_buffs']
+    body = json.loads(request.body)
+    try:
+        if body['spell_sequence']:
+            spell_sequence = body['spell_sequence']
+        if body['player_stats']:
+            player_stats = body['player_stats']
+        if body['player_talents']:
+            player_talents = body['player_talents']
+        if body['simulate'] is not None:    # TODO check this
+            simulate_sequence = body['simulate']
+        if body['active_buffs']:
+            active_buffs = body['active_buffs']
+    except KeyError:
+        # TODO error message/handle missing dict key
+        return redirect(error)
 
     engine = Engine(spell_sequence, player_stats, player_talents, active_buffs, simulate_sequence)
     sims_report, error_list = engine.simulate()

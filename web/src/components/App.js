@@ -5,6 +5,8 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import ReactDOM from 'react-dom';
 import Select, { defaultTheme } from 'react-select';
 import Spell from './Spell';
+import Footer from './Footer';
+import Header from './Header';
 
 
 const Container = styled.div`
@@ -12,16 +14,19 @@ const Container = styled.div`
     border: 1px solid lightgrey;
     border-radius: 2px;
 `;
-const Title = styled.h3`
-    padding: 8px;
-`;
-const SpellQueue = styled.div`
-    padding: 8px;
-`;
 
 const Button = styled.button`
     
     margin-left: 10px;
+`;
+
+const LandingContainer = styled.div`
+`;
+
+const StagesContainer = styled.div`
+`;
+
+const ProgressContainer = styled.div`
 `;
 
 const grid = 8;
@@ -51,6 +56,7 @@ class App extends Component {
                 'spells': []
             },
             sequence: [],
+            targets: [],
             loaded: false,
             selected_spell: null,
             placeholder: "Loading"
@@ -120,44 +126,93 @@ class App extends Component {
         }
     };
 
+    processSims = () => {
+        // TODO redirect? or let django redirect later?
+
+        // construct spell sequence coupled with targets
+        const spell_sequence = this.state.sequence.map((spell) => {
+           return [spell, 0] /*this.state.targets[index]]*/; // TODO reconsider targeting
+        });
+        console.log(spell_sequence);
+        const requestBody = {
+            spell_sequence: spell_sequence,
+            player_stats: [],
+            player_talents: [],
+            active_buffs: [],
+            simulate: false,
+        };
+
+        const requestOptions = {
+            method: "POST",
+            mode: "same-origin",
+            body: JSON.stringify(requestBody),
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            }
+        };
+        fetch("/submit-sim/", requestOptions)
+            .then(resp => {
+                if (resp.status > 400) {
+                    return { placeholder: "error submitting sim data"}
+                }
+            })
+            .then(data => {
+                console.log(data);
+            })
+    };
+
     render() {
         const selectSpellListOptions = this.state.data.spells.map(spell => {
             return { value: spell.id, label: spell.name }
         });
         return (
             <div>
-                <Title>Title</Title>
-                <Container>
-                    Add spell:
-                    <Select
-                        className="basic-single"
-                        classNamePrefix="select"
-                        options={selectSpellListOptions}
-                        onChange={this.handleSelectChange}
-                    />
+                <Header />
+                <LandingContainer>
+                    some img, text etc TODO
+                </LandingContainer>
+                <ProgressContainer>
+                    progress bar and stages TODO
+                </ProgressContainer>
+                <StagesContainer>
+                    <Container>
+                        Add spell:
+                        <Select
+                            className="basic-single"
+                            classNamePrefix="select"
+                            options={selectSpellListOptions}
+                            onChange={this.handleSelectChange}
+                        />
+                        <Button
+                            onClick={this.addNewSpellToSequence}
+                        >
+                            Add
+                        </Button>
+                    </Container>
+                    <DragDropContext onDragEnd={this.onDragEnd}>
+                        <Droppable droppableId="droppable" direction="horizontal">
+                            { (provided, snapshot) => (
+                                <div
+                                    ref={provided.innerRef}
+                                    style={getListStyle(snapshot.isDraggingOver)}
+                                    {...provided.droppableProps}
+                                >
+                                    {this.state.sequence.map((spell, index) => (
+                                        <Spell key={spell.id + '/' + index}
+                                               spell={spell} index={index} />
+                                    ))}
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
                     <Button
-                        onClick={this.addNewSpellToSequence}
+                        onClick={this.processSims}
                     >
-                        Add
+                        Process
                     </Button>
-                </Container>
-                <DragDropContext onDragEnd={this.onDragEnd}>
-                    <Droppable droppableId="droppable" direction="horizontal">
-                        { (provided, snapshot) => (
-                            <div
-                                ref={provided.innerRef}
-                                style={getListStyle(snapshot.isDraggingOver)}
-                                {...provided.droppableProps}
-                            >
-                                {this.state.sequence.map((spell, index) => (
-                                    <Spell key={spell.id + '/' + index}
-                                           spell={spell} index={index} />
-                                ))}
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
-                </DragDropContext>
+                </StagesContainer>
+                <Footer/>
             </div>
         );
     }
