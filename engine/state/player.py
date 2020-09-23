@@ -19,6 +19,7 @@ class Player:
         self.haste = stats['HASTE']
         self.crit = stats['CRIT']
         self.leech = stats['LEECH']
+
         self.int_mod = 1.0
         self.vers_mod = 1.0
         self.mastery_mod = 1.0
@@ -30,6 +31,11 @@ class Player:
             self.crit_mod = 1.01
         else:
             self.crit_mod = 1.0
+        if race == 'TAUREN' or 'DWARF':
+            self.crit_dmg_modifier = 2.04
+        else:
+            self.crit_dmg_modifier = 2.0
+
 
     @int_mod.setter
     def int_mod(self, v):
@@ -78,6 +84,9 @@ class Player:
     def get_sp(self):
         sp = self._int_mod * self._int
         return sp
+
+    def get_crit_dmg_modifier(self):
+        return self.crit_dmg_modifier
 
     def get_haste_multiplier(self):
         base_haste_multiplier = (self._haste / 33) / 100

@@ -1,5 +1,3 @@
-
-
 class Enemy:
 
     def __init__(self, state):
@@ -18,8 +16,8 @@ class Enemy:
         self.dot_duration = max_dot_duration if self.dot_duration + extend_duration > max_dot_duration else \
             self.dot_duration + extend_duration
 
-    def take_damage(self, sp):   # TODO convert sp into actual numbers maybe? idk
-        self.damage_taken = self.damage_taken + sp
+    def take_damage(self, damage):
+        self.damage_taken = self.damage_taken + damage
 
     def decay_dot(self, duration):
         self.dot_duration = self.dot_duration - duration

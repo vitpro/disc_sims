@@ -100,8 +100,9 @@ class Engine:
                 enemy.apply_dot(next_spell)
                 # schedule ticks
                 current_time = datetime.datetime.now()
-                # TODO CERE fix dot tickrate maths, use haste etc
-                sched_time = datetime.timedelta(milliseconds=(next_spell.baseline_tick_time * 1000
+                haste = self.state.player.get_haste_multiplier()
+                dot_tick_time = next_spell.baseline_tick_time / haste
+                sched_time = datetime.timedelta(milliseconds=(dot_tick_time * 1000
                                                               * EXEC_SPEED_MULTIPLIER)) + current_time
                 self.scheduler.add_date_job(self.process_dot_tick, sched_time, args=[next_spell.baseline_tick_time,
                                                                                      next_spell.sp_per_tick,
@@ -110,13 +111,14 @@ class Engine:
             # next spell is a cast`
 
             # check if this is an instant cast or not, schedule if needed for the cast time duration
-            if next_spell.cast_time:
+            if next_spell.cast_time == 0.0:
                 self.execute_spell_now(next_spell, target_id)
             else:
                 current_time = datetime.datetime.now()
-                # TODO CERE fix dot tickrate maths, use haste etc
+                haste = self.state.player.get_haste_multiplier()
+                cast_time = next_spell.cast_time / haste
                 # *1000 because need to convert to milliseconds
-                sched_time = datetime.timedelta(milliseconds=(next_spell.cast_time * 1000
+                sched_time = datetime.timedelta(milliseconds=(cast_time * 1000
                                                               * EXEC_SPEED_MULTIPLIER)) + current_time
                 self.scheduler.add_date_job(self.execute_spell_now, sched_time, args=[next_spell, target_id])
         else:
@@ -125,6 +127,7 @@ class Engine:
             pass
 
     def execute_spell_now(self, next_spell, target_id):
+        self.state.register_mana(next_spell.get_mana_cost())
         # check if it's a dps or healing spell, then check if it's an aoe spell
         is_aoe_spell = target_id[0] == 2
         # check if the spell does any damage
@@ -160,12 +163,20 @@ class Engine:
             self.state.register_healing(0, next_spell.bonus_sp)
 
     def process_dot_tick(self, baseline_tick_time, tick_sp, dot, enemy):
-        # TODO add potds proc
-
+        
         self.state.register_damage(enemy, tick_sp)
         haste = self.state.player.get_haste_multiplier()
-        dot_tick_time = baseline_tick_time/haste
+        dot_tick_time = baseline_tick_time / haste
         enemy.decay_dot(dot_tick_time)
+
+        # potds proc
+        if dot.spell_id not in PET_SPELL_IDS:
+            time_since_last_proc_attempt = datetime.datetime.now() - last_proc_attempt
+            time_since_last_proc = datetime.datetime.now() - last_proc
+            # TODO register time of this tick
+            if self.state.process_rppm(haste, time_since_last_proc_attempt, time_since_last_proc):
+                # TODO register proc and time of proc
+            
 
         # check if the dot has expired and there is no next tick
         if enemy.dot_duration == 0:
@@ -174,8 +185,8 @@ class Engine:
         current_time = datetime.datetime.now()
         # check if dot is going to expire soon and we need to process the last tick bit
         if enemy.dot_duration < dot_tick_time:
-            # check if it's a bender or shadowfiend and we need to rng last hit
-            if dot.spell_id in PET_SPELL_IDS:
+            # check if it's a bender or shadowfiend and we need to rng last hit TODO test if fiend actually works like this
+            if dot.spell_id in PET_SPELL_IDS:       # TODO test if fiend actually works like this
                 chance_to_hit = enemy.dot_duration / dot_tick_time
                 if random.random() < chance_to_hit:
                     sched_time = datetime.timedelta(milliseconds=(dot_tick_time * 1000 *
@@ -185,11 +196,10 @@ class Engine:
             else:  # SWP or PTW case
                 sched_time = datetime.timedelta(milliseconds=(enemy.dot_duration * 1000 *
                                                               EXEC_SPEED_MULTIPLIER)) + current_time
-                sp_dmg_portion = enemy.dot_duration / dot_tick_time
+                sp_dmg_portion = dot.sp_per_tick * (enemy.dot_duration / dot_tick_time)
                 self.scheduler.add_date_job(self.process_dot_tick, sched_time,
                                             args=[enemy.dot_duration, sp_dmg_portion, dot, enemy])
         else:
-            # TODO CERE fix dot tickrate maths, use haste etc
             sched_time = datetime.timedelta(milliseconds=(dot_tick_time * 1000 * EXEC_SPEED_MULTIPLIER)) + current_time
             self.scheduler.add_date_job(self.process_dot_tick, sched_time,
                                         args=[dot_tick_time, dot.sp_per_tick, dot, enemy])
