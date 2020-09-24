@@ -14,7 +14,7 @@ __pycache__/
 
 # node stuff
 web/node_modules/
-web/static/frontend
+web/static/frontend/*.js
 
 #*/migrations/*
 
