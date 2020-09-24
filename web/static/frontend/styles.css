@@ -71,7 +71,7 @@ body {                          /*TODO image from django media*/
 .mainContainer {
     margin-left: 10%;
     margin-right: 10%;
-    height: 500px;
+    height: 1000px;
     background-color: black;
 
     /*shadows*/
@@ -94,4 +94,52 @@ body {                          /*TODO image from django media*/
 #progressContainer {
     position: relative;
     top: -25px;
+}
+
+.characterDetailsContainer {
+    margin: 30px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.characterDetailsColumn {
+    width: 50%;
+    background-color: darkgrey;
+    color: white;
+}
+
+.talentGrid {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.talentCell {
+    margin: 5px;
+    padding: 8px;
+    border: solid 1px #4f564f;
+    border-radius: 3px;
+    width: 29%;
+    height: 40px;
+    background-color: #4f564f;
+
+    display: flex;
+    /*flex-flow: row wrap;*/
+    justify-content: flex-start;
+    align-items: center;
+
+    -webkit-box-shadow: -2px 5px 9px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: -2px 5px 9px -1px rgba(0,0,0,0.75);
+    box-shadow: -2px 5px 9px -1px rgba(0,0,0,0.75);
+}
+
+.talentCellImg {
+    height: 32px;
+    width: 32px;
+}
+
+.talentCellName {
+    margin-left: 10px;
+    font-size: 15px;
 }

@@ -9,11 +9,12 @@ import Footer from './Footer';
 import Header from './Header';
 import ProgressContainer from './ProgressContainer';
 import LandingContainer from "./LandingContainer";
+import TalentPicker from "./TalentPicker";
 //import './styles.css';
 
 const Container = styled.div`
-    margin: 8px;
-    border: 1px solid lightgrey;
+    margin: 20px;
+    border: 2px solid lightgrey;
     border-radius: 2px;
 `;
 
@@ -49,6 +50,11 @@ class App extends Component {
         this.state = {
             data: {
                 'spells': []
+            },
+            sim_data: {
+                spec: '',
+                sequence: [],
+                targets: [],
             },
             sequence: [],
             targets: [],
@@ -168,6 +174,18 @@ class App extends Component {
                 <div className="mainContainer">
                     <ProgressContainer barCompleted={77} barDisplayPercentage={this.state.isSimming} />
                     <StagesContainer>
+
+                        <div className="characterDetailsContainer">
+                            <div className="characterDetailsColumn">
+                                left
+                            </div>
+                            <div className="characterDetailsColumn">
+                                {/*<TalentPicker spec={this.state.sim_data.spec} >*/}
+                                <TalentPicker spec={'disc'} >
+                                </TalentPicker>
+                            </div>
+                        </div>
+
                         <Container>
                             Add spell:
                             <Select
