@@ -44,6 +44,7 @@ export default class TalentPicker extends Component {
             selected_talents: selected_talents,
         });
 
+        this.props.updateTalentsHandler(selected_talents);
     };
 
     render() {

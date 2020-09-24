@@ -53,6 +53,7 @@ class App extends Component {
             },
             sim_data: {
                 spec: '',
+                selected_talents: [],
                 sequence: [],
                 targets: [],
             },
@@ -107,6 +108,15 @@ class App extends Component {
             sequence: items,
         });
     }
+
+    updateSelectedTalents = talents => {
+        const sim_data = this.state.sim_data;
+        sim_data.selected_talents = talents;
+        this.setState({
+            ...this.state,
+            sim_data: sim_data,
+        });
+    };
 
     handleSelectChange = selected => {
         this.setState({
@@ -181,7 +191,7 @@ class App extends Component {
                             </div>
                             <div className="characterDetailsColumn">
                                 {/*<TalentPicker spec={this.state.sim_data.spec} >*/}
-                                <TalentPicker spec={'disc'} >
+                                <TalentPicker spec={'disc'} updateTalentsHandler={this.updateSelectedTalents}>
                                 </TalentPicker>
                             </div>
                         </div>
