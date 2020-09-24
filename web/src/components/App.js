@@ -7,6 +7,8 @@ import Select, { defaultTheme } from 'react-select';
 import Spell from './Spell';
 import Footer from './Footer';
 import Header from './Header';
+//import './styles.css';
+
 
 
 const Container = styled.div`
@@ -16,7 +18,6 @@ const Container = styled.div`
 `;
 
 const Button = styled.button`
-    
     margin-left: 10px;
 `;
 
@@ -166,7 +167,7 @@ class App extends Component {
             return { value: spell.id, label: spell.name }
         });
         return (
-            <div>
+            <div className="wrapper">
                 <Header />
                 <LandingContainer>
                     some img, text etc TODO
