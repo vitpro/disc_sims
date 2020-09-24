@@ -7,6 +7,8 @@ import Select, { defaultTheme } from 'react-select';
 import Spell from './Spell';
 import Footer from './Footer';
 import Header from './Header';
+import ProgressContainer from './ProgressContainer';
+import LandingContainer from "./LandingContainer";
 //import './styles.css';
 
 const Container = styled.div`
@@ -20,9 +22,6 @@ const Button = styled.button`
 `;
 
 const StagesContainer = styled.div`
-`;
-
-const ProgressContainer = styled.div`
 `;
 
 const grid = 8;
@@ -55,7 +54,8 @@ class App extends Component {
             targets: [],
             loaded: false,
             selected_spell: null,
-            placeholder: "Loading"
+            placeholder: "Loading",
+            isSimming: true, // flag to indicate that report is being generated
         };
         this.onDragEnd = this.onDragEnd.bind(this);
     }
@@ -164,56 +164,47 @@ class App extends Component {
         return (
             <div className="wrapper">
                 <Header />
-                <div className="landingContainer">
-                    <h2 className="landingContent">
-                        Healing sims
-                    </h2>
-                    <h4>
-                        Blah blah some text goes here blah. <br/> more text yesyes even more.
-                    </h4>
-                </div>
+                <LandingContainer />
                 <div className="mainContainer">
-                <ProgressContainer>
-                    progress bar and stages TODO
-                </ProgressContainer>
-                <StagesContainer>
-                    <Container>
-                        Add spell:
-                        <Select
-                            className="basic-single"
-                            classNamePrefix="select"
-                            options={selectSpellListOptions}
-                            onChange={this.handleSelectChange}
-                        />
+                    <ProgressContainer barCompleted={77} barDisplayPercentage={this.state.isSimming} />
+                    <StagesContainer>
+                        <Container>
+                            Add spell:
+                            <Select
+                                className="basic-single"
+                                classNamePrefix="select"
+                                options={selectSpellListOptions}
+                                onChange={this.handleSelectChange}
+                            />
+                            <Button
+                                onClick={this.addNewSpellToSequence}
+                            >
+                                Add
+                            </Button>
+                        </Container>
+                        <DragDropContext onDragEnd={this.onDragEnd}>
+                            <Droppable droppableId="droppable" direction="horizontal">
+                                { (provided, snapshot) => (
+                                    <div
+                                        ref={provided.innerRef}
+                                        style={getListStyle(snapshot.isDraggingOver)}
+                                        {...provided.droppableProps}
+                                    >
+                                        {this.state.sequence.map((spell, index) => (
+                                            <Spell key={spell.id + '/' + index}
+                                                   spell={spell} index={index} />
+                                        ))}
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                        </DragDropContext>
                         <Button
-                            onClick={this.addNewSpellToSequence}
+                            onClick={this.processSims}
                         >
-                            Add
+                            Process
                         </Button>
-                    </Container>
-                    <DragDropContext onDragEnd={this.onDragEnd}>
-                        <Droppable droppableId="droppable" direction="horizontal">
-                            { (provided, snapshot) => (
-                                <div
-                                    ref={provided.innerRef}
-                                    style={getListStyle(snapshot.isDraggingOver)}
-                                    {...provided.droppableProps}
-                                >
-                                    {this.state.sequence.map((spell, index) => (
-                                        <Spell key={spell.id + '/' + index}
-                                               spell={spell} index={index} />
-                                    ))}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                    </DragDropContext>
-                    <Button
-                        onClick={this.processSims}
-                    >
-                        Process
-                    </Button>
-                </StagesContainer>
+                    </StagesContainer>
                 </div>
                 <Footer/>
             </div>

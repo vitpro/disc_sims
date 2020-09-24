@@ -6,6 +6,9 @@ __pycache__/
 *.py[cod]
 *.cpython-36.pyc
 
+*fonts/
+*.DS_Store
+
 # pycharm
 .idea*
 
