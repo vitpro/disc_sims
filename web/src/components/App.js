@@ -9,8 +9,6 @@ import Footer from './Footer';
 import Header from './Header';
 //import './styles.css';
 
-
-
 const Container = styled.div`
     margin: 8px;
     border: 1px solid lightgrey;
@@ -19,9 +17,6 @@ const Container = styled.div`
 
 const Button = styled.button`
     margin-left: 10px;
-`;
-
-const LandingContainer = styled.div`
 `;
 
 const StagesContainer = styled.div`
@@ -169,9 +164,15 @@ class App extends Component {
         return (
             <div className="wrapper">
                 <Header />
-                <LandingContainer>
-                    some img, text etc TODO
-                </LandingContainer>
+                <div className="landingContainer">
+                    <h2 className="landingContent">
+                        Healing sims
+                    </h2>
+                    <h4>
+                        Blah blah some text goes here blah. <br/> more text yesyes even more.
+                    </h4>
+                </div>
+                <div className="mainContainer">
                 <ProgressContainer>
                     progress bar and stages TODO
                 </ProgressContainer>
@@ -213,6 +214,7 @@ class App extends Component {
                         Process
                     </Button>
                 </StagesContainer>
+                </div>
                 <Footer/>
             </div>
         );
