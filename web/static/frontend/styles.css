@@ -4,6 +4,10 @@
     /*padding: 2em;*/
 }
 
+html {
+    -webkit-font-smoothing: antialiased;
+}
+
 body {                          /*TODO image from django media*/
     background: #808080 url("https://cdn.discordapp.com/attachments/699289834669211718/758706448234184754/Rectangle_49.png") no-repeat;
     margin: 0;
@@ -15,12 +19,11 @@ body {                          /*TODO image from django media*/
     flex-flow: row wrap;
     justify-content: flex-end;
 
-    background-color: #5c565e;
+    /*//#5e5e5e;*/
+    background: rgba(94,94,94, 0.0);
     list-style: none;
     margin: 0;
     height: 50px;
-
-    opacity: 0.7;
 
     padding-right: 10%;
 }
@@ -29,21 +32,30 @@ body {                          /*TODO image from django media*/
     color: white;
     text-decoration: none;
     display: block;
-    padding: 1em;
+    padding: 7px;
+    height: 22px;
+    margin-top: 30px;
+
 }
 
 .header a:hover {
     color: black;
 }
 
+#headerDonate {
+    background-color: deeppink;
+    border-radius: 5px;
+}
+
 #headerLogo {
     color: white;
     text-decoration: none;
     display: block;
-    padding: 1em;
+    padding: 7px;
+    margin-top: 30px;
 
     /*align-self: flex-start;*/
-    margin-right: 65%;
+    margin-right: 71%;
 }
 
 .landingContainer {
@@ -73,7 +85,7 @@ body {                          /*TODO image from django media*/
 .mainContainer {
     margin-left: 10%;
     margin-right: 10%;
-    height: 1000px;
+    /*height: 1000px;*/
     background-color: black;
 
     /*shadows*/
@@ -139,6 +151,7 @@ body {                          /*TODO image from django media*/
 .talentCellImg {
     height: 42px;
     width: 42px;
+    border-radius: 10%;
 }
 
 .talentCellName {
