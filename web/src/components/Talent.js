@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 const getTalentStyle = selected => ({
-    border: selected? '1px red solid' : '',
-    borderRadius: selected? '3px' : '',
+    border: selected? '1px #fb1563 solid' : '',
+    borderRadius: selected? '4px' : '',
+    backgroundColor: selected? '#343f5e' : '#22293d',
 });
 
 export default class Talent extends Component {

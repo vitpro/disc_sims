@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 
 const getElemStyle = selected => ({
-    border: selected? '1px red solid' : '1px #b0b0b0 solid',
-    // borderRadius: selected? '3px' : '',
-
+    border: selected? '2px #fb1563 solid' : '2px #6d778b solid',
+    borderRadius: '4px',
 });
 
 const getImgStyle = selected => ({

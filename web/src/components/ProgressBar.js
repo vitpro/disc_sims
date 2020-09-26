@@ -7,7 +7,7 @@ const ProgressBar = (props) => {
     const containerStyles = {
         height: 10,
         width: '100%',
-        backgroundColor: "#e0e0de",
+        backgroundColor: "#22293d",
         borderRadius: 30,
     };
     // margin: 50
@@ -16,7 +16,7 @@ const ProgressBar = (props) => {
         transition: 'width 1s ease-in-out',
         height: '100%',
         width: `${completed}%`,
-        backgroundColor: '#f84e57',
+        backgroundColor: '#fb1563',
         borderRadius: 'inherit',
         textAlign: 'center',
         // overflow: 'hidden',
