@@ -119,6 +119,11 @@ class App extends Component {
         });
     };
 
+    // TODO implement this
+    specChangeHandler = spec => {
+        console.log(spec);
+    };
+
     handleSelectChange = selected => {
         this.setState({
             ...this.state,
@@ -197,8 +202,9 @@ class App extends Component {
 
                                     <div className="specPickerContainer">
                                         <h1>Spec</h1>
-                                        <SpecPicker>
-                                        </SpecPicker>
+                                        <SpecPicker
+                                            specChangeHandler={this.specChangeHandler}
+                                        />
                                     </div>
                                 </div>
                             </div>

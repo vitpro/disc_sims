@@ -14,7 +14,7 @@ export default class SpecPicker extends Component {
         }
     }
 
-    specClickHandler = idx => {
+    specClickHandler = (name, idx) => {
         const selected_spec = this.state.selected_spec.slice();
         selected_spec[this.state.currently_selected] = false;
         selected_spec[idx] = true;
@@ -22,9 +22,9 @@ export default class SpecPicker extends Component {
         this.setState({
             selected_spec: selected_spec,
             currently_selected: idx,
-        })
+        });
 
-        // TODO send back to App
+        this.props.specChangeHandler({name: name, idx: idx});
     };
 
     render() {

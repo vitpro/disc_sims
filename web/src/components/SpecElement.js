@@ -16,7 +16,7 @@ export default class SpecElement extends Component {
         return (
             <div style={getElemStyle(this.props.selected)}
                  className={this.props.selected? "specElement specElementLocked" : "specElement"}
-                 onClick={() => this.props.clickHandler(this.props.index)}
+                 onClick={() => this.props.clickHandler(this.props.name, this.props.index)}
             >
                 <img style={getImgStyle(this.props.selected)} src={this.props.url} className="specElementImg"/>
             </div>
