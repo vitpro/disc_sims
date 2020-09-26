@@ -8,9 +8,10 @@ import Spell from './Spell';
 import Footer from './Footer';
 import Header from './Header';
 import ProgressContainer from './ProgressContainer';
-import LandingContainer from "./LandingContainer";
-import TalentPicker from "./TalentPicker";
-//import './styles.css';
+import LandingContainer from './LandingContainer';
+import TalentPicker from './TalentPicker';
+import RacePicker from './RacePicker';
+import SpecPicker from './SpecPicker';
 
 const Container = styled.div`
     margin: 20px;
@@ -52,7 +53,7 @@ class App extends Component {
                 'spells': []
             },
             sim_data: {
-                spec: '',
+                spec: 'disc',
                 selected_talents: [],
                 sequence: [],
                 targets: [],
@@ -187,11 +188,22 @@ class App extends Component {
 
                         <div className="characterDetailsContainer">
                             <div className="characterDetailsColumn">
-                                left
+                                <div className="raceSpecContainer">
+                                    <div className="racePickerContainer">
+                                        <h1>Race</h1>
+                                        <RacePicker>
+                                        </RacePicker>
+                                    </div>
+
+                                    <div className="specPickerContainer">
+                                        <h1>Spec</h1>
+                                        <SpecPicker>
+                                        </SpecPicker>
+                                    </div>
+                                </div>
                             </div>
                             <div className="characterDetailsColumn">
-                                {/*<TalentPicker spec={this.state.sim_data.spec} >*/}
-                                <TalentPicker spec={'disc'} updateTalentsHandler={this.updateSelectedTalents}>
+                                <TalentPicker spec={this.state.sim_data.spec} updateTalentsHandler={this.updateSelectedTalents}>
                                 </TalentPicker>
                             </div>
                         </div>
