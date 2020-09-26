@@ -200,7 +200,7 @@ class App extends Component {
                             <div className="characterDetailsColumn">
                                 <div className="raceSpecContainer">
                                     <div className="racePickerContainer">
-                                        <h2>Race</h2>
+                                        <h2 className="midTitle">Race</h2>
                                         <RacePicker
                                             raceChangeHandler={this.raceChangeHandler}
                                         >
@@ -208,11 +208,15 @@ class App extends Component {
                                     </div>
 
                                     <div className="specPickerContainer">
-                                        <h2>Spec</h2>
+                                        <h2 className="midTitle">Spec</h2>
                                         <SpecPicker
                                             specChangeHandler={this.specChangeHandler}
                                         />
                                     </div>
+                                </div>
+                                <div>
+                                    <h2 className="midTitle">Meaningful Choice</h2>
+
                                 </div>
                             </div>
                             <div className="characterDetailsColumn">

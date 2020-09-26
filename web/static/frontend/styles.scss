@@ -1,4 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@font-face {
+  font-family: "Poppins";
+  src: url('../fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url('../fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+  font-weight: bold;
+}
 
 $module: #111622;
 $block: #22293d;
@@ -17,12 +27,19 @@ html {
 }
 
 body {                          /*TODO image from django media*/
-    background: #06080d url("/static/images/banner.png") no-repeat;
+    background: #06080d url("/static/images/banner-h.png") no-repeat;
     background-size: 100%;
-    background-position-y: -200px;
+    //background-position-y: -200px;
     margin: 0;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
+}
+
+.midTitle {
+    margin-block-end: 0;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 30px;
 }
 
 .header {
@@ -31,12 +48,12 @@ body {                          /*TODO image from django media*/
     justify-content: flex-end;
 
     /*//#5e5e5e;*/
-    background: rgba(94,94,94, 0.0);
     list-style: none;
     margin: 0;
     height: 50px;
 
-    padding-right: 10%;
+    padding-right: 344px;
+    padding-left: 344px;
 }
 
 .header a {
@@ -46,7 +63,6 @@ body {                          /*TODO image from django media*/
     padding: 7px;
     height: 22px;
     margin-top: 30px;
-
 }
 
 .header a:hover {
@@ -94,8 +110,8 @@ body {                          /*TODO image from django media*/
 }
 
 .mainContainer {
-    margin-left: 342px;
-    margin-right: 342px;
+    margin-left: 344px;
+    margin-right: 344px;
     /*height: 1000px;*/
     background-color: $module;
 
@@ -127,8 +143,8 @@ body {                          /*TODO image from django media*/
     flex-flow: row wrap;
     justify-content: center;
 
-    margin-right: 42px;
-    margin-left: 42px;
+    margin-right: 32px;
+    margin-left: 32px;
 }
 
 .characterDetailsColumn {
@@ -144,15 +160,15 @@ body {                          /*TODO image from django media*/
 }
 
 .talentCell {
-    margin: 5px;
-    padding: 8px;
+    margin: 0px 8px 8px 0;
+    padding: 6px;
     border: solid 2px $highlighted_block;
     border-radius: 4px;
-    width: 29%;
-    height: 40px;
+    width: 168px;
+    height: 44px;
     background-color: $block;
 
-    line-height: 115%;
+    line-height: 110%;
     font-weight: normal;
 
     display: flex;
@@ -166,15 +182,15 @@ body {                          /*TODO image from django media*/
 }
 
 .talentCellImg {
-    height: 42px;
-    width: 42px;
+    height: 38px;
+    width: 38px;
     border-radius: 10%;
     border: 2px solid $border_icons;
 }
 
 .talentCellName {
     margin-left: 10px;
-    font-size: 17px;
+    font-size: 14px;
 }
 
 .raceSpecContainer {
@@ -184,18 +200,17 @@ body {                          /*TODO image from django media*/
 }
 
 .racePickerContainer {
-    width: 54%;
+    margin-right: 16px;
+    width: 360px;
     //background-color: #757575;
 }
 
 .specPickerContainer {
-    width: 39%;
+    width: 192px;
     //background-color: #b0b0b0;
 }
 
 .specPickerGrid {
-    margin: 10px;
-    margin-left: 0;
 
     display: flex;
     flex-flow: row wrap;
@@ -204,29 +219,28 @@ body {                          /*TODO image from django media*/
     background-color: $block;
     border: 2px solid $highlighted_block;
     border-radius: 4px;
+    // 32 px difference betwene 2 columns
 
-    padding: 20px;
-    /*padding-left: 20px;*/
+    padding: 10px;
+    padding-right: 0;
 }
 
 .specElement {
-    margin: 5px;
+    margin: 4px;
     /*padding: 8px;*/
     border: solid 2px $border_icons;
     border-radius: 4px;
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
 }
 
 .specElementImg {
-    height: 48px;
-    width: 48px;
-    border-radius: 5px;
+    height: 44px;
+    width: 44px;
+    border-radius: 4px;
 }
 
 .racePickerGrid {
-    margin: 10px;
-    margin-left: 0;
 
     display: flex;
     flex-flow: row wrap;
@@ -237,15 +251,16 @@ body {                          /*TODO image from django media*/
     border-radius: 5px;
     border-top-right-radius: 0;
 
-    padding: 20px;
+    padding: 12px;
     /*padding-left: 20px;*/
 }
 
 .tab-list {
     padding-left: 0;
     position: absolute;
-    top: 580px;
-    left: 525px;
+    top: 557px;
+    left: 569px;
+    font-weight: bold;
 }
 
 .tab-list-item {

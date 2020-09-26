@@ -51,7 +51,7 @@ export default class TalentPicker extends Component {
         const talents = talentData[this.props.spec];
         return (
             <div>
-                <h1> Talent Choices </h1>
+                <h2 className="midTitle"> Talent</h2>
                 <div className="talentGrid">
 
                     {talents.map((talent, idx) => (

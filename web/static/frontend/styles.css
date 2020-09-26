@@ -1,4 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/Poppins/Poppins-Medium.ttf") format("truetype");
+  font-weight: normal; }
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/Poppins/Poppins-Bold.ttf") format("truetype");
+  font-weight: bold; }
 .wrapper {
   /*padding: 2em;*/ }
 
@@ -7,23 +14,28 @@ html {
 
 body {
   /*TODO image from django media*/
-  background: #06080d url("/static/images/banner.png") no-repeat;
+  background: #06080d url("/static/images/banner-h.png") no-repeat;
   background-size: 100%;
-  background-position-y: -200px;
   margin: 0;
   font-family: 'Poppins', sans-serif;
   font-weight: bold; }
+
+.midTitle {
+  margin-block-end: 0;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 30px; }
 
 .header {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
   /*//#5e5e5e;*/
-  background: rgba(94, 94, 94, 0);
   list-style: none;
   margin: 0;
   height: 50px;
-  padding-right: 10%; }
+  padding-right: 344px;
+  padding-left: 344px; }
 
 .header a {
   color: white;
@@ -71,8 +83,8 @@ body {
   display: block; }
 
 .mainContainer {
-  margin-left: 342px;
-  margin-right: 342px;
+  margin-left: 344px;
+  margin-right: 344px;
   /*height: 1000px;*/
   background-color: #111622;
   /*shadows*/
@@ -98,8 +110,8 @@ body {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  margin-right: 42px;
-  margin-left: 42px; }
+  margin-right: 32px;
+  margin-left: 32px; }
 
 .characterDetailsColumn {
   width: 50%;
@@ -111,14 +123,14 @@ body {
   justify-content: flex-start; }
 
 .talentCell {
-  margin: 5px;
-  padding: 8px;
+  margin: 0px 8px 8px 0;
+  padding: 6px;
   border: solid 2px #343f5e;
   border-radius: 4px;
-  width: 29%;
-  height: 40px;
+  width: 168px;
+  height: 44px;
   background-color: #22293d;
-  line-height: 115%;
+  line-height: 110%;
   font-weight: normal;
   display: flex;
   /*flex-flow: row wrap;*/
@@ -129,14 +141,14 @@ body {
   box-shadow: -2px 5px 9px -1px rgba(0, 0, 0, 0.75); }
 
 .talentCellImg {
-  height: 42px;
-  width: 42px;
+  height: 38px;
+  width: 38px;
   border-radius: 10%;
   border: 2px solid #6d778b; }
 
 .talentCellName {
   margin-left: 10px;
-  font-size: 17px; }
+  font-size: 14px; }
 
 .raceSpecContainer {
   display: flex;
@@ -144,39 +156,36 @@ body {
   justify-content: flex-start; }
 
 .racePickerContainer {
-  width: 54%; }
+  margin-right: 16px;
+  width: 360px; }
 
 .specPickerContainer {
-  width: 39%; }
+  width: 192px; }
 
 .specPickerGrid {
-  margin: 10px;
-  margin-left: 0;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   background-color: #22293d;
   border: 2px solid #343f5e;
   border-radius: 4px;
-  padding: 20px;
-  /*padding-left: 20px;*/ }
+  padding: 10px;
+  padding-right: 0; }
 
 .specElement {
-  margin: 5px;
+  margin: 4px;
   /*padding: 8px;*/
   border: solid 2px #6d778b;
   border-radius: 4px;
-  width: 48px;
-  height: 48px; }
+  width: 44px;
+  height: 44px; }
 
 .specElementImg {
-  height: 48px;
-  width: 48px;
-  border-radius: 5px; }
+  height: 44px;
+  width: 44px;
+  border-radius: 4px; }
 
 .racePickerGrid {
-  margin: 10px;
-  margin-left: 0;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -184,14 +193,15 @@ body {
   /*border: 1px solid #a7b07a;*/
   border-radius: 5px;
   border-top-right-radius: 0;
-  padding: 20px;
+  padding: 12px;
   /*padding-left: 20px;*/ }
 
 .tab-list {
   padding-left: 0;
   position: absolute;
-  top: 580px;
-  left: 525px; }
+  top: 557px;
+  left: 569px;
+  font-weight: bold; }
 
 .tab-list-item {
   margin-left: 3px;
