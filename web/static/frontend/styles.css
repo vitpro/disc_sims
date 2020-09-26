@@ -9,7 +9,7 @@ body {
   /*TODO image from django media*/
   background: #06080d url("/static/images/banner.png") no-repeat;
   background-size: 100%;
-  background-position-y: -110px;
+  background-position-y: -200px;
   margin: 0;
   font-family: 'Poppins', sans-serif;
   font-weight: bold; }
@@ -71,8 +71,8 @@ body {
   display: block; }
 
 .mainContainer {
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-left: 342px;
+  margin-right: 342px;
   /*height: 1000px;*/
   background-color: #111622;
   /*shadows*/
@@ -95,12 +95,11 @@ body {
   top: -25px; }
 
 .characterDetailsContainer {
-  margin: 30px;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  margin-right: 4%;
-  margin-left: 4%; }
+  margin-right: 42px;
+  margin-left: 42px; }
 
 .characterDetailsColumn {
   width: 50%;
@@ -167,12 +166,12 @@ body {
   /*padding: 8px;*/
   border: solid 2px #6d778b;
   border-radius: 4px;
-  width: 56px;
-  height: 56px; }
+  width: 48px;
+  height: 48px; }
 
 .specElementImg {
-  height: 56px;
-  width: 56px;
+  height: 48px;
+  width: 48px;
   border-radius: 5px; }
 
 .racePickerGrid {
@@ -190,9 +189,9 @@ body {
 
 .tab-list {
   padding-left: 0;
-  position: relative;
-  top: -62px;
-  left: 190px; }
+  position: absolute;
+  top: 580px;
+  left: 525px; }
 
 .tab-list-item {
   margin-left: 3px;
@@ -210,5 +209,10 @@ body {
   /*border: solid #ccc;*/
   /*border-width: 1px 1px 0 1px;*/
   border-radius: 5px 5px 0 0; }
+
+.raceIconsContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start; }
 
 /*# sourceMappingURL=styles.css.map */

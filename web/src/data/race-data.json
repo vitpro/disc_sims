@@ -1,0 +1,105 @@
+{
+  "horde": [
+    {
+      "name": "ORC",
+      "url": "/static/images/orc.png"
+    },
+    {
+      "name": "ORC",
+      "url": "/static/images/orc.png"
+    },
+    {
+      "name": "ORC",
+      "url": "/static/images/orc.png"
+    },
+    {
+      "name": "ORC",
+      "url": "/static/images/orc.png"
+    },
+    {
+      "name": "ORC",
+      "url": "/static/images/orc.png"
+    },
+    {
+      "name": "ORC",
+      "url": "/static/images/orc.png"
+    },
+    {
+      "name": "ORC",
+      "url": "/static/images/orc.png"
+    },
+    {
+      "name": "ORC",
+      "url": "/static/images/orc.png"
+    },
+    {
+      "name": "ORC",
+      "url": "/static/images/orc.png"
+    },
+    {
+      "name": "ORC",
+      "url": "/static/images/orc.png"
+    },
+    {
+      "name": "ORC",
+      "url": "/static/images/orc.png"
+    },
+    {
+      "name": "ORC",
+      "url": "/static/images/orc.png"
+    }
+  ],
+  "alliance": [
+    {
+      "name": "PANDAREN",
+      "url": "/static/images/pandaren.png"
+    },
+    {
+      "name": "PANDAREN",
+      "url": "/static/images/pandaren.png"
+    },
+    {
+      "name": "PANDAREN",
+      "url": "/static/images/pandaren.png"
+    },
+    {
+      "name": "PANDAREN",
+      "url": "/static/images/pandaren.png"
+    },
+    {
+      "name": "PANDAREN",
+      "url": "/static/images/pandaren.png"
+    },
+    {
+      "name": "PANDAREN",
+      "url": "/static/images/pandaren.png"
+    },
+    {
+      "name": "PANDAREN",
+      "url": "/static/images/pandaren.png"
+    },
+    {
+      "name": "PANDAREN",
+      "url": "/static/images/pandaren.png"
+    },
+    {
+      "name": "PANDAREN",
+      "url": "/static/images/pandaren.png"
+    },
+    {
+      "name": "PANDAREN",
+      "url": "/static/images/pandaren.png"
+    },
+    {
+      "name": "PANDAREN",
+      "url": "/static/images/pandaren.png"
+    },
+    {
+      "name": "PANDAREN",
+      "url": "/static/images/pandaren.png"
+    }
+  ],
+  "races": [
+    "ORC", "...TODO"
+  ]
+}

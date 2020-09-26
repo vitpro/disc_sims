@@ -8,9 +8,9 @@ export default class SpecPicker extends Component {
         super(props);
         this.state = {
             selected_spec: [
-                true, false, false, false, false, false
+                false, false, false, false, false, false
             ],
-            currently_selected: 0
+            currently_selected: -1,
         }
     }
 
@@ -28,6 +28,9 @@ export default class SpecPicker extends Component {
     };
 
     render() {
+
+        const noneSelected = this.state.currently_selected === -1;
+
         return (
             <div className="specPickerGrid">
                 {specData["specs"].map((spec, idx) => (
@@ -38,6 +41,7 @@ export default class SpecPicker extends Component {
                         url={spec.url}
                         selected={this.state.selected_spec[idx]}
                         clickHandler={this.specClickHandler}
+                        noneSelected={noneSelected}
                     />
                 ))}
             </div>

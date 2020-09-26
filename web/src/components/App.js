@@ -124,6 +124,11 @@ class App extends Component {
         console.log(spec);
     };
 
+    // TODO implement this
+    raceChangeHandler = race => {
+        console.log(race);
+    };
+
     handleSelectChange = selected => {
         this.setState({
             ...this.state,
@@ -188,20 +193,22 @@ class App extends Component {
                 <Header />
                 <LandingContainer />
                 <div className="mainContainer">
-                    <ProgressContainer barCompleted={77} barDisplayPercentage={this.state.isSimming} />
+                    <ProgressContainer barCompleted={10} barDisplayPercentage={this.state.isSimming} />
                     <StagesContainer>
 
                         <div className="characterDetailsContainer">
                             <div className="characterDetailsColumn">
                                 <div className="raceSpecContainer">
                                     <div className="racePickerContainer">
-                                        <h1>Race</h1>
-                                        <RacePicker>
+                                        <h2>Race</h2>
+                                        <RacePicker
+                                            raceChangeHandler={this.raceChangeHandler}
+                                        >
                                         </RacePicker>
                                     </div>
 
                                     <div className="specPickerContainer">
-                                        <h1>Spec</h1>
+                                        <h2>Spec</h2>
                                         <SpecPicker
                                             specChangeHandler={this.specChangeHandler}
                                         />

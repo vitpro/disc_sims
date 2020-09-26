@@ -6,6 +6,9 @@ __pycache__/
 *.py[cod]
 *.cpython-36.pyc
 
+#saas
+*.scssc
+
 *fonts/
 *.DS_Store
 

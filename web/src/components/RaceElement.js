@@ -9,7 +9,8 @@ const getImgStyle = (selected, noneSelected) => ({
     filter: selected? '' : noneSelected? '' : 'grayscale(100%)',
 });
 
-export default class SpecElement extends Component {
+
+export default class RaceElement extends Component {
 
     render() {
         return (
