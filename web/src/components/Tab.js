@@ -3,7 +3,11 @@ import React, {Component} from 'react';
 class Tab extends Component {
 
     onClick = () => {
-        const {label, onClick} = this.props;
+        const {label, onClick, locked} = this.props;
+        // if covenant hasn't been selected yet - should not be able to switch tabs
+        if (locked) {
+            return;
+        }
         onClick(label);
     };
 

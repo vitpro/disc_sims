@@ -162,12 +162,6 @@ body {                          /*TODO image from django media*/
     color: white;
 }
 
-.talentGrid {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-}
-
 .talentCell {
     margin: 0px 8px 8px 0;
     padding: 6px;
@@ -200,12 +194,6 @@ body {                          /*TODO image from django media*/
 .talentCellName {
     margin-left: 10px;
     font-size: 14px;
-}
-
-.raceSpecContainer {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
 }
 
 .racePickerContainer {
@@ -298,6 +286,17 @@ body {                          /*TODO image from django media*/
 }
 
 .raceIconsContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.covenantLoadoutContainer {
+    background-color: $highlighted_block;
+    border-radius: 5px 0 5px 5px;
+}
+
+.flexLeft {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;

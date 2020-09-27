@@ -52,7 +52,7 @@ export default class TalentPicker extends Component {
         return (
             <div>
                 <h2 className="midTitle"> Talents</h2>
-                <div className="talentGrid">
+                <div className="flexLeft">
 
                     {talents.map((talent, idx) => (
                         <Talent

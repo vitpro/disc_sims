@@ -1,0 +1,32 @@
+{
+  "covenants": [
+    {
+      "name": "Kyrian",
+      "soulbinds": [
+
+      ],
+      "banner_url": "/static/images/kyrian.png"
+    },
+    {
+      "name": "Venthyr",
+      "soulbinds": [
+
+      ],
+      "banner_url": "/static/images/venthyr.png"
+    },
+    {
+      "name": "Necrolord",
+      "soulbinds": [
+
+      ],
+      "banner_url": "/static/images/necrolord.png"
+    },
+    {
+      "name": "Night Fae",
+      "soulbinds": [
+
+      ],
+      "banner_url": "/static/images/night_fae.png"
+    }
+  ]
+}

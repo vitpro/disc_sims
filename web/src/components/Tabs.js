@@ -31,7 +31,7 @@ class Tabs extends Component {
             <div className="tabs">
                 <ol className="tab-list" id={listId}>
                     {children.map((child) => {
-                        const {label} = child.props;
+                        const {label, locked} = child.props;
 
                         return (
                             <Tab
@@ -39,6 +39,7 @@ class Tabs extends Component {
                                 key={label}
                                 label={label}
                                 onClick={onClickTabItem}
+                                locked={locked}
                             />
                         );
                     })}

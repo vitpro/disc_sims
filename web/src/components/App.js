@@ -133,6 +133,11 @@ class App extends Component {
         console.log(race);
     };
 
+    // TODO implement this
+    covenantChangeHandler = covenant => {
+        console.log(covenant);
+    };
+
     handleSelectChange = selected => {
         this.setState({
             ...this.state,
@@ -202,7 +207,7 @@ class App extends Component {
 
                         <div className="characterDetailsContainer">
                             <div className="characterDetailsColumn">
-                                <div className="raceSpecContainer">
+                                <div className="flexLeft">
                                     <div className="racePickerContainer">
                                         <h2 className="midTitle">Race</h2>
                                         <RacePicker
@@ -221,6 +226,7 @@ class App extends Component {
                                 <div>
                                     <h2 className="midTitle">Meaningful Choice</h2>
                                     <CovenantLoadout
+                                        covenantChangeHandler={this.covenantChangeHandler}
                                     />
                                 </div>
                             </div>
