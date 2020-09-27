@@ -63,6 +63,9 @@ class App extends Component {
             loaded: false,
             selected_spell: null,
             placeholder: "Loading",
+            progressBarSteps: [
+                14, 28, 100
+            ],
             isSimming: true, // flag to indicate that report is being generated
         };
         this.onDragEnd = this.onDragEnd.bind(this);
@@ -193,7 +196,7 @@ class App extends Component {
                 <Header />
                 <LandingContainer />
                 <div className="mainContainer">
-                    <ProgressContainer barCompleted={10} barDisplayPercentage={this.state.isSimming} />
+                    <ProgressContainer barCompleted={14} barDisplayPercentage={this.state.isSimming} />
                     <StagesContainer>
 
                         <div className="characterDetailsContainer">
