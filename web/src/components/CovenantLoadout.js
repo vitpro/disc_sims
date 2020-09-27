@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import covenantData from '../data/covenant-data.json';
 import SoulbindElement from "./SoulbindElement";
+import LineTo, { SteppedLineTo, Line } from 'react-lineto';
 
 export default class CovenantLoadout extends Component {
 
@@ -60,11 +61,16 @@ export default class CovenantLoadout extends Component {
 
     render() {
         const soulbinds = covenantData.covenants[this.state.currently_selected_covenant].soulbinds.slice();
+        const backgroundImage = ({
+           background: 'url(' + soulbinds[this.state.currently_selected_soulbind[
+                                this.state.currently_selected_covenant
+                                ]].background_img + ')'
+        });
 
         return (
             <div className="conduitPickerContainer">
                 <h1>Covenant picker here</h1>
-                <div className="flexLeft">
+                <div className="flexLeft conduitsContainer" style={backgroundImage}>
                     <div className="flexDown">
                         {soulbinds.map((elem, idx) => (
                             <SoulbindElement
@@ -79,7 +85,34 @@ export default class CovenantLoadout extends Component {
                         ))}
                     </div>
                     <div className="conduitTreeContainer">
+                        <div className="block-A">
+                            A
+                        </div>
+                        <div className="block-B">
+                            B
+                        </div>
+                        <div className="block-C">
+                            C
+                        </div>
 
+                        <Line y0={666} y1={666} x0={710} x1={784} borderColor="#fb1563" borderWidth={8} className="linexd"/>
+                        <Line y0={710} y1={666} x0={776} x1={776} borderColor="#fb1563" borderWidth={8} className="linexd"/>
+
+                        <Line y0={710} y1={666} x0={776} x1={776} borderColor="#fb1563" borderWidth={8} className="linexd"/>
+
+                        <LineTo from="block-C" to="block-B" borderColor="#fb1563" borderWidth={8} className="linexd" />
+                    </div>
+
+
+                    <div className="conduitsRandomInfoBlock">
+                        <div>
+                            <h1 className="title">{soulbinds[this.state.currently_selected_soulbind[
+                                this.state.currently_selected_covenant
+                                ]].name}</h1>
+                            <p className="infoParagraph">{soulbinds[this.state.currently_selected_soulbind[
+                                this.state.currently_selected_covenant
+                                ]].description}</p>
+                        </div>
                     </div>
                 </div>
             </div>

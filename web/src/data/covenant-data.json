@@ -5,8 +5,10 @@
       "soulbinds": [
         {
           "name": "Pelegos",
-          "description": "some very very long text here ahah yes more stupid text ffs can't think of more text ok enough",
+          "description": "Pelagos trains diligently for ascension even in the face of challenge and adversity. Along with Kleia, his other soulbind, Pelagos is quick to befriend you as you seek an audience with the Archon and confront the Forsworn threat. Despite the trials he faces, Pelagos pushes ever forward, steadfast and optimistic.",
           "img_url": "/static/images/Covenants/Kyrian/Soulbind_PelegosBox.png",
+          "background_img": "/static/images/Covenants/Kyrian/Soulbind_Pelegos_Background.png",
+          "conduit_tree_preset_id": 0,
           "conduits": [
 
           ]
@@ -15,6 +17,8 @@
           "name": "Kleia",
           "description": "some very very long text here ahah yes more stupid text ffs can't think of more text ok enough",
           "img_url": "/static/images/Covenants/Kyrian/Soulbind_KleiaBox.png",
+          "background_img": "/static/images/Covenants/Kyrian/Soulbind_Kleia_Background.png",
+          "conduit_tree_preset_id": 1,
           "conduits": [
 
           ]
@@ -23,6 +27,8 @@
           "name": "Forgelite Prime Mikanikos",
           "description": "some very very long text here ahah yes more stupid text ffs can't think of more text ok enough",
           "img_url": "/static/images/Covenants/Kyrian/Soulbind_PrimeBox.png",
+          "background_img": "/static/images/Covenants/Kyrian/Soulbind_Prime_Background.png",
+          "conduit_tree_preset_id": 1,
           "conduits": [
 
           ]

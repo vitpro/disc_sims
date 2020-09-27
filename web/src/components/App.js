@@ -59,7 +59,7 @@ class App extends Component {
                 '3. Sim Options',
                 '4. Report',
             ],
-            activeStep: 0,
+            activeStep: 1,
             sim_data: {
                 spec: 'disc',
                 selected_talents: [],

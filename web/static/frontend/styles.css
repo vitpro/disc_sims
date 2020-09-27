@@ -20,6 +20,17 @@ body {
   font-family: 'Poppins', sans-serif;
   font-weight: bold; }
 
+.title {
+  margin-block-end: 0;
+  margin-block-start: 0;
+  margin: 0;
+  font-size: 45px; }
+
+.infoParagraph {
+  font-weight: normal;
+  font-size: 14px;
+  margin: 0; }
+
 .midTitle {
   margin-block-end: 0;
   margin-bottom: 10px;
@@ -239,8 +250,67 @@ body {
 .conduitPickerContainer {
   display: flex;
   flex-flow: column;
-  justify-content: flex-start;
-  margin-right: 32px;
-  margin-left: 32px; }
+  justify-content: flex-start; }
+
+.conduitsContainer {
+  padding: 48px;
+  padding-bottom: 32px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 2px solid #343f5e;
+  height: 100%;
+  width: 1064px; }
+
+.soulbindElement {
+  margin-bottom: 16px;
+  height: 148px; }
+
+.soulbindElementImg {
+  height: 148px; }
+
+.conduitsRandomInfoBlock {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  color: white;
+  margin-left: 55%;
+  width: 30%;
+  float: right; }
+
+.block-A {
+  background-color: #343f5e;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 650px;
+  left: 680px;
+  border: 2px solid #fb1563;
+  border-radius: 4px;
+  z-index: 5; }
+
+.block-B {
+  background-color: #343f5e;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 770px;
+  left: 830px;
+  border: 2px solid #fb1563;
+  border-radius: 4px;
+  z-index: 5; }
+
+.block-C {
+  background-color: #343f5e;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 700px;
+  left: 760px;
+  z-index: 5;
+  border: 2px solid #fb1563;
+  border-radius: 4px; }
+
+.linexd {
+  border-radius: 5px; }
 
 /*# sourceMappingURL=styles.css.map */
