@@ -250,26 +250,31 @@ body {                          /*TODO image from django media*/
 }
 
 .racePickerGrid {
-
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
 
     background-color: $highlighted_block;
-    /*border: 1px solid #a7b07a;*/
-    border-radius: 5px;
-    border-top-right-radius: 0;
+    border-radius: 5px 0 5px 5px;
 
     padding: 12px;
-    /*padding-left: 20px;*/
 }
 
 .tab-list {
+    font-weight: bold;
+}
+
+#race-picker-tab-list {
     padding-left: 0;
     position: absolute;
     top: 587px;
     left: 569px;
-    font-weight: bold;
+}
+
+#covenant-tab-list {
+    position: absolute;
+    left: 670px;
+    top: 800px;
 }
 
 .tab-list-item {

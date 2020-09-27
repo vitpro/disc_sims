@@ -12,6 +12,7 @@ import LandingContainer from './LandingContainer';
 import TalentPicker from './TalentPicker';
 import RacePicker from './RacePicker';
 import SpecPicker from './SpecPicker';
+import CovenantLoadout from "./CovenantLoadout";
 
 const Container = styled.div`
     margin: 20px;
@@ -219,7 +220,8 @@ class App extends Component {
                                 </div>
                                 <div>
                                     <h2 className="midTitle">Meaningful Choice</h2>
-
+                                    <CovenantLoadout
+                                    />
                                 </div>
                             </div>
                             <div className="characterDetailsColumn">
