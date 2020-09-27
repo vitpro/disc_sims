@@ -1,0 +1,235 @@
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/Poppins/Poppins-Medium.ttf") format("truetype");
+  font-weight: normal; }
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/Poppins/Poppins-Bold.ttf") format("truetype");
+  font-weight: bold; }
+.wrapper {
+  /*padding: 2em;*/ }
+
+html {
+  -webkit-font-smoothing: antialiased; }
+
+body {
+  /*TODO image from django media*/
+  background: #06080d url("/static/images/banner-h.png") no-repeat;
+  background-size: 100%;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold; }
+
+.midTitle {
+  margin-block-end: 0;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 30px; }
+
+.header {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-end;
+  background: rgba(0, 0, 0, 0);
+  -webkit-transition: background .5s ease-out;
+  -moz-transition: background .5s ease-out;
+  -o-transition: background .5s ease-out;
+  transition: background .5s ease-out;
+  list-style: none;
+  margin: 0;
+  height: 80px;
+  padding-right: 344px;
+  padding-left: 344px; }
+
+.header:hover {
+  background: black; }
+
+.header a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 7px;
+  height: 22px;
+  margin-top: 20px; }
+
+.header a:hover {
+  color: black; }
+
+#headerDonate {
+  background-color: #fb1563;
+  border-radius: 3px; }
+
+#headerLogo {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 7px;
+  margin-top: 20px;
+  /*align-self: flex-start;*/
+  margin-right: 71%; }
+
+.landingContainer {
+  /*display: flex;*/
+  /*flex-flow: column wrap;*/
+  /*justify-content: space-around;*/
+  text-align: center;
+  height: 400px; }
+
+.landingContainer h2 {
+  padding-top: 150px;
+  font-size: 40px;
+  margin-block-end: 0;
+  color: white;
+  text-decoration: none;
+  display: block; }
+
+.landingContainer h3 {
+  margin-block-start: 10px;
+  color: white;
+  text-decoration: none;
+  display: block; }
+
+.mainContainer {
+  margin-left: 344px;
+  margin-right: 344px;
+  /*height: 1000px;*/
+  background-color: #111622;
+  /*shadows*/
+  -webkit-box-shadow: -8px 7px 5px -5px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: -8px 7px 5px -5px rgba(0, 0, 0, 0.57);
+  box-shadow: -8px 7px 5px -5px rgba(0, 0, 0, 0.57);
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px; }
+
+.progressStep {
+  margin-left: 35px;
+  margin-right: 20px;
+  font-weight: bold;
+  color: white; }
+
+#progressContainer {
+  position: relative;
+  top: -25px; }
+
+.characterDetailsContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin-right: 32px;
+  margin-left: 32px; }
+
+.characterDetailsColumn {
+  width: 50%;
+  color: white; }
+
+.talentGrid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start; }
+
+.talentCell {
+  margin: 0px 8px 8px 0;
+  padding: 6px;
+  border: solid 2px #343f5e;
+  border-radius: 4px;
+  width: 168px;
+  height: 44px;
+  background-color: #22293d;
+  line-height: 110%;
+  font-weight: normal;
+  display: flex;
+  /*flex-flow: row wrap;*/
+  justify-content: flex-start;
+  align-items: center;
+  -webkit-box-shadow: -2px 5px 9px -1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -2px 5px 9px -1px rgba(0, 0, 0, 0.75);
+  box-shadow: -2px 5px 9px -1px rgba(0, 0, 0, 0.75); }
+
+.talentCellImg {
+  height: 38px;
+  width: 38px;
+  border-radius: 10%;
+  border: 2px solid #6d778b; }
+
+.talentCellName {
+  margin-left: 10px;
+  font-size: 14px; }
+
+.raceSpecContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start; }
+
+.racePickerContainer {
+  margin-right: 16px;
+  width: 360px; }
+
+.specPickerContainer {
+  width: 192px; }
+
+.specPickerGrid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  background-color: #22293d;
+  border: 2px solid #343f5e;
+  border-radius: 4px;
+  padding: 10px;
+  padding-right: 0; }
+
+.specElement {
+  margin: 4px;
+  /*padding: 8px;*/
+  border: solid 2px #6d778b;
+  border-radius: 4px;
+  width: 44px;
+  height: 44px; }
+
+.specElementImg {
+  height: 44px;
+  width: 44px;
+  border-radius: 4px; }
+
+.racePickerGrid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  background-color: #343f5e;
+  /*border: 1px solid #a7b07a;*/
+  border-radius: 5px;
+  border-top-right-radius: 0;
+  padding: 12px;
+  /*padding-left: 20px;*/ }
+
+.tab-list {
+  padding-left: 0;
+  position: absolute;
+  top: 587px;
+  left: 569px;
+  font-weight: bold; }
+
+.tab-list-item {
+  margin-left: 3px;
+  background-color: #22293d;
+  border-radius: 5px 5px 0 0;
+  border: 1px solid #343f5e;
+  display: inline-block;
+  list-style: none;
+  /*margin-bottom: -1px;*/
+  padding-left: 10px;
+  padding-right: 10px; }
+
+.tab-list-active {
+  background-color: #343f5e;
+  /*border: solid #ccc;*/
+  /*border-width: 1px 1px 0 1px;*/
+  border-radius: 5px 5px 0 0; }
+
+.raceIconsContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start; }
+
+/*# sourceMappingURL=styles.css.map */

@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hello</title>
+    <title>WoW simulations for healers</title>
+
+    {% csrf_token %}
 </head>
 <body>
     <div id="app">
-
     </div>
 </body>
 {% load static %}
 <script src="{% static "frontend/main.js" %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static "frontend/styles.css" %}">
 </html>

@@ -1,0 +1,28 @@
+{
+  "specs": [
+    {
+      "name": "disc",
+      "url": "https://wow.zamimg.com/images/wow/icons/large/spell_holy_powerwordshield.jpg"
+    },
+    {
+      "name": "holy",
+      "url": "https://wow.zamimg.com/images/wow/icons/large/spell_holy_powerwordshield.jpg"
+    },
+    {
+      "name": "paladin",
+      "url": "https://wow.zamimg.com/images/wow/icons/large/spell_holy_powerwordshield.jpg"
+    },
+    {
+      "name": "druid",
+      "url": "https://wow.zamimg.com/images/wow/icons/large/spell_holy_powerwordshield.jpg"
+    },
+    {
+      "name": "shaman",
+      "url": "https://wow.zamimg.com/images/wow/icons/large/spell_holy_powerwordshield.jpg"
+    },
+    {
+      "name": "monk",
+      "url": "https://wow.zamimg.com/images/wow/icons/large/spell_holy_powerwordshield.jpg"
+    }
+  ]
+}

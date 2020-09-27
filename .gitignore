@@ -6,6 +6,12 @@ __pycache__/
 *.py[cod]
 *.cpython-36.pyc
 
+#saas
+*.scssc
+
+*fonts/
+*.DS_Store
+
 # pycharm
 .idea*
 
@@ -14,7 +20,7 @@ __pycache__/
 
 # node stuff
 web/node_modules/
-web/static/frontend
+web/static/frontend/*.js
 
 #*/migrations/*
 
