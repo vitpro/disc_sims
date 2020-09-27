@@ -9,7 +9,7 @@ const getImgStyle = (selected, noneSelected, hover) => ({
     filter: selected? '' : noneSelected? '' : hover? '' : 'grayscale(100%)',
 });
 
-export default class CovenantElement extends Component {
+export default class SoulbindElement extends Component {
 
     constructor(props) {
         super(props);
@@ -25,12 +25,12 @@ export default class CovenantElement extends Component {
     render() {
         return (
             <div style={getElemStyle(this.props.selected, this.props.noneSelected, this.state.hover)}
-                 className="covenantElement"
+                 className="soulbindElement"
                  onClick={() => this.props.clickHandler(this.props.name, this.props.index)}
                  onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}
             >
                 <img style={getImgStyle(this.props.selected, this.props.noneSelected, this.state.hover)}
-                     src={this.props.url} className="covenantElementImg"/>
+                     src={this.props.url} className="soulbindElementImg"/>
             </div>
         );
     }

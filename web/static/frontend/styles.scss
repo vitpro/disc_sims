@@ -147,10 +147,10 @@ body {                          /*TODO image from django media*/
     top: -25px;
 }
 
-.characterDetailsContainer {
+.detailsContainer {
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: flex-start;
 
     margin-right: 32px;
     margin-left: 32px;
@@ -259,12 +259,6 @@ body {                          /*TODO image from django media*/
     left: 569px;
 }
 
-#covenant-tab-list {
-    position: absolute;
-    left: 670px;
-    top: 800px;
-}
-
 .tab-list-item {
     margin-left: 3px;
     background-color: $block;
@@ -291,13 +285,29 @@ body {                          /*TODO image from django media*/
     justify-content: flex-start;
 }
 
-.covenantLoadoutContainer {
-    background-color: $highlighted_block;
-    border-radius: 5px 0 5px 5px;
+.navButtonsContainer {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
 }
 
 .flexLeft {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
+}
+
+.flexDown {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+}
+
+.conduitPickerContainer {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+
+    margin-right: 32px;
+    margin-left: 32px;
 }

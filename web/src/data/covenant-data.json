@@ -3,7 +3,30 @@
     {
       "name": "Kyrian",
       "soulbinds": [
+        {
+          "name": "Pelegos",
+          "description": "some very very long text here ahah yes more stupid text ffs can't think of more text ok enough",
+          "img_url": "/static/images/Covenants/Kyrian/Soulbind_PelegosBox.png",
+          "conduits": [
 
+          ]
+        },
+        {
+          "name": "Kleia",
+          "description": "some very very long text here ahah yes more stupid text ffs can't think of more text ok enough",
+          "img_url": "/static/images/Covenants/Kyrian/Soulbind_KleiaBox.png",
+          "conduits": [
+
+          ]
+        },
+        {
+          "name": "Forgelite Prime Mikanikos",
+          "description": "some very very long text here ahah yes more stupid text ffs can't think of more text ok enough",
+          "img_url": "/static/images/Covenants/Kyrian/Soulbind_PrimeBox.png",
+          "conduits": [
+
+          ]
+        }
       ],
       "banner_url": "/static/images/kyrian.png"
     },

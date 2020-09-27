@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
-import Tabs from './Tabs';
 import covenantData from '../data/covenant-data.json';
-import CovenantElement from "./CovenantElement";
-import ConduitPicker from "./ConduitPicker";
+import SoulbindElement from "./SoulbindElement";
 
 export default class CovenantLoadout extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            currently_selected_covenant: -1,
+            currently_selected_covenant: 0,
+            currently_selected_soulbind: [
+                0, 0, 0, 0
+            ],
             selected_covenant: [
-                false, false, false, false
-            ]
+                true, false, false, false
+            ],
+            selected_soulbind: [
+                [true, false, false],
+                [true, false, false],
+                [true, false, false],
+                [true, false, false]
+            ],
         }
     }
 
@@ -31,34 +38,50 @@ export default class CovenantLoadout extends Component {
         this.props.covenantChangeHandler({name:name, idx: idx});
     };
 
+    soulbindClickHandler = (name, idx) => {
+        const curr_soulbind_idx = this.state.currently_selected_soulbind[this.state.currently_selected_covenant];
+        const soulbind_list = this.state.selected_soulbind.slice();
+        const curr_selected_list = this.state.currently_selected_soulbind.slice();
+        const _selected_soulbind = this.state.selected_soulbind[this.state.currently_selected_covenant].slice();
+        _selected_soulbind[curr_soulbind_idx] = false;
+        _selected_soulbind[idx] = true;
+
+        soulbind_list[this.state.currently_selected_covenant] = _selected_soulbind;
+        curr_selected_list[this.state.currently_selected_covenant] = idx;
+
+        this.setState({
+            ...this.state,
+            currently_selected_soulbind: curr_selected_list,
+            selected_soulbind: soulbind_list
+        });
+
+        //no need to pass anything to App
+    };
+
     render() {
-        // if covenant hasn't been selected yet - lock the other tab
-        const noCovenantSelected = this.state.currently_selected_covenant === -1;
+        const soulbinds = covenantData.covenants[this.state.currently_selected_covenant].soulbinds.slice();
 
         return (
-            <div className="covenantLoadoutContainer">
-                <Tabs listId="covenant-tab-list">
-                    <div label="Covenant">
-                        <div className="flexLeft">
-                            {covenantData["covenants"].map((covenant, idx) => (
-                                <CovenantElement
-                                    name={covenant.name}
-                                    url={covenant.banner_url}
-                                    index={idx}
-                                    key={covenant.name + idx.toString()}
-                                    clickHandler={this.covenantClickHandler}
-                                    selected={this.state.selected_covenant[idx]}
-                                    noneSelected={noCovenantSelected}
-                                />
-                            ))}
-                        </div>
+            <div className="conduitPickerContainer">
+                <h1>Covenant picker here</h1>
+                <div className="flexLeft">
+                    <div className="flexDown">
+                        {soulbinds.map((elem, idx) => (
+                            <SoulbindElement
+                                index={idx}
+                                key={elem.name + idx.toString()}
+                                name={elem.name}
+                                url={elem.img_url}
+                                selected={this.state.selected_soulbind[this.state.currently_selected_covenant][idx]}
+                                clickHandler={this.soulbindClickHandler}
+                                noneSelected={false}
+                            />
+                        ))}
                     </div>
-                    <div label="Conduits" locked={noCovenantSelected}>
-                        <ConduitPicker
-                            covenantId={this.state.currently_selected_covenant}
-                        />
+                    <div className="conduitTreeContainer">
+
                     </div>
-                </Tabs>
+                </div>
             </div>
         );
     }

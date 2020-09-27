@@ -205,7 +205,7 @@ class App extends Component {
         switch (step) {
             case 0:
                 return (
-                    <div className="characterDetailsContainer">
+                    <div className="detailsContainer">
                         <div className="characterDetailsColumn">
                             <div className="flexLeft">
                                 <div className="racePickerContainer">
@@ -238,7 +238,11 @@ class App extends Component {
                 );
             case 1:
                 return (
-                    <div>11111111111111111111</div>
+                    <div className="detailsContainer">
+                        <CovenantLoadout
+
+                        />
+                    </div>
                 );
             case 2:
                 const selectSpellListOptions = this.state.data.spells.map(spell => {
@@ -320,18 +324,20 @@ class App extends Component {
                     <StagesContainer>
                         {this.getStepContent(activeStep)}
                     </StagesContainer>
-                    <Button
-                        disabled={activeStep === 0}
-                        onClick={this.handleBack}
-                    >
-                        Back
-                    </Button>
-                    <Button
-                        onClick={this.handleNext}
-                        disabled={activeStep === this.state.steps.length - 1 }
-                    >
-                        {activeStep === this.state.steps.length - 2 ? 'SIM' : 'NEXT'}
-                    </Button>
+                    <div className="navButtonsContainer">
+                        <Button
+                            disabled={activeStep === 0}
+                            onClick={this.handleBack}
+                        >
+                            Back
+                        </Button>
+                        <Button
+                            onClick={this.handleNext}
+                            disabled={activeStep === this.state.steps.length - 1 }
+                        >
+                            {activeStep === this.state.steps.length - 2 ? 'SIM' : 'NEXT'}
+                        </Button>
+                    </div>
                 </div>
                 <Footer/>
             </div>

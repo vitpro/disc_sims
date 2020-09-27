@@ -12,7 +12,7 @@ export default class ProgressContainer extends Component {
             <div id="progressContainer">
                 <div>
                     {this.props.steps.map((step, idx) => (
-                        <span className="progressStep">{step}</span>
+                        <span className="progressStep" key={step}>{step}</span>
                     ))}
 
                 </div>
