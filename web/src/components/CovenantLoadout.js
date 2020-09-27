@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Tabs from './Tabs';
 import covenantData from '../data/covenant-data.json';
 import CovenantElement from "./CovenantElement";
+import ConduitPicker from "./ConduitPicker";
 
 export default class CovenantLoadout extends Component {
 
@@ -53,7 +54,9 @@ export default class CovenantLoadout extends Component {
                         </div>
                     </div>
                     <div label="Conduits" locked={noCovenantSelected}>
-                        Conduits
+                        <ConduitPicker
+                            covenantId={this.state.currently_selected_covenant}
+                        />
                     </div>
                 </Tabs>
             </div>

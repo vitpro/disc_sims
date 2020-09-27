@@ -53,6 +53,13 @@ class App extends Component {
             data: {
                 'spells': []
             },
+            steps: [
+                '1. Character',
+                '2. Covenant & Conduits',
+                '3. Sim Options',
+                '4. Report',
+            ],
+            activeStep: 0,
             sim_data: {
                 spec: 'disc',
                 selected_talents: [],
@@ -193,63 +200,67 @@ class App extends Component {
             })
     };
 
-    render() {
-        const selectSpellListOptions = this.state.data.spells.map(spell => {
-            return { value: spell.id, label: spell.name }
-        });
-        return (
-            <div className="wrapper">
-                <Header />
-                <LandingContainer />
-                <div className="mainContainer">
-                    <ProgressContainer barCompleted={14} barDisplayPercentage={this.state.isSimming} />
-                    <StagesContainer>
+    getStepContent = step => {
 
-                        <div className="characterDetailsContainer">
-                            <div className="characterDetailsColumn">
-                                <div className="flexLeft">
-                                    <div className="racePickerContainer">
-                                        <h2 className="midTitle">Race</h2>
-                                        <RacePicker
-                                            raceChangeHandler={this.raceChangeHandler}
-                                        >
-                                        </RacePicker>
-                                    </div>
-
-                                    <div className="specPickerContainer">
-                                        <h2 className="midTitle">Spec</h2>
-                                        <SpecPicker
-                                            specChangeHandler={this.specChangeHandler}
-                                        />
-                                    </div>
+        switch (step) {
+            case 0:
+                return (
+                    <div className="characterDetailsContainer">
+                        <div className="characterDetailsColumn">
+                            <div className="flexLeft">
+                                <div className="racePickerContainer">
+                                    <h2 className="midTitle">Race</h2>
+                                    <RacePicker
+                                        raceChangeHandler={this.raceChangeHandler}
+                                    >
+                                    </RacePicker>
                                 </div>
-                                <div>
-                                    <h2 className="midTitle">Meaningful Choice</h2>
-                                    <CovenantLoadout
-                                        covenantChangeHandler={this.covenantChangeHandler}
+
+                                <div className="specPickerContainer">
+                                    <h2 className="midTitle">Spec</h2>
+                                    <SpecPicker
+                                        specChangeHandler={this.specChangeHandler}
                                     />
                                 </div>
                             </div>
-                            <div className="characterDetailsColumn">
-                                <TalentPicker spec={this.state.sim_data.spec} updateTalentsHandler={this.updateSelectedTalents}>
-                                </TalentPicker>
-                            </div>
+                            {/*<div>*/}
+                                {/*<h2 className="midTitle">Meaningful Choice</h2>*/}
+                                {/*<CovenantLoadout*/}
+                                    {/*covenantChangeHandler={this.covenantChangeHandler}*/}
+                                {/*/>*/}
+                            {/*</div>*/}
                         </div>
+                        <div className="characterDetailsColumn">
+                            <TalentPicker spec={this.state.sim_data.spec} updateTalentsHandler={this.updateSelectedTalents}>
+                            </TalentPicker>
+                        </div>
+                    </div>
+                );
+            case 1:
+                return (
+                    <div>11111111111111111111</div>
+                );
+            case 2:
+                const selectSpellListOptions = this.state.data.spells.map(spell => {
+                    return { value: spell.id, label: spell.name }
+                });
+                return (
+                    <div>
 
-                        <Container>
-                            Add spell:
-                            <Select
-                                className="basic-single"
-                                classNamePrefix="select"
-                                options={selectSpellListOptions}
-                                onChange={this.handleSelectChange}
-                            />
-                            <Button
-                                onClick={this.addNewSpellToSequence}
-                            >
-                                Add
-                            </Button>
-                        </Container>
+                    <Container>
+                        Add spell:
+                        <Select
+                            className="basic-single"
+                            classNamePrefix="select"
+                            options={selectSpellListOptions}
+                            onChange={this.handleSelectChange}
+                        />
+                        <Button
+                            onClick={this.addNewSpellToSequence}
+                        >
+                            Add
+                        </Button>
+                    </Container>
                         <DragDropContext onDragEnd={this.onDragEnd}>
                             <Droppable droppableId="droppable" direction="horizontal">
                                 { (provided, snapshot) => (
@@ -271,8 +282,56 @@ class App extends Component {
                             onClick={this.processSims}
                         >
                             Process
-                        </Button>
+                    </Button>
+                    </div>
+                );
+            case 3:
+                return (
+                    <div>Report page</div>
+                );
+            default:
+                return 'mama mia';
+        }
+    };
+
+    handleNext = () => {
+        this.setState({
+            ...this.state,
+            activeStep: this.state.activeStep + 1
+        })
+    };
+
+    handleBack = () => {
+        this.setState({
+            ...this.state,
+            activeStep: this.state.activeStep - 1
+        })
+    };
+
+    render() {
+        const activeStep = this.state.activeStep;
+
+        return (
+            <div className="wrapper">
+                <Header />
+                <LandingContainer />
+                <div className="mainContainer">
+                    <ProgressContainer activeStep={activeStep} steps={this.state.steps} />
+                    <StagesContainer>
+                        {this.getStepContent(activeStep)}
                     </StagesContainer>
+                    <Button
+                        disabled={activeStep === 0}
+                        onClick={this.handleBack}
+                    >
+                        Back
+                    </Button>
+                    <Button
+                        onClick={this.handleNext}
+                        disabled={activeStep === this.state.steps.length - 1 }
+                    >
+                        {activeStep === this.state.steps.length - 2 ? 'SIM' : 'NEXT'}
+                    </Button>
                 </div>
                 <Footer/>
             </div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 const ProgressBar = (props) => {
-    const { bgcolour, completed } = props;
+    const { completed } = props;
 
 
     const containerStyles = {

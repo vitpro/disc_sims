@@ -2,15 +2,21 @@ import React, { Component } from 'react';
 import ProgressBar from './ProgressBar';
 
 export default class ProgressContainer extends Component {
+
+    getProgressBarPercentage = () => {
+        return (this.props.activeStep + 1) * 14;
+    };
+
     render() {
         return (
             <div id="progressContainer">
                 <div>
-                    <span className="progressStep">1. Character</span>
-                    <span className="progressStep">2. Sim Options</span>
-                    <span className="progressStep">3. Report</span>
+                    {this.props.steps.map((step, idx) => (
+                        <span className="progressStep">{step}</span>
+                    ))}
+
                 </div>
-                <ProgressBar completed={this.props.barCompleted} displayPercentage={this.props.barDisplayPercentage} />
+                <ProgressBar completed={this.getProgressBarPercentage()} />
             </div>
         );
     }
