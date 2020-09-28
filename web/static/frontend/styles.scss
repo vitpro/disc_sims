@@ -134,8 +134,8 @@ body {                          /*TODO image from django media*/
 .mainContainer {
     margin-left: 344px;
     margin-right: 344px;
-    /*height: 1000px;*/
     background-color: $module;
+    color: white;
 
     /*shadows*/
     -webkit-box-shadow: -8px 7px 5px -5px rgba(0,0,0,0.57);
@@ -339,10 +339,21 @@ body {                          /*TODO image from django media*/
 .soulbindElement {
     margin-bottom: 16px;
     height: 148px;
+    z-index: 1;
 }
 
 .soulbindElementImg {
     height: 148px;
+}
+
+.conduitElement {
+    height: 38px;
+    width: 38px;
+}
+
+.conduitElementImg {
+    height: 38px;
+    width: 38px;
 }
 
 .conduitsRandomInfoBlock {
@@ -354,55 +365,6 @@ body {                          /*TODO image from django media*/
     margin-left: 55%;
     width:30%;
     float: right;
-}
-
-.block-A {
-    background-color: $highlighted_block;
-    width: 40px;
-    height: 40px;
-
-    position: absolute;
-    top: 650px;
-    left: 680px;
-
-    border: 2px solid $highlight;
-    border-radius: 4px;
-
-    z-index: 5;
-}
-
-.block-B {
-    background-color: $highlighted_block;
-        width: 40px;
-    height: 40px;
-
-    position: absolute;
-    top: 770px;
-    left: 830px;
-
-    border: 2px solid $highlight;
-    border-radius: 4px;
-
-    z-index: 5;
-}
-
-.block-C {
-    background-color: $highlighted_block;
-        width: 40px;
-    height: 40px;
-
-    position: absolute;
-    top: 700px;
-    left: 760px;
-
-    z-index: 5;
-
-    border: 2px solid $highlight;
-    border-radius: 4px;
-}
-
-.linexd {
-    border-radius: 5px;
 }
 
 

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import covenantData from '../data/covenant-data.json';
+import conduitTree from '../data/conduit-tree.json';
 import SoulbindElement from "./SoulbindElement";
 import LineTo, { SteppedLineTo, Line } from 'react-lineto';
+import ConduitElement from "./ConduitElement";
 
 export default class CovenantLoadout extends Component {
 
@@ -21,7 +23,11 @@ export default class CovenantLoadout extends Component {
                 [true, false, false],
                 [true, false, false]
             ],
-        }
+            selected_conduits: [
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            ]
+        };
+        this.treeRef = React.createRef();
     }
 
     covenantClickHandler = (name, idx) => {
@@ -37,6 +43,16 @@ export default class CovenantLoadout extends Component {
 
         // pass changes to App
         this.props.covenantChangeHandler({name:name, idx: idx});
+    };
+
+    conduitClickhandler = (name, idx, available) => {
+        if (!available) return;
+        const selected_conduits = this.state.selected_conduits.slice();
+        selected_conduits[idx] = true;
+        this.setState({
+            ...this.state,
+            selected_conduits: selected_conduits
+        });
     };
 
     soulbindClickHandler = (name, idx) => {
@@ -59,13 +75,29 @@ export default class CovenantLoadout extends Component {
         //no need to pass anything to App
     };
 
+    calculateBlockPosition = (x, y) => {
+        const offset = { x: 700, y: 700 };
+        const x_coord = offset.x + x;
+        const y_coord = offset.y + y;
+        return {
+            y: '' + y_coord + 'px',
+            x: '' + x_coord + 'px'
+        }
+    };
+
     render() {
         const soulbinds = covenantData.covenants[this.state.currently_selected_covenant].soulbinds.slice();
         const backgroundImage = ({
-           background: 'url(' + soulbinds[this.state.currently_selected_soulbind[
-                                this.state.currently_selected_covenant
-                                ]].background_img + ')'
+           background: 'url(' +
+           soulbinds[this.state.currently_selected_soulbind[this.state.currently_selected_covenant]].background_img
+           + ')'
         });
+        const conduits =
+            soulbinds[this.state.currently_selected_soulbind[this.state.currently_selected_covenant]].conduits.slice();
+        const tree_id =
+            soulbinds[this.state.currently_selected_soulbind[this.state.currently_selected_covenant]].conduit_tree_id;
+        const lines =
+            conduitTree.tree_id[tree_id].lines.slice();
 
         return (
             <div className="conduitPickerContainer">
@@ -84,23 +116,25 @@ export default class CovenantLoadout extends Component {
                             />
                         ))}
                     </div>
-                    <div className="conduitTreeContainer">
-                        <div className="block-A">
-                            A
-                        </div>
-                        <div className="block-B">
-                            B
-                        </div>
-                        <div className="block-C">
-                            C
-                        </div>
+                    <div ref={this.treeRef}>
 
-                        <Line y0={666} y1={666} x0={710} x1={784} borderColor="#fb1563" borderWidth={8} className="linexd"/>
-                        <Line y0={710} y1={666} x0={776} x1={776} borderColor="#fb1563" borderWidth={8} className="linexd"/>
-
-                        <Line y0={710} y1={666} x0={776} x1={776} borderColor="#fb1563" borderWidth={8} className="linexd"/>
-
-                        <LineTo from="block-C" to="block-B" borderColor="#fb1563" borderWidth={8} className="linexd" />
+                        {conduits.map((conduit, idx) => {
+                            // get the coordinates for this conduit component
+                            const coords = conduitTree.tree_id[tree_id].conduits[idx];
+                            return (
+                                <ConduitElement
+                                    index={idx}
+                                    key={conduit.name + idx.toString()}
+                                    url={conduit.img}
+                                    selected={this.state.selected_conduits[idx]}
+                                    available={true} // TODO implement available
+                                    clickHandler={this.conduitClickhandler}
+                                    coords_x={coords.x}
+                                    coords_y={coords.y}
+                                />
+                            )
+                        })}
+                        {}
                     </div>
 
 

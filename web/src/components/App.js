@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
+import ReactDOM from 'react-dom';
 import { render } from "react-dom";
 import styled, { css } from 'styled-components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import ReactDOM from 'react-dom';
 import Select, { defaultTheme } from 'react-select';
 import Spell from './Spell';
 import Footer from './Footer';
