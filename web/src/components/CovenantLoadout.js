@@ -43,7 +43,6 @@ export default class CovenantLoadout extends Component {
             selected_covenant: selected_covenant,
             currently_selected_covenant: idx,
         });
-
         // pass changes to App
         this.props.covenantChangeHandler({name:name, idx: idx});
     };
@@ -92,6 +91,7 @@ export default class CovenantLoadout extends Component {
     };
 
     render() {
+        const offset = { x: 650, y: 700 };
         const soulbinds = covenantData.covenants[this.state.currently_selected_covenant].soulbinds.slice();
         const backgroundImage = ({
            background: 'url(' +
@@ -142,7 +142,19 @@ export default class CovenantLoadout extends Component {
                                 />
                             )
                         })}
-                        {}
+
+                        {lines.map((line, idx) => {
+                            return (
+                                <Line x0={line.x0 + offset.x} y0={line.y0 + offset.y}
+                                      x1={line.x1 + offset.x} y1={line.y1 + offset.y}
+                                      key={"line"+idx}
+                                      className="conduitTreeLine"
+                                      borderColor={this.state.selected_conduits[line.connects[0]] &&
+                                        this.state.selected_conduits[line.connects[1]] ? "#fb1563" : '#6d778b'}
+                                      borderWidth={8}
+                                />
+                            )
+                        })}
                     </div>
 
 

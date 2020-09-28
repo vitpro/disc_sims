@@ -263,19 +263,24 @@ body {
 
 .soulbindElement {
   margin-bottom: 16px;
-  height: 148px;
-  z-index: 1; }
+  height: 148px; }
 
 .soulbindElementImg {
   height: 148px; }
 
 .conduitElement {
   height: 38px;
-  width: 38px; }
+  width: 38px;
+  z-index: 2; }
 
 .conduitElementImg {
   height: 38px;
-  width: 38px; }
+  width: 38px;
+  z-index: 2; }
+
+.conduitTreeLine {
+  border-radius: 5px;
+  z-index: 1; }
 
 .conduitsRandomInfoBlock {
   display: flex;
