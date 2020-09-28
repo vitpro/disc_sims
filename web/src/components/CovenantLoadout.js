@@ -25,7 +25,10 @@ export default class CovenantLoadout extends Component {
             ],
             selected_conduits: [
                 false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-            ]
+            ],
+            available_conduits: [
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            ],
         };
         this.treeRef = React.createRef();
     }
@@ -47,12 +50,26 @@ export default class CovenantLoadout extends Component {
 
     conduitClickhandler = (name, idx, available) => {
         if (!available) return;
+        const soulbinds = covenantData.covenants[this.state.currently_selected_covenant].soulbinds.slice();
         const selected_conduits = this.state.selected_conduits.slice();
+        const available_conduits = this.state.available_conduits.slice();
+        const tree_id =
+            soulbinds[this.state.currently_selected_soulbind[this.state.currently_selected_covenant]].conduit_tree_id;
+        const unlocks = conduitTree.tree_id[tree_id].conduits[idx].unlocks.slice();
+        const locks = conduitTree.tree_id[tree_id].conduits[idx].locks.slice();
         selected_conduits[idx] = true;
+        unlocks.map(e => {
+            available_conduits[e] = true;
+        });
+        locks.map(e => {
+            available_conduits[e] = false;
+        });
         this.setState({
             ...this.state,
-            selected_conduits: selected_conduits
+            selected_conduits: selected_conduits,
+            available_conduits: available_conduits
         });
+        // TODO pass to App
     };
 
     soulbindClickHandler = (name, idx) => {
@@ -71,18 +88,7 @@ export default class CovenantLoadout extends Component {
             currently_selected_soulbind: curr_selected_list,
             selected_soulbind: soulbind_list
         });
-
         //no need to pass anything to App
-    };
-
-    calculateBlockPosition = (x, y) => {
-        const offset = { x: 700, y: 700 };
-        const x_coord = offset.x + x;
-        const y_coord = offset.y + y;
-        return {
-            y: '' + y_coord + 'px',
-            x: '' + x_coord + 'px'
-        }
     };
 
     render() {
@@ -96,8 +102,10 @@ export default class CovenantLoadout extends Component {
             soulbinds[this.state.currently_selected_soulbind[this.state.currently_selected_covenant]].conduits.slice();
         const tree_id =
             soulbinds[this.state.currently_selected_soulbind[this.state.currently_selected_covenant]].conduit_tree_id;
-        const lines =
-            conduitTree.tree_id[tree_id].lines.slice();
+        const lines = conduitTree.tree_id[tree_id].lines.slice();
+        conduitTree.tree_id[tree_id].init_available.map(e => {
+            this.state.available_conduits[e] = true;
+        });
 
         return (
             <div className="conduitPickerContainer">
@@ -127,7 +135,7 @@ export default class CovenantLoadout extends Component {
                                     key={conduit.name + idx.toString()}
                                     url={conduit.img}
                                     selected={this.state.selected_conduits[idx]}
-                                    available={true} // TODO implement available
+                                    available={this.state.available_conduits[idx]} // TODO implement available
                                     clickHandler={this.conduitClickhandler}
                                     coords_x={coords.x}
                                     coords_y={coords.y}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 const getElemStyle = (selected, hover, coords_x, coords_y) => {
-    const offset = { x: 700, y: 700 };
+    const offset = { x: 650, y: 700 };
     const x_coord = (coords_x + offset.x).toString() + 'px';
     const y_coord = (coords_y + offset.y).toString() + 'px';
     return ({
@@ -13,7 +13,7 @@ const getElemStyle = (selected, hover, coords_x, coords_y) => {
 })};
 
 const getImgStyle = (available, hover) => ({
-    filter: available? '' : hover? '' : 'grayscale(100%)',
+    filter: available? '' : 'grayscale(100%)',
 });
 
 export default class ConduitElement extends Component {
