@@ -4,7 +4,12 @@ import ProgressBar from './ProgressBar';
 export default class ProgressContainer extends Component {
 
     getProgressBarPercentage = () => {
-        return (this.props.activeStep + 1) * 14;
+        const margins = 4;
+        let progress = 0;
+        for (let i = 0; i <= this.props.activeStep; i++) {
+            progress += this.props.steps[i].length * 0.75 + margins;
+        }
+        return progress;
     };
 
     render() {

@@ -29,7 +29,7 @@ html {
 body {                          /*TODO image from django media*/
     background: #06080d url("/static/images/banner-h.png") no-repeat;
     background-size: 100%;
-    //background-position-y: -200px;
+    background-position-y: 80px;
     margin: 0;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
@@ -60,7 +60,7 @@ body {                          /*TODO image from django media*/
     flex-flow: row wrap;
     justify-content: flex-end;
 
-    background: rgba(0, 0, 0, 0.0);
+    background: rgba(0, 0, 0, 1.0);
     -webkit-transition: background .5s ease-out;
     -moz-transition: background .5s ease-out;
     -o-transition: background .5s ease-out;
@@ -73,16 +73,17 @@ body {                          /*TODO image from django media*/
     padding-right: 344px;
     padding-left: 344px;
 }
-
-.header:hover {
-    background: rgba(0, 0, 0, 1.0);
-}
+//
+//.header:hover {
+//    background: rgba(0, 0, 0, 1.0);
+//}
 
 .header a {
     color: white;
     text-decoration: none;
     display: block;
     padding: 7px;
+    padding-top: 5px;
     height: 22px;
     margin-top: 20px;
 }
