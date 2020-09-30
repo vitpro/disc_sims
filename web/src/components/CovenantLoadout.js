@@ -5,8 +5,6 @@ import SoulbindElement from "./SoulbindElement";
 import LineTo, { SteppedLineTo, Line } from 'react-lineto';
 import ConduitElement from "./ConduitElement";
 
-
-
 export default class CovenantLoadout extends Component {
 
     constructor(props) {
@@ -52,14 +50,16 @@ export default class CovenantLoadout extends Component {
     };
 
     conduitClickHandler = (name, idx, available, activating) => {
+        // if the button is locked - do nothing
         if (!available) return;
-        console.log(activating);
         // this prevents double-click event when clicking on the 'x' component
         if (!this.doubleClickPrevention) {
             this.doubleClickPrevention = activating;
             return;
         }
         this.doubleClickPrevention = activating;
+
+        // get correct collections within this nested awfulness
         const soulbinds = covenantData.covenants[this.state.currently_selected_covenant].soulbinds.slice();
         const selected_conduits = this.state.selected_conduits.slice();
         const available_conduits = this.state.available_conduits.slice();
@@ -69,6 +69,7 @@ export default class CovenantLoadout extends Component {
         const unlocks = conduitTree.tree_id[tree_id].conduits[idx].unlocks.slice();
         const locks = conduitTree.tree_id[tree_id].conduits[idx].locks.slice();
 
+        // update which conduits are available/selected
         selected_conduits[idx] = activating;
         unlocks.map(e => {
             available_conduits[e] = activating;
@@ -152,6 +153,8 @@ export default class CovenantLoadout extends Component {
                                     clickHandler={this.conduitClickHandler}
                                     coords_x={coords.x}
                                     coords_y={coords.y}
+                                    spellId={conduit.spell_id}
+                                    conduitType={conduit.type}
                                 />
                             )
                         })}
@@ -163,7 +166,7 @@ export default class CovenantLoadout extends Component {
                                       key={"line"+idx}
                                       className="conduitTreeLine"
                                       borderColor={this.state.selected_conduits[line.connects[0]] &&
-                                        this.state.selected_conduits[line.connects[1]] ? "#fb1563" : '#6d778b'}
+                                        this.state.selected_conduits[line.connects[1]] ? "#00D97B" : '#6d778b'}
                                       borderWidth={8}
                                 />
                             )

@@ -16,7 +16,7 @@ const ProgressBar = (props) => {
         transition: 'width 1s ease-in-out',
         height: '100%',
         width: `${completed}%`,
-        backgroundColor: '#fb1563',
+        backgroundColor: '#00D97B',
         borderRadius: 'inherit',
         textAlign: 'center',
         // overflow: 'hidden',

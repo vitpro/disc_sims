@@ -15,7 +15,7 @@ $block: #22293d;
 $highlighted_block: #343f5e;
 $border_icons: #6d778b;
 $border_module: #22293d;
-$highlight: #fb1563;
+$highlight: #00D97B;
 $text_fields: #8e8e8e;
 
 .wrapper {
@@ -355,6 +355,7 @@ body {                          /*TODO image from django media*/
 .conduitElementImg {
     height: 38px;
     width: 38px;
+    border-radius: 3px;
     z-index: 2;
 }
 
@@ -388,6 +389,24 @@ body {                          /*TODO image from django media*/
     background-color: $highlight;
     width: 10px;
     height: 10px;
+}
+
+.conduitTypeElementIcon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    padding-left: 9px;
+    padding-top: 9px;
+    //border: 2px solid $highlight;
+    //border-top-right-radius: 4px;
+    //background-color: $highlight;
+    width: 20px;
+    height: 20px;
+}
+
+.wowheadTooltip {
+    text-decoration: none;
 }
 
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 const getElemStyle = (selected, noneSelected, hover) => ({
-    border: selected? '2px #fb1563 solid' : hover? '2px white solid' : '2px #6d778b solid',
+    border: selected? '2px #00D97B solid' : hover? '2px white solid' : '2px #6d778b solid',
     borderRadius: '4px',
 });
 
@@ -17,6 +17,7 @@ export default class SoulbindElement extends Component {
             hover: false
         }
     }
+
 
     toggleHover = () => {
         this.setState({ hover: !this.state.hover });
