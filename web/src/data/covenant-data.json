@@ -30,9 +30,9 @@
             },
             {
               "name": "test",
-              "type": "generic",
+              "type": "endurance",
               "img": "/static/images/Conduits/EmptyConduit_Tree.png",
-              "spell_id": "328257"
+              "spell_id": ""
             },
             {
               "name": "test",

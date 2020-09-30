@@ -297,18 +297,34 @@ body {
 
 .conduitCloseElementIcon {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: -1px;
+  right: -1px;
   border-bottom-left-radius: 4px;
   border: 2px solid #00D97B;
   background-color: #00D97B;
   width: 10px;
-  height: 10px; }
+  height: 10px;
+  z-index: 3; }
+
+.finesseIcon {
+  margin-left: 4px;
+  height: 20px;
+  width: 20px; }
+
+.enduranceIcon {
+  margin-left: 1px;
+  height: 20px;
+  width: 20px; }
+
+.closeButton {
+  position: absolute;
+  top: 0;
+  right: 0; }
 
 .conduitTypeElementIcon {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0px;
+  left: 0px;
   padding: 10px;
   padding-left: 9px;
   padding-top: 9px;

@@ -16,6 +16,14 @@ const getImgStyle = (available, hover) => ({
     filter: available? '' : 'grayscale(100%)',
 });
 
+const getCImgStyle = (available, hover) => ({
+    filter: hover? '' : available? 'brightness(0.4) sepia(1) hue-rotate(180deg)' :
+        'brightness(0.2) sepia(1) hue-rotate(180deg)',
+    height: '100%',
+    width: 'auto',
+
+});
+
 export default class ConduitElement extends Component {
 
     constructor(props) {
@@ -29,6 +37,7 @@ export default class ConduitElement extends Component {
         this.setState({ hover: !this.state.hover });
     };
 
+
     render() {
         let imgContainer;
         let conduitType;
@@ -37,26 +46,33 @@ export default class ConduitElement extends Component {
                 conduitType = ''; break;
             case "finesse":
                 conduitType = (
-                        <div className="conduitTypeElementIcon">
-                            {/*<img src="/static/images/Conduits/Test.svg" />*/}
+                    <div className="conduitTypeElementIcon">
+                        <div className="finesseIcon">
+                            <img src="/static/images/Conduits/ConduitType_Finesse.svg"
+                            style={getCImgStyle(this.props.available, this.state.hover)}/>
                         </div>
+                    </div>
                 ); break;
             case "potency":
                 conduitType = (
                     <div className="conduitTypeElementIcon" >
-                        <img src="/static/images/Conduits/Test.svg" />
+                        <img src="/static/images/Conduits/ConduitType_Potency.svg"
+                             style={getCImgStyle(this.props.available, this.state.hover)}/>
                     </div>
                 ); break;
             case "endurance":
                 conduitType = (
                     <div className="conduitTypeElementIcon" >
-
+                        <div className="enduranceIcon">
+                            <img src="/static/images/Conduits/ConduitType_Endurance.svg"
+                                style={getCImgStyle(this.props.available, this.state.hover)}/>
+                        </div>
                     </div>
                 ); break;
             default:
                 conduitType = '';
         }
-        if (this.props.selected) {
+        if (this.props.selected && this.state.hover) {
             imgContainer = (
                 <div className="conduitImgContainer">
                     <a data-wowhead={'spell='+ this.props.spellId} rel="noopener" className="wowheadTooltip"
@@ -66,10 +82,10 @@ export default class ConduitElement extends Component {
                         <div className="conduitCloseElementIcon"
                             onClick={() => {
                                 this.props.clickHandler(this.props.name, this.props.index, this.props.available, false)}}>
-                            {/*/!*<img src="/static/images/cross.png" />*!/ <span className="closeConduitButton">X</span>*/}
+                            <img src="/static/images/X_Button_Icon.svg" className="closeButton"/>
                         </div>
+                        {conduitType}
                     </a>
-                    {conduitType}
                 </div>
             )
         } else {
@@ -79,8 +95,8 @@ export default class ConduitElement extends Component {
                     onClick={(e) => {e.preventDefault()}}>
                         <img style={getImgStyle(this.props.available, this.state.hover)}
                                  src={this.props.url} className="conduitElementImg"/>
+                        {conduitType}
                     </a>
-                    {conduitType}
                 </div>
             )
         }
