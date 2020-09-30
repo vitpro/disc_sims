@@ -18,7 +18,7 @@ const getImgStyle = (available, hover) => ({
 
 const getCImgStyle = (available, hover) => ({
     filter: hover? '' : available? 'brightness(0.4) sepia(1) hue-rotate(180deg)' :
-        'brightness(0.2) sepia(1) hue-rotate(180deg)',
+        'brightness(0.17) sepia(1) hue-rotate(180deg)',
     height: '100%',
     width: 'auto',
 
