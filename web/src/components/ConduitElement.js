@@ -37,6 +37,10 @@ export default class ConduitElement extends Component {
         this.setState({ hover: !this.state.hover });
     };
 
+    canUnselect = () => {
+        return this.props.selected && this.state.hover && this.props.canBeUnselected;
+    };
+
 
     render() {
         let imgContainer;
@@ -72,7 +76,7 @@ export default class ConduitElement extends Component {
             default:
                 conduitType = '';
         }
-        if (this.props.selected && this.state.hover) {
+        if (this.canUnselect()) {
             imgContainer = (
                 <div className="conduitImgContainer">
                     <a data-wowhead={'spell='+ this.props.spellId} rel="noopener" className="wowheadTooltip"

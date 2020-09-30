@@ -104,6 +104,14 @@ export default class CovenantLoadout extends Component {
         //no need to pass anything to App
     };
 
+    canBeUnselected = (unlocks, idx) => {
+        let unselectable = true;
+        for (let i = 0; i < unlocks.length; i++) {
+            unselectable = unselectable && !this.state.selected_conduits[unlocks[i]];
+        }
+        return unselectable;
+    };
+
     render() {
         const offset = { x: 650, y: 700 };
         const soulbinds = covenantData.covenants[this.state.currently_selected_covenant].soulbinds.slice();
@@ -155,6 +163,7 @@ export default class CovenantLoadout extends Component {
                                     coords_y={coords.y}
                                     spellId={conduit.spell_id}
                                     conduitType={conduit.type}
+                                    canBeUnselected={this.canBeUnselected(coords.unlocks, idx)}
                                 />
                             )
                         })}
