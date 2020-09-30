@@ -111,7 +111,7 @@ export default class CovenantLoadout extends Component {
         }
         return unselectable;
     };
-
+    
     render() {
         const offset = { x: 650, y: 700 };
         const soulbinds = covenantData.covenants[this.state.currently_selected_covenant].soulbinds.slice();
