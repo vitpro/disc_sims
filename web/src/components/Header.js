@@ -5,7 +5,7 @@ export default class Header extends Component {
         return (
             <div className="header">
                 <div id="headerLogo">
-                    img and name
+                    <img src="/static/images/SIMPCRAFT_Logo_Full_Green.png" className="logoImg"/>
                 </div>
                 <a href="#" className="headerLink">Link 1</a>
                 <a href="#" className="headerLink">Link 2</a>

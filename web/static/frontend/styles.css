@@ -25,7 +25,9 @@ body {
   margin-block-end: 0;
   margin-block-start: 0;
   margin: 0;
-  font-size: 45px; }
+  margin-bottom: 20px;
+  font-size: 45px;
+  line-height: 1.1; }
 
 .infoParagraph {
   font-weight: normal;
@@ -49,7 +51,7 @@ body {
   transition: background .5s ease-out;
   list-style: none;
   margin: 0;
-  height: 80px;
+  height: 75px;
   padding-right: 344px;
   padding-left: 344px; }
 
@@ -74,9 +76,13 @@ body {
   text-decoration: none;
   display: block;
   padding: 7px;
-  margin-top: 20px;
-  /*align-self: flex-start;*/
-  margin-right: 71%; }
+  margin-right: 60%;
+  width: 250px; }
+
+.logoImg {
+  max-height: 100%;
+  max-width: 100%;
+  display: block; }
 
 .landingContainer {
   /*display: flex;*/

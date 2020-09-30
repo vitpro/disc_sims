@@ -202,7 +202,96 @@
           "background_img": "/static/images/Covenants/Kyrian/Soulbind_Prime_Background.png",
           "conduit_tree_id": 1,
           "conduits": [
-
+            {
+              "name": "test",
+              "type": "generic",
+              "img": "/static/images/Conduits/ability_hunter_readiness.jpg",
+              "spell_id": "328257"
+            },
+            {
+              "name": "test",
+              "type": "finesse",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": ""
+            },
+            {
+              "name": "test",
+              "type": "potency",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": ""
+            },
+            {
+              "name": "test",
+              "type": "endurance",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": ""
+            },
+            {
+              "name": "test",
+              "type": "generic",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": "328257"
+            },
+            {
+              "name": "test",
+              "type": "generic",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": "328257"
+            },
+            {
+              "name": "test",
+              "type": "generic",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": "328257"
+            },
+            {
+              "name": "test",
+              "type": "generic",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": "328257"
+            },
+            {
+              "name": "test",
+              "type": "generic",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": "328257"
+            },
+            {
+              "name": "test",
+              "type": "generic",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": "328257"
+            },
+            {
+              "name": "test",
+              "type": "generic",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": "328257"
+            },
+            {
+              "name": "test",
+              "type": "generic",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": "328257"
+            },
+            {
+              "name": "test",
+              "type": "generic",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": "328257"
+            },
+            {
+              "name": "test",
+              "type": "generic",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": "328257"
+            },
+            {
+              "name": "test",
+              "type": "generic",
+              "img": "/static/images/Conduits/EmptyConduit_Tree.png",
+              "spell_id": "328257"
+            }
           ]
         }
       ],

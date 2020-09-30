@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import covenantData from '../data/covenant-data.json';
 import conduitTree from '../data/conduit-tree.json';
 import SoulbindElement from "./SoulbindElement";
-import LineTo, { SteppedLineTo, Line } from 'react-lineto';
+import { Line } from 'react-lineto';
 import ConduitElement from "./ConduitElement";
+import CovenantPicker from "./CovenantPicker";
 
 export default class CovenantLoadout extends Component {
 
@@ -83,6 +84,7 @@ export default class CovenantLoadout extends Component {
             available_conduits: available_conduits
         });
         // TODO pass to App
+
     };
 
     soulbindClickHandler = (name, idx) => {
@@ -101,6 +103,14 @@ export default class CovenantLoadout extends Component {
             currently_selected_soulbind: curr_selected_list,
             selected_soulbind: soulbind_list
         });
+
+        // reset conduit trees
+        for (let i = 0; i < this.state.selected_conduits.length; i++) {
+            this.state.selected_conduits[i] = false;
+        }
+        for (let i = 0; i < this.state.available_conduits.length; i++) {
+            this.state.available_conduits[i] = false;
+        }
         //no need to pass anything to App
     };
 
@@ -131,7 +141,12 @@ export default class CovenantLoadout extends Component {
 
         return (
             <div className="conduitPickerContainer">
-                <h1>Covenant picker here</h1>
+
+                <CovenantPicker
+                    selectedCovenant={this.state.currently_selected_covenant}
+
+                />
+
                 <div className="flexLeft conduitsContainer" style={backgroundImage}>
                     <div className="flexDown">
                         {soulbinds.map((elem, idx) => (
