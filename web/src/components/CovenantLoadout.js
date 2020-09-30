@@ -5,10 +5,13 @@ import SoulbindElement from "./SoulbindElement";
 import LineTo, { SteppedLineTo, Line } from 'react-lineto';
 import ConduitElement from "./ConduitElement";
 
+
+
 export default class CovenantLoadout extends Component {
 
     constructor(props) {
         super(props);
+        this.doubleClickPrevention = true;
         this.state = {
             currently_selected_covenant: 0,
             currently_selected_soulbind: [
@@ -29,6 +32,7 @@ export default class CovenantLoadout extends Component {
             available_conduits: [
                 false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             ],
+
         };
         this.treeRef = React.createRef();
     }
@@ -47,21 +51,30 @@ export default class CovenantLoadout extends Component {
         this.props.covenantChangeHandler({name:name, idx: idx});
     };
 
-    conduitClickhandler = (name, idx, available) => {
+    conduitClickHandler = (name, idx, available, activating) => {
         if (!available) return;
+        console.log(activating);
+        // this prevents double-click event when clicking on the 'x' component
+        if (!this.doubleClickPrevention) {
+            this.doubleClickPrevention = activating;
+            return;
+        }
+        this.doubleClickPrevention = activating;
         const soulbinds = covenantData.covenants[this.state.currently_selected_covenant].soulbinds.slice();
         const selected_conduits = this.state.selected_conduits.slice();
         const available_conduits = this.state.available_conduits.slice();
         const tree_id =
             soulbinds[this.state.currently_selected_soulbind[this.state.currently_selected_covenant]].conduit_tree_id;
+
         const unlocks = conduitTree.tree_id[tree_id].conduits[idx].unlocks.slice();
         const locks = conduitTree.tree_id[tree_id].conduits[idx].locks.slice();
-        selected_conduits[idx] = true;
+
+        selected_conduits[idx] = activating;
         unlocks.map(e => {
-            available_conduits[e] = true;
+            available_conduits[e] = activating;
         });
         locks.map(e => {
-            available_conduits[e] = false;
+            available_conduits[e] = !activating;
         });
         this.setState({
             ...this.state,
@@ -136,7 +149,7 @@ export default class CovenantLoadout extends Component {
                                     url={conduit.img}
                                     selected={this.state.selected_conduits[idx]}
                                     available={this.state.available_conduits[idx]} // TODO implement available
-                                    clickHandler={this.conduitClickhandler}
+                                    clickHandler={this.conduitClickHandler}
                                     coords_x={coords.x}
                                     coords_y={coords.y}
                                 />

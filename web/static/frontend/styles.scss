@@ -374,6 +374,20 @@ body {                          /*TODO image from django media*/
     float: right;
 }
 
+.conduitImgContainer {
+    position: relative;
+    display: inline-block;
+}
 
+.conduitCloseElementIcon {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-bottom-left-radius: 4px;
+    border: 2px solid $highlight;
+    background-color: $highlight;
+    width: 10px;
+    height: 10px;
+}
 
 

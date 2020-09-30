@@ -33,11 +33,18 @@ export default class ConduitElement extends Component {
         return (
             <div style={getElemStyle(this.props.selected, this.state.hover, this.props.coords_x, this.props.coords_y)}
                  className="conduitElement"
-                 onClick={() => this.props.clickHandler(this.props.name, this.props.index, this.props.available)}
+                 onClick={() => this.props.clickHandler(this.props.name, this.props.index, this.props.available, true)}
                  onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}
             >
-                <img style={getImgStyle(this.props.available, this.state.hover)}
-                     src={this.props.url} className="conduitElementImg"/>
+                <div className="conduitImgContainer">
+                    <img style={getImgStyle(this.props.available, this.state.hover)}
+                         src={this.props.url} className="conduitElementImg"/>
+                    <div className="conduitCloseElementIcon"
+                        onClick={() => {
+                            this.props.clickHandler(this.props.name, this.props.index, this.props.available, false)}}>
+                        {/*<img src="/static/images/cross.png" />*/} <span className="closeConduitButton">X</span>
+                    </div>
+                </div>
             </div>
         );
     }
