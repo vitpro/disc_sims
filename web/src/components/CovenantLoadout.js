@@ -83,8 +83,6 @@ export default class CovenantLoadout extends Component {
             selected_conduits: selected_conduits,
             available_conduits: available_conduits
         });
-        // TODO pass to App
-
     };
 
     soulbindClickHandler = (name, idx) => {
@@ -153,6 +151,7 @@ export default class CovenantLoadout extends Component {
 
                 <CovenantPicker
                     selectedCovenant={this.state.currently_selected_covenant}
+                    clickHandler={this.covenantClickHandler}
                 />
 
                 <div className="flexLeft conduitsContainer" style={backgroundImage}>
@@ -169,7 +168,7 @@ export default class CovenantLoadout extends Component {
                             />
                         ))}
                     </div>
-                    <div ref={this.treeRef}>
+                    <div>
 
                         {conduits.map((conduit, idx) => {
                             // get the coordinates for this conduit component
