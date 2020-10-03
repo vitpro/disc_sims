@@ -153,7 +153,6 @@ export default class CovenantLoadout extends Component {
 
                 <CovenantPicker
                     selectedCovenant={this.state.currently_selected_covenant}
-
                 />
 
                 <div className="flexLeft conduitsContainer" style={backgroundImage}>

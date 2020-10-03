@@ -101,7 +101,7 @@
           "description": "some very very long text here ahah yes more stupid text ffs can't think of more text ok enough",
           "img_url": "/static/images/Covenants/Kyrian/Soulbind_KleiaBox.png",
           "background_img": "/static/images/Covenants/Kyrian/Soulbind_Kleia_Background.png",
-          "conduit_tree_id": 2,
+          "conduit_tree_id": 1,
           "conduits": [
             {
               "name": "Ascendant Phial",
