@@ -140,7 +140,7 @@ export default class CovenantLoadout extends Component {
         const initAvailable = conduitTree.tree_id[tree_id].init_available;
         let hasInit = false;
         for (let i = 0; i < initAvailable.length; i++) {
-            hasInit = hasInit && initAvailable[i];
+            hasInit = hasInit || this.state.available_conduits[initAvailable[i]];
         }
         initAvailable.map(e => {
             if (!hasInit) {
