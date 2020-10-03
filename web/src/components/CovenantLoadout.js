@@ -135,8 +135,17 @@ export default class CovenantLoadout extends Component {
         const tree_id =
             soulbinds[this.state.currently_selected_soulbind[this.state.currently_selected_covenant]].conduit_tree_id;
         const lines = conduitTree.tree_id[tree_id].lines.slice();
-        conduitTree.tree_id[tree_id].init_available.map(e => {
-            this.state.available_conduits[e] = true;
+
+        // set the first tree nodes as available
+        const initAvailable = conduitTree.tree_id[tree_id].init_available;
+        let hasInit = false;
+        for (let i = 0; i < initAvailable.length; i++) {
+            hasInit = hasInit && initAvailable[i];
+        }
+        initAvailable.map(e => {
+            if (!hasInit) {
+                this.state.available_conduits[e] = true;
+            }
         });
 
         return (
@@ -196,7 +205,6 @@ export default class CovenantLoadout extends Component {
                             )
                         })}
                     </div>
-
 
                     <div className="conduitsRandomInfoBlock">
                         <div>
