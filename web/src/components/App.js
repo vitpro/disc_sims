@@ -201,7 +201,6 @@ class App extends Component {
     };
 
     getStepContent = step => {
-
         switch (step) {
             case 0:
                 return (
@@ -215,7 +214,6 @@ class App extends Component {
                                     >
                                     </RacePicker>
                                 </div>
-
                                 <div className="specPickerContainer">
                                     <h2 className="midTitle">Spec</h2>
                                     <SpecPicker
@@ -223,12 +221,6 @@ class App extends Component {
                                     />
                                 </div>
                             </div>
-                            {/*<div>*/}
-                                {/*<h2 className="midTitle">Meaningful Choice</h2>*/}
-                                {/*<CovenantLoadout*/}
-                                    {/*covenantChangeHandler={this.covenantChangeHandler}*/}
-                                {/*/>*/}
-                            {/*</div>*/}
                         </div>
                         <div className="characterDetailsColumn">
                             <TalentPicker spec={this.state.sim_data.spec} updateTalentsHandler={this.updateSelectedTalents}>
@@ -240,7 +232,8 @@ class App extends Component {
                 return (
                     <div className="detailsContainer">
                         <CovenantLoadout
-
+                            spec={this.state.sim_data.spec}
+                            covenantChangehandler={this.covenantChangeHandler}
                         />
                     </div>
                 );
@@ -250,7 +243,6 @@ class App extends Component {
                 });
                 return (
                     <div>
-
                     <Container>
                         Add spell:
                         <Select

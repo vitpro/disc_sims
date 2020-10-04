@@ -33,7 +33,6 @@ export default class CovenantLoadout extends Component {
             ],
 
         };
-        this.treeRef = React.createRef();
     }
 
     covenantClickHandler = (name, idx) => {
@@ -148,7 +147,6 @@ export default class CovenantLoadout extends Component {
 
         return (
             <div className="conduitPickerContainer">
-
                 <CovenantPicker
                     selectedCovenant={this.state.currently_selected_covenant}
                     clickHandler={this.covenantClickHandler}
