@@ -233,7 +233,7 @@ class App extends Component {
                     <div className="detailsContainer">
                         <CovenantLoadout
                             spec={this.state.sim_data.spec}
-                            covenantChangehandler={this.covenantChangeHandler}
+                            covenantChangeHandler={this.covenantChangeHandler}
                         />
                     </div>
                 );
