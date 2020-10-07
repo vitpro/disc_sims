@@ -52,7 +52,7 @@ export default class TalentPicker extends Component {
         return (
             <div>
                 <h2 className="midTitle"> Talents</h2>
-                <div className="talentGrid">
+                <div className="flexLeft">
 
                     {talents.map((talent, idx) => (
                         <Talent
@@ -62,6 +62,7 @@ export default class TalentPicker extends Component {
                             key={talent.name + idx.toString()}
                             talentClickHandler={this.talentClickHandler}
                             selected={this.state.selected_talents[idx]}
+                            spellId={talent.spell_id}
                         />
                     ))}
 

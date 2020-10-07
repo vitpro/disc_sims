@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 const ProgressBar = (props) => {
-    const { bgcolour, completed } = props;
+    const { completed } = props;
 
 
     const containerStyles = {
@@ -16,7 +16,7 @@ const ProgressBar = (props) => {
         transition: 'width 1s ease-in-out',
         height: '100%',
         width: `${completed}%`,
-        backgroundColor: '#fb1563',
+        backgroundColor: '#00D97B',
         borderRadius: 'inherit',
         textAlign: 'center',
         // overflow: 'hidden',

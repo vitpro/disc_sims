@@ -3,113 +3,113 @@
         {
             "name": "Castigation",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "193134"
         },
         {
             "name": "Twist of Fate",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "265259"
         },
         {
             "name": "Schism",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "214621"
         },
 
         {
             "name": "Body and Soul",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "64129"
         },
         {
             "name": "Masochism",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "193063"
         },
         {
             "name": "Angelic Feather",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "121536"
         },
 
         {
             "name": "Shield Discipline",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "197045"
         },
         {
             "name": "Mindbender",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "123040"
         },
         {
             "name": "Power Word: Solace",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "129250"
         },
 
         {
             "name": "Psychic Voice",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "196704"
         },
         {
             "name": "Dominant Mind",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "205367"
         },
         {
             "name": "Shining Force",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "204263"
         },
 
         {
             "name": "Sins of the Many",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "280391"
         },
         {
             "name": "Contrition",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "197419"
         },
         {
             "name": "Shadow Covenant",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "314867"
         },
 
         {
             "name": "Purge the Wicked",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "204197"
         },
         {
             "name": "Divine Star",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "110744"
         },
         {
             "name": "Halo",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "120517"
         },
 
         {
             "name": "Lenience",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "238063"
         },
         {
             "name": "Spirit Shell",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "109964"
         },
         {
             "name": "Evangelism",
             "img": "https://wow.zamimg.com/images/wow/icons/medium/spell_holy_searinglightpriest.jpg",
-            "wowhead-link": ""
+            "spell_id": "246287"
         }
     ]
 }

@@ -55,7 +55,7 @@ export default class RacePicker extends Component {
 
         return (
             <div className="racePickerGrid">
-               <Tabs>
+               <Tabs listId="race-picker-tab-list">
                    <div label="Horde">
                        <div className="raceIconsContainer">
                            {raceData["horde"].map((race, idx) => (

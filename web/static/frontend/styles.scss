@@ -15,7 +15,7 @@ $block: #22293d;
 $highlighted_block: #343f5e;
 $border_icons: #6d778b;
 $border_module: #22293d;
-$highlight: #fb1563;
+$highlight: #00D97B;
 $text_fields: #8e8e8e;
 
 .wrapper {
@@ -29,10 +29,25 @@ html {
 body {                          /*TODO image from django media*/
     background: #06080d url("/static/images/banner-h.png") no-repeat;
     background-size: 100%;
-    //background-position-y: -200px;
+    background-position-y: 80px;
     margin: 0;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
+}
+
+.title {
+    margin-block-end: 0;
+    margin-block-start: 0;
+    margin: 0;
+    margin-bottom: 20px;
+    font-size: 45px;
+    line-height: 1.1;
+}
+
+.infoParagraph {
+    font-weight: normal;
+    font-size: 14px;
+    margin: 0;
 }
 
 .midTitle {
@@ -47,7 +62,7 @@ body {                          /*TODO image from django media*/
     flex-flow: row wrap;
     justify-content: flex-end;
 
-    background: rgba(0, 0, 0, 0.0);
+    background: rgba(0, 0, 0, 1.0);
     -webkit-transition: background .5s ease-out;
     -moz-transition: background .5s ease-out;
     -o-transition: background .5s ease-out;
@@ -55,21 +70,22 @@ body {                          /*TODO image from django media*/
 
     list-style: none;
     margin: 0;
-    height: 80px;
+    height: 75px;
 
     padding-right: 344px;
     padding-left: 344px;
 }
-
-.header:hover {
-    background: rgba(0, 0, 0, 1.0);
-}
+//
+//.header:hover {
+//    background: rgba(0, 0, 0, 1.0);
+//}
 
 .header a {
     color: white;
     text-decoration: none;
     display: block;
     padding: 7px;
+    padding-top: 5px;
     height: 22px;
     margin-top: 20px;
 }
@@ -88,10 +104,15 @@ body {                          /*TODO image from django media*/
     text-decoration: none;
     display: block;
     padding: 7px;
-    margin-top: 20px;
 
-    /*align-self: flex-start;*/
-    margin-right: 71%;
+    margin-right: 60%;
+    width: 250px;
+}
+
+.logoImg {
+    max-height: 100%;
+    max-width: 100%;
+    display: block;
 }
 
 .landingContainer {
@@ -121,8 +142,8 @@ body {                          /*TODO image from django media*/
 .mainContainer {
     margin-left: 344px;
     margin-right: 344px;
-    /*height: 1000px;*/
     background-color: $module;
+    color: white;
 
     /*shadows*/
     -webkit-box-shadow: -8px 7px 5px -5px rgba(0,0,0,0.57);
@@ -147,25 +168,20 @@ body {                          /*TODO image from django media*/
     top: -25px;
 }
 
-.characterDetailsContainer {
+.detailsContainer {
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: flex-start;
 
     margin-right: 32px;
     margin-left: 32px;
+    margin-top: -25px;
 }
 
 .characterDetailsColumn {
     width: 50%;
     //background-color: darkgrey;
     color: white;
-}
-
-.talentGrid {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
 }
 
 .talentCell {
@@ -200,12 +216,6 @@ body {                          /*TODO image from django media*/
 .talentCellName {
     margin-left: 10px;
     font-size: 14px;
-}
-
-.raceSpecContainer {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
 }
 
 .racePickerContainer {
@@ -250,26 +260,25 @@ body {                          /*TODO image from django media*/
 }
 
 .racePickerGrid {
-
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
 
     background-color: $highlighted_block;
-    /*border: 1px solid #a7b07a;*/
-    border-radius: 5px;
-    border-top-right-radius: 0;
+    border-radius: 5px 0 5px 5px;
 
     padding: 12px;
-    /*padding-left: 20px;*/
 }
 
 .tab-list {
+    font-weight: bold;
+}
+
+#race-picker-tab-list {
     padding-left: 0;
     position: absolute;
-    top: 587px;
+    top: 557px;
     left: 569px;
-    font-weight: bold;
 }
 
 .tab-list-item {
@@ -297,3 +306,150 @@ body {                          /*TODO image from django media*/
     flex-flow: row wrap;
     justify-content: flex-start;
 }
+
+.navButtonsContainer {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.flexLeft {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.flexDown {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+}
+
+.conduitPickerContainer {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+
+
+    //width: 100%;
+}
+
+.conduitsContainer {
+    padding: 48px;
+    padding-bottom: 32px;
+
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 2px solid $highlighted_block;
+    height: 100%;
+    width: 1064px;
+}
+
+.soulbindElement {
+    margin-bottom: 16px;
+    height: 148px;
+}
+
+.soulbindElementImg {
+    height: 148px;
+}
+
+.conduitElement {
+    -webkit-box-shadow: 0px 0px 5px 2px rgba(34,41,61,1);;
+    -moz-box-shadow: 0px 0px 5px 2px rgba(34,41,61,1);;
+    box-shadow: 0px 0px 5px 2px rgba(34,41,61,1);;
+
+    height: 38px;
+    width: 38px;
+    z-index: 2;
+}
+
+.conduitElementImg {
+    height: 38px;
+    width: 38px;
+    border-radius: 3px;
+    z-index: 2;
+}
+
+.conduitTreeLine {
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.conduitsRandomInfoBlock {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+
+    color: white;
+    margin-left: 55%;
+    width:30%;
+    float: right;
+}
+
+.conduitImgContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.conduitCloseElementIcon {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    border-bottom-left-radius: 4px;
+    border: 2px solid $highlight;
+    background-color: $highlight;
+    width: 10px;
+    height: 10px;
+
+    z-index: 3;
+}
+
+.finesseIcon {
+    margin-left: 4px;
+    height: 20px;
+    width: 20px;
+}
+
+.enduranceIcon {
+    margin-left: 1px;
+    height: 20px;
+    width: 20px;
+}
+
+.closeButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.conduitTypeElementIcon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 10px;
+    padding-left: 9px;
+    padding-top: 9px;
+    //border: 2px solid $highlight;
+    //border-top-right-radius: 4px;
+    //background-color: $highlight;
+    width: 20px;
+    height: 20px;
+}
+
+.covenantPickerContainer {
+    height: 80px;
+    padding-left: 26px;
+}
+
+.covenantIcon {
+    height: 85px;
+    width: 75px;
+    z-index: 6;
+}
+
+.wowheadTooltip {
+    text-decoration: none;
+}
+
+

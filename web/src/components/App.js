@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
+import ReactDOM from 'react-dom';
 import { render } from "react-dom";
 import styled, { css } from 'styled-components';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import ReactDOM from 'react-dom';
 import Select, { defaultTheme } from 'react-select';
 import Spell from './Spell';
 import Footer from './Footer';
@@ -12,6 +12,7 @@ import LandingContainer from './LandingContainer';
 import TalentPicker from './TalentPicker';
 import RacePicker from './RacePicker';
 import SpecPicker from './SpecPicker';
+import CovenantLoadout from "./CovenantLoadout";
 
 const Container = styled.div`
     margin: 20px;
@@ -52,6 +53,13 @@ class App extends Component {
             data: {
                 'spells': []
             },
+            steps: [
+                '1. Character',
+                '2. Covenant & Conduits',
+                '3. Sim Options',
+                '4. Report',
+            ],
+            activeStep: 1,
             sim_data: {
                 spec: 'disc',
                 selected_talents: [],
@@ -132,6 +140,11 @@ class App extends Component {
         console.log(race);
     };
 
+    // TODO implement this
+    covenantChangeHandler = covenant => {
+        console.log(covenant);
+    };
+
     handleSelectChange = selected => {
         this.setState({
             ...this.state,
@@ -187,61 +200,63 @@ class App extends Component {
             })
     };
 
-    render() {
-        const selectSpellListOptions = this.state.data.spells.map(spell => {
-            return { value: spell.id, label: spell.name }
-        });
-        return (
-            <div className="wrapper">
-                <Header />
-                <LandingContainer />
-                <div className="mainContainer">
-                    <ProgressContainer barCompleted={14} barDisplayPercentage={this.state.isSimming} />
-                    <StagesContainer>
-
-                        <div className="characterDetailsContainer">
-                            <div className="characterDetailsColumn">
-                                <div className="raceSpecContainer">
-                                    <div className="racePickerContainer">
-                                        <h2 className="midTitle">Race</h2>
-                                        <RacePicker
-                                            raceChangeHandler={this.raceChangeHandler}
-                                        >
-                                        </RacePicker>
-                                    </div>
-
-                                    <div className="specPickerContainer">
-                                        <h2 className="midTitle">Spec</h2>
-                                        <SpecPicker
-                                            specChangeHandler={this.specChangeHandler}
-                                        />
-                                    </div>
+    getStepContent = step => {
+        switch (step) {
+            case 0:
+                return (
+                    <div className="detailsContainer">
+                        <div className="characterDetailsColumn">
+                            <div className="flexLeft">
+                                <div className="racePickerContainer">
+                                    <h2 className="midTitle">Race</h2>
+                                    <RacePicker
+                                        raceChangeHandler={this.raceChangeHandler}
+                                    >
+                                    </RacePicker>
                                 </div>
-                                <div>
-                                    <h2 className="midTitle">Meaningful Choice</h2>
-
+                                <div className="specPickerContainer">
+                                    <h2 className="midTitle">Spec</h2>
+                                    <SpecPicker
+                                        specChangeHandler={this.specChangeHandler}
+                                    />
                                 </div>
-                            </div>
-                            <div className="characterDetailsColumn">
-                                <TalentPicker spec={this.state.sim_data.spec} updateTalentsHandler={this.updateSelectedTalents}>
-                                </TalentPicker>
                             </div>
                         </div>
-
-                        <Container>
-                            Add spell:
-                            <Select
-                                className="basic-single"
-                                classNamePrefix="select"
-                                options={selectSpellListOptions}
-                                onChange={this.handleSelectChange}
-                            />
-                            <Button
-                                onClick={this.addNewSpellToSequence}
-                            >
-                                Add
-                            </Button>
-                        </Container>
+                        <div className="characterDetailsColumn">
+                            <TalentPicker spec={this.state.sim_data.spec} updateTalentsHandler={this.updateSelectedTalents}>
+                            </TalentPicker>
+                        </div>
+                    </div>
+                );
+            case 1:
+                return (
+                    <div className="detailsContainer">
+                        <CovenantLoadout
+                            spec={this.state.sim_data.spec}
+                            covenantChangeHandler={this.covenantChangeHandler}
+                        />
+                    </div>
+                );
+            case 2:
+                const selectSpellListOptions = this.state.data.spells.map(spell => {
+                    return { value: spell.id, label: spell.name }
+                });
+                return (
+                    <div>
+                    <Container>
+                        Add spell:
+                        <Select
+                            className="basic-single"
+                            classNamePrefix="select"
+                            options={selectSpellListOptions}
+                            onChange={this.handleSelectChange}
+                        />
+                        <Button
+                            onClick={this.addNewSpellToSequence}
+                        >
+                            Add
+                        </Button>
+                    </Container>
                         <DragDropContext onDragEnd={this.onDragEnd}>
                             <Droppable droppableId="droppable" direction="horizontal">
                                 { (provided, snapshot) => (
@@ -263,8 +278,58 @@ class App extends Component {
                             onClick={this.processSims}
                         >
                             Process
-                        </Button>
+                    </Button>
+                    </div>
+                );
+            case 3:
+                return (
+                    <div>Report page</div>
+                );
+            default:
+                return 'mama mia';
+        }
+    };
+
+    handleNext = () => {
+        this.setState({
+            ...this.state,
+            activeStep: this.state.activeStep + 1
+        })
+    };
+
+    handleBack = () => {
+        this.setState({
+            ...this.state,
+            activeStep: this.state.activeStep - 1
+        })
+    };
+
+    render() {
+        const activeStep = this.state.activeStep;
+
+        return (
+            <div className="wrapper">
+                <Header />
+                <LandingContainer />
+                <div className="mainContainer">
+                    <ProgressContainer activeStep={activeStep} steps={this.state.steps} />
+                    <StagesContainer>
+                        {this.getStepContent(activeStep)}
                     </StagesContainer>
+                    <div className="navButtonsContainer">
+                        <Button
+                            disabled={activeStep === 0}
+                            onClick={this.handleBack}
+                        >
+                            Back
+                        </Button>
+                        <Button
+                            onClick={this.handleNext}
+                            disabled={activeStep === this.state.steps.length - 1 }
+                        >
+                            {activeStep === this.state.steps.length - 2 ? 'SIM' : 'NEXT'}
+                        </Button>
+                    </div>
                 </div>
                 <Footer/>
             </div>
