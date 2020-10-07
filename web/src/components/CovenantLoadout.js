@@ -120,7 +120,7 @@ export default class CovenantLoadout extends Component {
     };
 
     render() {
-        const offset = { x: 650, y: 700 };
+        const offset = { x: 650, y: 660 };
         const soulbinds = covenantData.covenants[this.state.currently_selected_covenant].soulbinds.slice();
         const backgroundImage = ({
            background: 'url(' +

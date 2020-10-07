@@ -62,6 +62,7 @@ export default class TalentPicker extends Component {
                             key={talent.name + idx.toString()}
                             talentClickHandler={this.talentClickHandler}
                             selected={this.state.selected_talents[idx]}
+                            spellId={talent.spell_id}
                         />
                     ))}
 

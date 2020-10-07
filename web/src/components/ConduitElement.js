@@ -31,7 +31,7 @@ const nodeList = [
 ];
 
 const getElemStyle = (selected, hover, coords_x, coords_y) => {
-    const offset = { x: 650, y: 700 };
+    const offset = { x: 650, y: 660 };
     const x_coord = (coords_x + offset.x).toString() + 'px';
     const y_coord = (coords_y + offset.y).toString() + 'px';
     return ({

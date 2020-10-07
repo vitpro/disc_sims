@@ -4,19 +4,23 @@ import Select from 'react-select';
 const covenantsListOptions = [
     {
         name: "0",
-        label: "Kyrian"
+        label: "Kyrian",
+        icon_url: '/static/images/Covenants/Kyrian/Kyrian_sigil.png',
     },
     {
         name: "1",
-        label: "Venthyr"
+        label: "Venthyr",
+        icon_url: '/static/images/Covenants/Venthyr/Venthyr_sigil.png',
     },
     {
         name: "2",
-        label: "Necrolord"
+        label: "Necrolord",
+        icon_url: '/static/images/Covenants/Necrolord/Necrolord_sigil.png',
     },
     {
         name: "3",
-        label: "Night Fae"
+        label: "Night Fae",
+        icon_url: '/static/images/Covenants/NightFae/Night_Fae_sigil.png',
     }
 ];
 
@@ -35,6 +39,7 @@ const selectStyles = {
     container: (provided, state) => ({
         width: '200px',
         padding: 20,
+        paddingLeft: 0,
     }),
     control: (provided, state) => ({
         // ...provided,
@@ -83,9 +88,7 @@ export default class CovenantPicker extends Component {
         return (
             <div className="covenantPickerContainer">
                 <div className="flexLeft">
-                    <div className="covenantIcon">
-                        <img src="" />
-                    </div>
+                    <img className="covenantIcon" src={covenantsListOptions[this.props.selectedCovenant].icon_url} />
                     <Select
                         styles={selectStyles}
                         defaultValue={covenantsListOptions[this.props.selectedCovenant]}

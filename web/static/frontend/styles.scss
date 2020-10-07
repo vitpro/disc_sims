@@ -175,6 +175,7 @@ body {                          /*TODO image from django media*/
 
     margin-right: 32px;
     margin-left: 32px;
+    margin-top: -25px;
 }
 
 .characterDetailsColumn {
@@ -276,7 +277,7 @@ body {                          /*TODO image from django media*/
 #race-picker-tab-list {
     padding-left: 0;
     position: absolute;
-    top: 587px;
+    top: 557px;
     left: 569px;
 }
 
@@ -434,6 +435,17 @@ body {                          /*TODO image from django media*/
     //background-color: $highlight;
     width: 20px;
     height: 20px;
+}
+
+.covenantPickerContainer {
+    height: 80px;
+    padding-left: 26px;
+}
+
+.covenantIcon {
+    height: 85px;
+    width: 75px;
+    z-index: 6;
 }
 
 .wowheadTooltip {
