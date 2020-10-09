@@ -1,34 +1,4 @@
 import React, { Component } from 'react';
-const nodeList = [
-    {
-        name: "Endurance 1",
-        nodes: [
-            {
-                name: 'r1'
-            },
-            {
-                name: 'r2'
-            },
-            {
-                name: 'r3'
-            }
-        ]
-    },
-    {
-        name: "Endurance 2",
-        nodes: [
-            {
-                name: 'r1'
-            },
-            {
-                name: 'r2'
-            },
-            {
-                name: 'r3'
-            }
-        ]
-    }
-];
 
 const getElemStyle = (selected, hover, coords_x, coords_y) => {
     const offset = { x: 650, y: 660 };

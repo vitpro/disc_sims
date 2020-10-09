@@ -346,8 +346,9 @@ body {
   padding-left: 26px; }
 
 .covenantIcon {
-  height: 85px;
-  width: 75px;
+  height: 65px;
+  width: 60px;
+  padding-top: 10px;
   z-index: 6; }
 
 .wowheadTooltip {

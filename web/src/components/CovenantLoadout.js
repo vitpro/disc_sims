@@ -177,7 +177,7 @@ export default class CovenantLoadout extends Component {
                                     key={conduit.name + idx.toString()}
                                     url={conduit.img}
                                     selected={this.state.selected_conduits[idx]}
-                                    available={this.state.available_conduits[idx]} // TODO implement available
+                                    available={this.state.available_conduits[idx]}
                                     clickHandler={this.conduitClickHandler}
                                     coords_x={coords.x}
                                     coords_y={coords.y}
