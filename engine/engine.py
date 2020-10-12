@@ -7,6 +7,7 @@ from web.models import Dot, Cast, Spell, Buff
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
 import random
+import math
 
 
 '''
@@ -89,9 +90,10 @@ class Engine:
 
         # que the spell, with timer if needed
         if type(next_spell) is Dot:
+            self.state.register_mana(next_spell.get_mana_cost())
             enemy = self.state.enemies[target_id[1]]
             # apply initial hit
-            self.state.register_damage(enemy, next_spell.get_initial_hit_sp())  # TODO CERE - fix maths
+            self.state.register_damage(enemy, next_spell.get_initial_hit_sp(), next_spell.atonement_trigger)
             # check if dot is in pandemic, if new dot - schedule the ticks
             if enemy.has_dot():
                 # 1.3 = pandemic window
@@ -106,9 +108,9 @@ class Engine:
                                                               * EXEC_SPEED_MULTIPLIER)) + current_time
                 self.scheduler.add_date_job(self.process_dot_tick, sched_time, args=[next_spell.baseline_tick_time,
                                                                                      next_spell.sp_per_tick,
-                                                                                     enemy])
+                                                                                     enemy, next_spell.atonement_trigger])
         elif type(next_spell) is Cast:
-            # next spell is a cast`
+            # next spell is a cast
 
             # check if this is an instant cast or not, schedule if needed for the cast time duration
             if next_spell.cast_time == 0.0:
@@ -128,55 +130,82 @@ class Engine:
 
     def execute_spell_now(self, next_spell, target_id):
         self.state.register_mana(next_spell.get_mana_cost())
-        # check if it's a dps or healing spell, then check if it's an aoe spell
-        is_aoe_spell = target_id[0] == 2
+        # buff triggers/procs
+        for proc in Buff.objects.filter(caused_by_spell=next_spell):
+            if proc.rppm:
+                if self.state.process_rppm(proc.rppm, proc.name):
+                    self.state.active_buffs.append(proc)
+            else:
+                self.state.active_buffs.append(proc)
         # check if the spell does any damage
-        if target_id[0] == 1 or (is_aoe_spell and len(target_id[1][1]) != 0):
+        if target_id[0] == 1 or (next_spell.is_aoe and len(target_id[1][1]) != 0):
+        # TODO add buff modifiers here
             # cover aoe spell case
             aoe_target_list = target_id[1][1]
-            if is_aoe_spell and aoe_target_list:  # will assume first target in the enemy list is the closest one
+            if next_spell.is_aoe and aoe_target_list:
+                # check for target cap, distribute damage depending on scaling type
+                if next_spell.damage_cap and next_spell.aoe_scaling_type == 'LINEAR':
+                    damage_sp = next_spell.get_damage_sp() * next_spell.damage_cap / max(len(aoe_damage_list), next_spell.damage_cap)
+                # TODO implement capped SQRT scaling - how does it work?
+                elif next_spell.aoe_scaling_type == 'SQRT': 
+                    # TODO make an exception for ascended eruption?
+                    damage_sp = next_spell.get_damage_sp() / math.sqrt(len(aoe_damage_list))
+                else: 
+                    damage_sp = next_spell.get_damage_sp()
+                # will assume first target in the enemy list is the closest one
                 main_target = aoe_target_list.pop(0)
-                self.state.register_damage(main_target, next_spell.get_dps_sp())
+                self.state.register_damage(main_target, next_spell.get_damage_sp(), next_spell.atonement_trigger)
                 # atonement only works on 1 target
                 for target in aoe_target_list:
-                    self.state.register_damage_no_atonement(target, next_spell.get_dps_sp())
+                    self.state.register_damage(target, next_spell.get_damage_sp(), False)
             # ST spell case
             else:
-                self.state.register_damage(target_id[1], next_spell.get_dps_sp())  # TODO add buff modifiers here
+                self.state.register_damage(target_id[1], next_spell.get_damage_sp(), next_spell.atonement_trigger)
 
         # check if the spell does any healing
         aoe_healing_list = target_id[1][0]
-        if target_id[0] == 0 or (is_aoe_spell and aoe_healing_list):
+        if target_id[0] == 0 or (next_spell.is_aoe and aoe_healing_list):
+            # TODO apply spell specific buffs
+            healing_sp = next_spell.get_healiing_sp()
             # check if it does aoe healing
-            if is_aoe_spell and aoe_healing_list:
+            if next.spell.is_aoe and aoe_healing_list:
+                # check for target cap, distribute healing depending on scaling type
+                if next_spell.healing_cap and next_spell.aoe_scaling_type == 'LINEAR':
+                    healing_sp = healing_sp * next_spell.healing_cap / max(len(aoe_healing_list), next_spell.healing_cap)
+                # TODO implement capped SQRT scaling
+                elif next_spell.aoe_scaling_type == 'SQRT': 
+                    healing_sp = healing_sp / math.sqrt(len(aoe_healing_list))
+                
                 for target in aoe_healing_list:
-                    self.state.register_healing(target, next_spell.get_healing_sp(),
+                    self.state.register_healing(target, healing_sp,
                                                 next_spell.applies_atonement,
                                                 next_spell.atonement_duration)
             # st spell
             else:
-                self.state.register_healing(target_id[1], next_spell.get_healing_sp(),
+                self.state.register_healing(target_id[1], healing_sp,
                                             next_spell.applies_atonement,
                                             next_spell.atonement_duration)
         # process any additional perks, i.e. mindgames extra value
         if next_spell.bonus_sp:
             self.state.register_healing(0, next_spell.bonus_sp)
 
-    def process_dot_tick(self, baseline_tick_time, tick_sp, dot, enemy):
+    def process_dot_tick(self, baseline_tick_time, tick_sp, dot, enemy, atonement_trigger=False):
         
-        self.state.register_damage(enemy, tick_sp)
+        self.state.register_damage(enemy, tick_sp, atonement_trigger)
         haste = self.state.player.get_haste_multiplier()
         dot_tick_time = baseline_tick_time / haste
         enemy.decay_dot(dot_tick_time)
 
-        # potds proc
-        if dot.spell_id not in PET_SPELL_IDS:
-            time_since_last_proc_attempt = datetime.datetime.now() - last_proc_attempt
-            time_since_last_proc = datetime.datetime.now() - last_proc
-            # TODO register time of this tick
-            if self.state.process_rppm(haste, time_since_last_proc_attempt, time_since_last_proc):
-                # TODO register proc and time of proc
-            
+        # buff triggers/procs
+        # TODO refresh/pandemic buff durations
+        for proc in Buff.objects.filter(caused_by_spell=dot):
+            if proc.rppm:
+                if self.state.process_rppm(proc.rppm, proc.name):
+                    self.state.active_buffs.append(proc)
+            else:
+                self.state.active_buffs.append(proc)
+
+
 
         # check if the dot has expired and there is no next tick
         if enemy.dot_duration == 0:
@@ -192,17 +221,17 @@ class Engine:
                     sched_time = datetime.timedelta(milliseconds=(dot_tick_time * 1000 *
                                                                   EXEC_SPEED_MULTIPLIER)) + current_time
                     self.scheduler.add_date_job(self.process_dot_tick, sched_time,
-                                                args=[dot_tick_time, dot.sp_per_tick, dot, enemy])
+                                                args=[dot_tick_time, dot.sp_per_tick, dot, enemy, next_spell.atonement_trigger])
             else:  # SWP or PTW case
                 sched_time = datetime.timedelta(milliseconds=(enemy.dot_duration * 1000 *
                                                               EXEC_SPEED_MULTIPLIER)) + current_time
                 sp_dmg_portion = dot.sp_per_tick * (enemy.dot_duration / dot_tick_time)
                 self.scheduler.add_date_job(self.process_dot_tick, sched_time,
-                                            args=[enemy.dot_duration, sp_dmg_portion, dot, enemy])
+                                            args=[enemy.dot_duration, sp_dmg_portion, dot, enemy, next_spell.atonement_trigger])
         else:
             sched_time = datetime.timedelta(milliseconds=(dot_tick_time * 1000 * EXEC_SPEED_MULTIPLIER)) + current_time
             self.scheduler.add_date_job(self.process_dot_tick, sched_time,
-                                        args=[dot_tick_time, dot.sp_per_tick, dot, enemy])
+                                        args=[dot_tick_time, dot.sp_per_tick, dot, enemy, next_spell.atonement_trigger])
 
     def untrack_buff(self, buff_id):
         try:

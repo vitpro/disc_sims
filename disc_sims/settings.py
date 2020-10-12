@@ -130,7 +130,21 @@ MEDIA_URL = 'storage/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'storage/')
 
 STAT_NAMES = ['INT', 'CRIT', 'HASTE', 'MASTERY', 'VERS', 'LEECH', ]
+
+# DR Brackets: interval lower bound, multiplier
+SECONDARY_DRS = [[0, 1.0],
+           [30, 0.9],
+           [39, 0.8],
+           [47, 0.7],
+           [54, 0.6],
+           [66, 0.5],
+           [126, 0.0]]
+
+SECONDARY_SCALING = {'HASTE': 33, 'CRIT': 35, 'VERS': 40, 'MASTERY': 35, 'DISC_MASTERY': 26}
+
 BUFF_PROCS_FROM = ['RPPM', 'ANY_SPELL', 'DOT', ]
+
+AOE_SCALING_TYPES = ['SQRT', 'LINEAR', ]
 
 CASTING_SCHOOLS = ['HOLY', 'SHADOW', 'FIRE', 'ARCANE']
 

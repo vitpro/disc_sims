@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 from django.core.validators import int_list_validator
-from disc_sims.settings import STAT_NAMES, BUFF_PROCS_FROM, CASTING_SCHOOLS
+from disc_sims.settings import STAT_NAMES, BUFF_PROCS_FROM, CASTING_SCHOOLS, AOE_SCALING_TYPES
 
 
 class Spell(models.Model):
@@ -9,6 +9,7 @@ class Spell(models.Model):
     name = models.CharField(max_length=255, unique=True)
     mana_cost = models.DecimalField(max_digits=6, decimal_places=3)
     cooldown = models.DecimalField(max_digits=5, decimal_places=2)
+    gcd = models.DecimalField(max_digits=2, decimal_places=2, default=1.5)
 
     icon = models.ImageField(upload_to='icons', null=True, blank=True)
     # schools for things like scov checks
@@ -32,6 +33,7 @@ class Dot(Spell):
     duration = models.IntegerField(default=0)
     initial_hit_sp = models.DecimalField(max_digits=10, decimal_places=2)
     sp_per_tick = models.DecimalField(max_digits=10, decimal_places=2)
+    atonement_trigger = models.BooleanField(default=False)
     baseline_tick_time = models.DecimalField(max_digits=4, decimal_places=2)
     # end of duration to indicate it's a dot that benefits from haste, pets have a chance to hit instead
     end_of_duration_tick = models.BooleanField(default=True)
@@ -46,17 +48,23 @@ class Dot(Spell):
 class Cast(Spell):
     # cast time 0.0 means an instant spell
     cast_time = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)
-    dps_sp = models.DecimalField(max_digits=10, decimal_places=2)
+    damage_sp = models.DecimalField(max_digits=10, decimal_places=2)
+    atonement_trigger = models.BooleanField(default=False)
     healing_sp = models.DecimalField(max_digits=10, decimal_places=2)
     bonus_sp = models.DecimalField(max_digits=10, decimal_places=2)
     applies_atonement = models.BooleanField(default=False)
     atonement_duration = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
 
+    is_aoe = models.BooleanField(default=False)
+    aoe_scaling_type = models.CharField(choices=map(lambda t: (t, t), AOE_SCALING_TYPES), max_length=10, default='', blank=True)
+    damage_cap = models.IntegerField(default=20)
+    healing_cap = models.IntegerField(default=6)
+
     def get_cast_time(self):
         return self.cast_time
 
-    def get_dps_sp(self):
-        return self.dps_sp
+    def get_damage_sp(self):
+        return self.damage_sp
 
     def get_healing_sp(self):
         return self.healing_sp
@@ -70,18 +78,24 @@ class Buff(models.Model):
     # empty if not a blank stat buff
     affects_stat = models.CharField(choices=map(lambda t: (t, t), STAT_NAMES), max_length=10, default='', blank=True)
     # field showing which spell in particular it affects, many spells if null
-    affects_spell = models.OneToOneField(Cast, on_delete=models.DO_NOTHING, blank=True, null=True,
+    affects_spell = models.ManyToManyField(Spell, on_delete=models.DO_NOTHING, blank=True, null=True,
                                          related_name='affects_spell')
     # if spell causes a buff - register it here (schism/scov etc)
-    caused_by_spell = models.OneToOneField(Cast, on_delete=models.DO_NOTHING, blank=True, null=True,
+    caused_by_spell = models.ManyToManyField(Spell, on_delete=models.DO_NOTHING, blank=True, null=True,
                                            related_name='caused_by_spell')
     # by how many % this buff increases a stat/dmg/healing values
-    multiplier_value = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    multiplier_value = models.DecimalField(max_digits=10, decimal_places=2, default=1.0)
+    additive_value = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    # whether the dmg increase affects atonement healing or general dmg/healing
+    affects_attonement = models.BooleanField(default=False)
+    affects_generic_damage = models.BooleanField(default=False)
+    affects_generic_healing = models.BooleanField(default=False)
     # ranked values for conduits maybe?
     # ranked_multiplier_value = models. ...
 
     max_stacks = models.IntegerField(default=1)
     max_duration = models.IntegerField(default=0)
+    is_pandemic = models.BooleanField(default=False)
     is_permanent = models.BooleanField(default=False)
 
     # indicator of how this buff in invoked
@@ -103,11 +117,13 @@ class Buff(models.Model):
 class SimulationReport(models.Model):  # TODO CERE what else do we need in the report?
     report_id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     total_gcds = models.IntegerField(default=0)
-    total_healing = models.DecimalField(max_digits=32, decimal_places=2, default=0.0)  # in sp?
-    total_damage = models.DecimalField(max_digits=32, decimal_places=2, default=0.0)  # in sp?
+    total_healing = models.DecimalField(max_digits=32, decimal_places=2, default=0.0)
+    total_damage = models.DecimalField(max_digits=32, decimal_places=2, default=0.0)
+    total_mana_spent = models.DecimalField(max_digits=32, decimal_places=2, default=0.0)
     # values = [int(x) for x in data.split(',') if x], values = map(int, '0,1,2,3,'.rstrip(',').split(','))
     # ','.join([str(i) for i in list_of_ints])
     raiders_healing_received_list = models.CharField(validators=[int_list_validator, ], max_length=120)
+    enemies_damage_taken_list = models.CharField(validators=[int_list_validator, ], max_length=120)
 
     def __str__(self):
         return 'report #' + str(self.report_id)
